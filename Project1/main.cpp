@@ -161,6 +161,12 @@ void LoadAssetsMario()
 	//Add fire mario for fireball
 	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_IDLE_RIGHT, 206, 109, 206 + 14, 109 + 27, texMarioPro);
 
+	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_HAND_UP_RIGHT, 280, 109, 280 + 14, 109 + 27, texMarioPro);
+	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_HAND_DOWN_RIGHT, 297, 109, 297 + 14, 109 + 27, texMarioPro);
+
+	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_OPEN_RIGHT, 555, 109, 555 + 19, 109 + 27, texMarioPro);
+	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_CLOSE_RIGHT, 621, 109, 621 + 18, 109 + 27, texMarioPro);
+
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);
@@ -295,6 +301,16 @@ void LoadAssetsMario()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_IDLE_RIGHT);
 	animations->Add(ID_ANI_MARIO_BIG_FIRE_IDLE_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_HAND_UP_RIGHT);
+	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_HAND_DOWN_RIGHT);
+	animations->Add(ID_ANI_MARIO_BIG_FIRE_SHOOT_BULLET_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_OPEN_RIGHT);
+	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_CLOSE_RIGHT);
+	animations->Add(ID_ANI_MARIO_BIG_FIRE_FLY_SHOOT_BULLET_RIGHT, ani);
 }
 
 void LoadAssetsGoomba()
