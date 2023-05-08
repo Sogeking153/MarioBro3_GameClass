@@ -30,15 +30,15 @@ void Map::LoadTileSet()
 		}
 	}
 
-	DebugOut(L"day nefff: %d \n", map[0][0]);
-	DebugOut(L"day nefff: %d \n", map[0][1]);
+	//DebugOut(L"day nefff: %d \n", map[0][0]);
+	//DebugOut(L"day nefff: %d \n", map[0][1]);
 
 	f.close();
 
 	CTextures* textures = CTextures::GetInstance();
 
 
-	textures->Add(100, L"textures\\Final1.png");
+	textures->Add(100, L"textures\\TileObject.png");
 
 	int id = 0;
 	CSprites* sprites = CSprites::GetInstance();

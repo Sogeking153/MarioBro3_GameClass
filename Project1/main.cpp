@@ -24,6 +24,7 @@
 #include <d3dx10.h>
 #include <list>
 
+#include "Map.h"
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
@@ -47,8 +48,8 @@
 
 #define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 760
+#define SCREEN_HEIGHT 730	
 
 
 #define TEXTURES_DIR L"textures"
@@ -59,6 +60,7 @@
 
 CGame *game;
 CMario *mario;
+Map* map;
 
 list<LPGAMEOBJECT> objects;
 
@@ -371,6 +373,9 @@ void LoadResources()
 	LoadAssetsBrick();
 	LoadAssetsCoin();
 	LoadAssetsOther();
+
+	map = new Map();
+	map->LoadTileSet();
 }
 
 void ClearScene()
@@ -407,7 +412,7 @@ void Reload()
 		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
 		objects.push_back(b);
 	}
-
+	/*
 	// Short, low platform
 	for (int i = 1; i < 3; i++)
 	{
@@ -447,7 +452,7 @@ void Reload()
 	CPlatform* p = new CPlatform(90.0f, GROUND_Y - 34.0f,
 		16, 15, 16, ID_SPRITE_CLOUD_BEGIN, ID_SPRITE_CLOUD_MIDDLE, ID_SPRITE_CLOUD_END);
 	objects.push_back(p);
-
+	*/
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 
@@ -456,13 +461,13 @@ void Reload()
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
 		objects.push_back(goomba);
 	}
-
+	/*
 	// COINS 
 	for (int i = 0; i < 10; i++)
 	{
 		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
 		objects.push_back(c);
-	}
+	}*/
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
@@ -516,7 +521,7 @@ void Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, cy);
+	CGame::GetInstance()->SetCamPos(cx, 700);
 }
 
 /*
@@ -537,6 +542,8 @@ void Render()
 
 	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
 	pD3DDevice->OMSetBlendState(g->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
+
+	map->Draw();
 
 	list<LPGAMEOBJECT>::iterator i;
 	for (i = objects.begin(); i != objects.end(); ++i)
@@ -652,7 +659,7 @@ int WINAPI WinMain(
 	LoadResources();
 	Reload();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 
