@@ -58,6 +58,8 @@
 #define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemies_transparent.png"
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
+#define TEXTURE_PATH_MARIOPRO TEXTURES_DIR "\\MARIOPRO.png"
+
 CGame *game;
 CMario *mario;
 Map* map;
@@ -86,6 +88,7 @@ void LoadAssetsMario()
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
+	LPTEXTURE texMarioPro = textures->Get(30);
 
 	// IDLE
 	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1, 246,154,259,181, texMario);
@@ -154,6 +157,9 @@ void LoadAssetsMario()
 
 	sprites->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_LEFT + 1, 65, 40, 65 + 15, 40 + 15, texMario);
 	sprites->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_RIGHT + 1, 365, 40, 365 + 15, 40 + 15, texMario);
+
+	//Add fire mario for fireball
+	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_IDLE_RIGHT, 206, 109, 206 + 14, 109 + 27, texMarioPro);
 
 	LPANIMATION ani;
 
@@ -284,6 +290,11 @@ void LoadAssetsMario()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_MARIO_SMALL_JUMP_RUN_RIGHT + 1);
 	animations->Add(ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT, ani);
+
+	//fire mario
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_IDLE_RIGHT);
+	animations->Add(ID_ANI_MARIO_BIG_FIRE_IDLE_RIGHT, ani);
 }
 
 void LoadAssetsGoomba()
@@ -367,6 +378,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMY);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
+	textures->Add(30, TEXTURE_PATH_MARIOPRO);
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
@@ -409,7 +421,7 @@ void Reload()
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
 	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, BRICK_Y);
+		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, 500+700+48);
 		objects.push_back(b);
 	}
 	/*
