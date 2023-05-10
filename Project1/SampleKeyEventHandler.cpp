@@ -28,6 +28,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_R: // reset
 		Reload();
 		break;
+	case DIK_A:
+	case 14:
+		mario->SetState(MARIO_STATE_STAND_SHOOT);
+		break;
 	}
 }
 
@@ -65,5 +69,9 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	else
+	{
+		if (mario->GetState() == MARIO_STATE_STAND_SHOOT)
+			return;
 		mario->SetState(MARIO_STATE_IDLE);
+	}
 }

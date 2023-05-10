@@ -86,8 +86,8 @@ void Map::Draw()
 	if (begin_column < 0)
 		begin_column = 0;
 
-	DebugOut(L"end row %d \n", end_row);
-	DebugOut(L"end column %d \n", end_column);
+	//DebugOut(L"end row %d \n", end_row);
+	//DebugOut(L"end column %d \n", end_column);
 
 
 	//CSprites* sprites = CSprites::GetInstance();
