@@ -41,6 +41,7 @@
 #include "SampleKeyEventHandler.h"
 
 #include "AssetIDs.h"
+#include "MarioBullet.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -166,6 +167,9 @@ void LoadAssetsMario()
 
 	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_OPEN_RIGHT, 555, 109, 555 + 19, 109 + 27, texMarioPro);
 	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_CLOSE_RIGHT, 621, 109, 621 + 18, 109 + 27, texMarioPro);
+
+	//fire ball bullet
+	sprites->Add(18000, 162, 124, 162 + 8, 124 + 8, texMarioPro);
 
 	LPANIMATION ani;
 
@@ -311,6 +315,11 @@ void LoadAssetsMario()
 	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_OPEN_RIGHT);
 	ani->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_CLOSE_RIGHT);
 	animations->Add(ID_ANI_MARIO_BIG_FIRE_FLY_SHOOT_BULLET_RIGHT, ani);
+
+	//ani for fireball
+	ani = new CAnimation(100);
+	ani->Add(18000);
+	animations->Add(1800, ani);
 }
 
 void LoadAssetsGoomba()
@@ -433,6 +442,8 @@ void ClearScene()
 void Reload()
 {
 	ClearScene();
+	MarioBullet* bullet = new MarioBullet(200, 1000);
+	objects.push_back(bullet);
 
 	// Main ground
 	for (int i = 0; i < NUM_BRICKS; i++)
@@ -484,11 +495,11 @@ void Reload()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 
-	for (int j = 0; j < 4; j++)
+	/*for (int j = 0; j < 4; j++)
 	{
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
 		objects.push_back(goomba);
-	}
+	}*/
 	/*
 	// COINS 
 	for (int i = 0; i < 10; i++)

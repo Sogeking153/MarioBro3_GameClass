@@ -151,6 +151,8 @@ public:
 	void Render();
 	void SetState(int state);
 
+	void attack();
+
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 

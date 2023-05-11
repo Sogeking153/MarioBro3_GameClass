@@ -9,6 +9,8 @@
 
 #include "Collision.h"
 
+#include "MarioBullet.h"
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
@@ -270,6 +272,7 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_STAND_SHOOT:
 		throw_start = GetTickCount64();
+		this->attack();
 		break;
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
@@ -343,6 +346,15 @@ void CMario::SetState(int state)
 
 	CGameObject::SetState(state);
 }
+
+extern list<LPGAMEOBJECT> objects;
+
+void CMario::attack()
+{
+	MarioBullet* temp = new MarioBullet(this->x, this->y);
+	objects.push_back(temp);
+}
+
 
 void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {

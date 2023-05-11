@@ -39,11 +39,11 @@ void MarioBullet::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->ny != 0)
 	{
-		vy = 0;
+		vy = -0.25 * 1.5;
 	}
 	else if (e->nx != 0)
 	{
-		vx = -vx;
+		//vx = -vx;
 	}
 }
 
@@ -71,7 +71,7 @@ void MarioBullet::Render()
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	CAnimations::GetInstance()->Get(1800)->Render(x, y);
 	RenderBoundingBox();
 }
 
@@ -88,7 +88,7 @@ void MarioBullet::SetState(int state)
 		ay = 0;
 		break;
 	case GOOMBA_STATE_WALKING:
-		vx = -GOOMBA_WALKING_SPEED;
+		vx = GOOMBA_WALKING_SPEED;
 		break;
 	}
 }
