@@ -34,6 +34,7 @@
 #define MARIO_STATE_SIT_RELEASE		601
 
 #define MARIO_STATE_STAND_SHOOT		700
+#define MARIO_STATE_SPIN			800
 
 
 #pragma region ANIMATION_ID
@@ -86,6 +87,10 @@
 
 #define ID_ANI_MARIO_BIG_FIRE_FLY_SHOOT_BULLET_RIGHT 1750
 
+//tail spin ani
+#define ID_ANI_MARIO_BIG_TAIL_STAND_RIGHT 1900
+#define ID_ANI_MARIO_BIG_TAIL_SPIN_RIGHT 1901
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -120,6 +125,7 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG throw_start = 0;
+	DWORD spin_start = 0;
 	BOOLEAN isOnPlatform;
 	int coin; 
 
@@ -131,6 +137,7 @@ class CMario : public CGameObject
 	int GetAniIdBig();
 	int GetAniIdSmall();
 	int GetAniIdFire();
+	int GetAniIdTail();
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -141,7 +148,7 @@ public:
 		ay = MARIO_GRAVITY; 
 
 		//level = MARIO_LEVEL_BIG;
-		level = 3;
+		level = 4;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
@@ -164,6 +171,7 @@ public:
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
+	int GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

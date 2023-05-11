@@ -60,6 +60,7 @@
 #define TEXTURE_PATH_BBOX TEXTURES_DIR "\\bbox.png"
 
 #define TEXTURE_PATH_MARIOPRO TEXTURES_DIR "\\MARIOPRO.png"
+#define TEXTURE_PATH_TAIL TEXTURES_DIR "\\MARIO_TAIL_SPIN.png"
 
 CGame *game;
 CMario *mario;
@@ -90,6 +91,7 @@ void LoadAssetsMario()
 
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 	LPTEXTURE texMarioPro = textures->Get(30);
+	LPTEXTURE texMarioTail = textures->Get(40);
 
 	// IDLE
 	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1, 246,154,259,181, texMario);
@@ -167,6 +169,16 @@ void LoadAssetsMario()
 
 	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_OPEN_RIGHT, 555, 109, 555 + 19, 109 + 27, texMarioPro);
 	sprites->Add(ID_SPRITE_MARIO_BIG_FIRE_FLY_THROW_CLOSE_RIGHT, 621, 109, 621 + 18, 109 + 27, texMarioPro);
+
+	//tail
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_STAND_LEFT, 80, 142, 80 + 21, 142 + 28, texMarioPro);
+
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT, 12, 13, 12 + 21, 13 + 28, texMarioTail);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 1, 55, 13, 55 + 39, 13 + 28, texMarioTail);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 2, 103, 13, 103 + 35, 13 + 28, texMarioTail);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 3, 147, 12, 147 + 32, 12 + 29, texMarioTail);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 4, 192, 13, 192 + 35, 13 + 28, texMarioTail);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 5, 12, 13, 12 + 21, 13 + 28, texMarioTail);
 
 	//fire ball bullet
 	sprites->Add(18000, 162, 124, 162 + 8, 124 + 8, texMarioPro);
@@ -320,6 +332,21 @@ void LoadAssetsMario()
 	ani = new CAnimation(100);
 	ani->Add(18000);
 	animations->Add(1800, ani);
+
+	//tail
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_STAND_LEFT);
+	animations->Add(ID_ANI_MARIO_BIG_TAIL_STAND_RIGHT, ani);
+
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 2);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 3);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 4);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 5);
+	animations->Add(ID_ANI_MARIO_BIG_TAIL_SPIN_RIGHT, ani);
 }
 
 void LoadAssetsGoomba()
@@ -404,6 +431,7 @@ void LoadResources()
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 	textures->Add(30, TEXTURE_PATH_MARIOPRO);
+	textures->Add(40, TEXTURE_PATH_TAIL);
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();

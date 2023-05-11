@@ -32,6 +32,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	}
 
+	if (GetState() == MARIO_STATE_SPIN && GetTickCount64() - spin_start >= 600 && spin_start)
+	{
+		SetState(MARIO_STATE_IDLE);
+		spin_start = 0;
+		DebugOut(L"[INFO] demacia spin\n");
+
+	}
+
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -166,17 +174,35 @@ int CMario::GetAniIdFire()
 {
 	int aniId = -1;
 
-	/*if (!isOnPlatform)
+	if (!isOnPlatform)
 	{
 	}
 	else
-	{*/
+	{
 	if (state == MARIO_STATE_STAND_SHOOT)
 		aniId = ID_ANI_MARIO_BIG_FIRE_SHOOT_BULLET_RIGHT;
-	//}
+	}
 
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_BIG_FIRE_IDLE_RIGHT;
+
+	return aniId;
+}
+
+int CMario::GetAniIdTail()
+{
+	int aniId = -1;
+
+	if (!isOnPlatform)
+	{
+	}
+	else
+	{
+		if (state == MARIO_STATE_SPIN)
+			aniId = ID_ANI_MARIO_BIG_TAIL_SPIN_RIGHT;
+	}
+
+	if (aniId == -1) aniId = ID_ANI_MARIO_BIG_TAIL_STAND_RIGHT;
 
 	return aniId;
 }
@@ -255,6 +281,8 @@ void CMario::Render()
 		aniId = GetAniIdSmall();
 	else if (level == 3)
 		aniId = GetAniIdFire();
+	else if (level == 4)
+		aniId = GetAniIdTail();
 
 	animations->Get(aniId)->Render(x, y);
 
@@ -270,6 +298,9 @@ void CMario::SetState(int state)
 
 	switch (state)
 	{
+	case MARIO_STATE_SPIN:
+		spin_start = GetTickCount64();
+		break;
 	case MARIO_STATE_STAND_SHOOT:
 		throw_start = GetTickCount64();
 		this->attack();
