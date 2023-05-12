@@ -1,11 +1,15 @@
 #include "Goomba.h"
+#include "Mario.h"
 
-CGoomba::CGoomba(float x, float y):CGameObject(x, y)
+//extern CMario* mario
+CGoomba::CGoomba(float x, float y, CMario* mario) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	SetState(GOOMBA_STATE_WALKING);
+
+	player = mario;
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -60,6 +64,19 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	float ml, mt, mr, mb;
+	float il, it, ir, ib;
+
+	this->GetBoundingBox(il, it, ir, ib);
+	player->GetBoundingBox(ml, mt, mr, mb);
+	//DebugOut(L"[INFO] mario l value %f \n",ml);
+	if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
+	{
+
+		DebugOut(L"[INFO] inside checkoverlap function \n");
+		this->SetState(GOOMBA_STATE_DIE);
+	}
 }
 
 
@@ -88,7 +105,8 @@ void CGoomba::SetState(int state)
 			ay = 0; 
 			break;
 		case GOOMBA_STATE_WALKING: 
-			vx = -GOOMBA_WALKING_SPEED;
+			//vx = -GOOMBA_WALKING_SPEED;
+			vx = 0;
 			break;
 	}
 }

@@ -523,11 +523,11 @@ void Reload()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 
-	/*for (int j = 0; j < 4; j++)
+	for (int j = 0; j < 4; j++)
 	{
-		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
+		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f, mario);
 		objects.push_back(goomba);
-	}*/
+	}
 	/*
 	// COINS 
 	for (int i = 0; i < 10; i++)
