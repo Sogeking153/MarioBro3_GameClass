@@ -13,7 +13,8 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	vy += ay * dt;
+	if (state != MARIO_STATE_FLY)
+		vy += ay * dt;
 	vx += ax * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
@@ -36,9 +37,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		SetState(MARIO_STATE_IDLE);
 		spin_start = 0;
-		DebugOut(L"[INFO] demacia spin\n");
 
 	}
+
+	if (GetState() == MARIO_STATE_FLY && GetTickCount64() - fly_start >= 300 && fly_start)
+	{
+		SetState(MARIO_STATE_IDLE);
+		fly_start = 0;
+	}
+	DebugOut(L"[INFO] state is: %d\n", state);
 
 	isOnPlatform = false;
 
@@ -197,6 +204,10 @@ int CMario::GetAniIdTail()
 
 	if (!isOnPlatform)
 	{
+		if (nx >= 0)
+			aniId = ID_ANI_MARIO_BIG_TAIL_JUMP_RIGHT;
+		if (state == MARIO_STATE_FLY)
+			aniId = ID_ANI_MARIO_BIG_TAIL_FLY_DOWN_RIGHT;
 	}
 	else
 	{
@@ -300,6 +311,10 @@ void CMario::SetState(int state)
 
 	switch (state)
 	{
+	case MARIO_STATE_FLY:
+		fly_start = GetTickCount64();
+		vy = 0.02;
+		break;
 	case MARIO_STATE_SPIN:
 		spin_start = GetTickCount64();
 		break;

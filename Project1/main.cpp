@@ -180,6 +180,12 @@ void LoadAssetsMario()
 	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 4, 192, 13, 192 + 35, 13 + 28, texMarioTail);
 	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 5, 12, 13, 12 + 21, 13 + 28, texMarioTail);
 
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT, 283, 143, 283 + 23, 143 + 27, texMarioPro);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 1, 334, 142, 334 + 23, 142 + 28, texMarioPro);
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 2, 309, 143, 309 + 23, 143 + 27, texMarioPro);
+
+	sprites->Add(ID_SPRITE_MARIO_BIG_TAIL_JUMP_LEFT, 257, 143, 257 + 23, 143 + 27, texMarioPro);
+
 	//fire ball bullet
 	sprites->Add(18000, 162, 124, 162 + 8, 124 + 8, texMarioPro);
 
@@ -347,6 +353,16 @@ void LoadAssetsMario()
 	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 4);
 	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_SPIN_LEFT + 5);
 	animations->Add(ID_ANI_MARIO_BIG_TAIL_SPIN_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_JUMP_LEFT);
+	animations->Add(ID_ANI_MARIO_BIG_TAIL_JUMP_RIGHT, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 1);
+	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 2);
+	animations->Add(ID_ANI_MARIO_BIG_TAIL_FLY_DOWN_RIGHT, ani);
 }
 
 void LoadAssetsGoomba()
