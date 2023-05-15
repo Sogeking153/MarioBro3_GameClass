@@ -45,7 +45,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		SetState(MARIO_STATE_IDLE);
 		fly_start = 0;
 	}
-	DebugOut(L"[INFO] state is: %d\n", state);
+	//DebugOut(L"[INFO] state is: %d\n", state);
 
 	isOnPlatform = false;
 
@@ -107,9 +107,9 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 				}
 			}
 		}
-		DebugOut(L"[INFO] trung koompas khong ben trong %d\n");
+		DebugOut(L"[INFO] trung Koopa khong ben trong %d\n");
 	}
-	DebugOut(L"[INFO] trung koompas khong ben ngoai %d\n");
+	DebugOut(L"[INFO] trung Koopa khong ben ngoai %d\n");
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)

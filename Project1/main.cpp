@@ -42,6 +42,7 @@
 
 #include "AssetIDs.h"
 #include "MarioBullet.h"
+#include "Koopa.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -61,6 +62,7 @@
 
 #define TEXTURE_PATH_MARIOPRO TEXTURES_DIR "\\MARIOPRO.png"
 #define TEXTURE_PATH_TAIL TEXTURES_DIR "\\MARIO_TAIL_SPIN.png"
+#define TEXTURE_PATH_ENEMY TEXTURES_DIR "\\enemy.png"
 
 CGame *game;
 CMario *mario;
@@ -92,6 +94,7 @@ void LoadAssetsMario()
 	LPTEXTURE texMario = textures->Get(ID_TEX_MARIO);
 	LPTEXTURE texMarioPro = textures->Get(30);
 	LPTEXTURE texMarioTail = textures->Get(40);
+	LPTEXTURE texEnemy = textures->Get(50);
 
 	// IDLE
 	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1, 246,154,259,181, texMario);
@@ -188,6 +191,10 @@ void LoadAssetsMario()
 
 	//fire ball bullet
 	sprites->Add(18000, 162, 124, 162 + 8, 124 + 8, texMarioPro);
+
+	//koopa
+	sprites->Add(ID_SPRITE_KOOPA_WALKING_LEFT, 31, 119, 31 + 16, 119 + 26, texEnemy);
+	sprites->Add(ID_SPRITE_KOOPA_WALKING_LEFT + 1, 50, 118, 50 + 16, 118 + 27, texEnemy);
 
 	LPANIMATION ani;
 
@@ -363,6 +370,12 @@ void LoadAssetsMario()
 	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 1);
 	ani->Add(ID_SPRITE_MARIO_BIG_TAIL_FLY_DOWN_LEFT + 2);
 	animations->Add(ID_ANI_MARIO_BIG_TAIL_FLY_DOWN_RIGHT, ani);
+
+	//ani for koopa for testing. Need to create LoadAsset for Koopa later
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_KOOPA_WALKING_LEFT);
+	ani->Add(ID_SPRITE_KOOPA_WALKING_LEFT + 1);
+	animations->Add(ID_ANI_KOOPA_WALKING_LEFT, ani);
 }
 
 void LoadAssetsGoomba()
@@ -448,6 +461,7 @@ void LoadResources()
 	textures->Add(ID_TEX_BBOX, TEXTURE_PATH_BBOX);
 	textures->Add(30, TEXTURE_PATH_MARIOPRO);
 	textures->Add(40, TEXTURE_PATH_TAIL);
+	textures->Add(50, TEXTURE_PATH_ENEMY);
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
@@ -544,13 +558,16 @@ void Reload()
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f, mario);
 		objects.push_back(goomba);
 	}
-	/*
+	
 	// COINS 
 	for (int i = 0; i < 10; i++)
 	{
-		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2), GROUND_Y - 96.0f);
+		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2) + 200, GROUND_Y - 96.0f +1150);
 		objects.push_back(c);
-	}*/
+	}
+
+	Koopa* koopa = new Koopa(400, 800, mario);
+	objects.push_back(koopa);
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
