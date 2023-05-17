@@ -7,19 +7,19 @@ Koopa::Koopa(float x, float y, CMario* mario) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	SetState(GOOMBA_STATE_INDENT_IN);
+	SetState(GOOMBA_STATE_WALKING);
 
 	player = mario;
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == GOOMBA_STATE_DIE)
+	if (state == GOOMBA_STATE_INDENT_IN)
 	{
-		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - GOOMBA_BBOX_HEIGHT_DIE / 2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
+		left = x - GOOMBA_BBOX_WIDTH_INDENT_IN / 2;
+		top = y - GOOMBA_BBOX_HEIGHT_INDENT_IN / 2;
+		right = left + GOOMBA_BBOX_WIDTH_INDENT_IN;
+		bottom = top + GOOMBA_BBOX_HEIGHT_INDENT_IN;
 	}
 	else
 	{
