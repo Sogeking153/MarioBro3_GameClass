@@ -88,7 +88,7 @@ void CGoomba::Render()
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
+	CAnimations::GetInstance()->Get(ID_ANI_GOOMBA_WALKING)->Render(x,y);
 	RenderBoundingBox();
 }
 

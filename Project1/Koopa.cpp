@@ -7,7 +7,7 @@ Koopa::Koopa(float x, float y, CMario* mario) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	SetState(GOOMBA_STATE_WALKING);
+	SetState(GOOMBA_STATE_INDENT_IN);
 
 	player = mario;
 }
@@ -72,20 +72,25 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	player->GetBoundingBox(ml, mt, mr, mb);
 	if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
 	{
-		this->SetState(GOOMBA_STATE_DIE);
+		DebugOut(L"[INFO] bump, kill koopa  \n");
+		//this->SetState(GOOMBA_STATE_DIE);
 	}
 }
 
 
 void Koopa::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
+	int aniId = ID_ANI_KOOPA_WALKING_LEFT;
 	if (state == GOOMBA_STATE_DIE)
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
+	else if (state == GOOMBA_STATE_INDENT_IN)
+	{
+		aniId = ID_ANI_KOOPA_INDENT_IN;
+	}
 
-	CAnimations::GetInstance()->Get(ID_ANI_KOOPA_WALKING_LEFT)->Render(x, y);
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
@@ -102,8 +107,13 @@ void Koopa::SetState(int state)
 		ay = 0;
 		break;
 	case GOOMBA_STATE_WALKING:
+		vx = -GOOMBA_WALKING_SPEED;
+		vx = 0;
+		break;
+	case GOOMBA_STATE_INDENT_IN:
 		//vx = -GOOMBA_WALKING_SPEED;
 		vx = 0;
+		vy = 0;
 		break;
 	}
 }
