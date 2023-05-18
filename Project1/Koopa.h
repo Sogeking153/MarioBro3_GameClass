@@ -18,6 +18,7 @@
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
 #define GOOMBA_STATE_INDENT_IN 300
+#define GOOMBA_STATE_SHELL_RUNNING 400
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
@@ -31,8 +32,8 @@ protected:
 
 
 
-	float ax;
-	float ay;
+	float ax = 0;
+	float ay = 0;
 	CMario* player;
 	ULONGLONG die_start;
 

@@ -131,6 +131,12 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			koopa->SetState(GOOMBA_STATE_INDENT_IN);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
+		else if (koopa->GetState() == GOOMBA_STATE_INDENT_IN)
+		{
+			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+
+		}
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 }
 

@@ -5,7 +5,7 @@
 Koopa::Koopa(float x, float y, CMario* mario) :CGameObject(x, y)
 {
 	this->ax = 0;
-	this->ay = GOOMBA_GRAVITY;
+	//this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	SetState(GOOMBA_STATE_WALKING);
 
@@ -14,7 +14,7 @@ Koopa::Koopa(float x, float y, CMario* mario) :CGameObject(x, y)
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == GOOMBA_STATE_INDENT_IN)
+	if (state == GOOMBA_STATE_INDENT_IN || state == GOOMBA_STATE_SHELL_RUNNING)
 	{
 		left = x - GOOMBA_BBOX_WIDTH_INDENT_IN / 2;
 		top = y - GOOMBA_BBOX_HEIGHT_INDENT_IN / 2;
@@ -53,8 +53,8 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
+	vy += 0.002 * dt;
+	//vx += ax * dt;
 
 	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
@@ -75,6 +75,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		DebugOut(L"[INFO] bump, kill koopa  \n");
 		//this->SetState(GOOMBA_STATE_DIE);
 	}
+	DebugOut(L"[INFO] vy of koopa: %f\n", vy);
 }
 
 
@@ -85,7 +86,7 @@ void Koopa::Render()
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
-	else if (state == GOOMBA_STATE_INDENT_IN)
+	else if (state == GOOMBA_STATE_INDENT_IN || state==400)
 	{
 		aniId = ID_ANI_KOOPA_INDENT_IN;
 	}
@@ -114,6 +115,9 @@ void Koopa::SetState(int state)
 		//vx = -GOOMBA_WALKING_SPEED;
 		vx = 0;
 		vy = 0;
+		break;
+	case GOOMBA_STATE_SHELL_RUNNING:
+		vx = 0.2;
 		break;
 	}
 }

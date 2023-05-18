@@ -510,11 +510,11 @@ void Reload()
 	objects.push_back(bullet);
 
 	// Main ground
-	for (int i = 0; i < NUM_BRICKS; i++)
-	{
-		CBrick* b = new CBrick(i * BRICK_WIDTH * 1.0f, 500+700+48);
+	//for (int i = 0; i < NUM_BRICKS; i++)
+	//{
+		CBrick* b = new CBrick(0 * BRICK_WIDTH * 1.0f, 500+700+48);
 		objects.push_back(b);
-	}
+	//}
 	/*
 	// Short, low platform
 	for (int i = 1; i < 3; i++)
@@ -566,11 +566,11 @@ void Reload()
 	}
 	
 	// COINS 
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
 		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2) + 200, GROUND_Y - 96.0f +1150);
 		objects.push_back(c);
-	}
+	}*/
 
 	Koopa* koopa = new Koopa(400, 800, mario);
 	objects.push_back(koopa);
