@@ -117,7 +117,7 @@ void Koopa::SetState(int state)
 		vy = 0;
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
-		vx = 0.2;
+		vx = 0.02;
 		break;
 	}
 }

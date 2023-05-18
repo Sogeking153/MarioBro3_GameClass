@@ -126,6 +126,9 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
 	if (e->ny < 0)
 	{
+		float x, y;
+		koopa->GetPosition(x, y);
+		koopa->SetPosition(x, y - 1);
 		if (koopa->GetState() != GOOMBA_STATE_INDENT_IN)
 		{
 			koopa->SetState(GOOMBA_STATE_INDENT_IN);
