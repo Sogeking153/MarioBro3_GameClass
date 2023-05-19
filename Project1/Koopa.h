@@ -19,6 +19,7 @@
 #define GOOMBA_STATE_DIE 200
 #define GOOMBA_STATE_INDENT_IN 300
 #define GOOMBA_STATE_SHELL_RUNNING 400
+#define GOOMBA_STATE_BEING_HOLDED 500
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
@@ -29,9 +30,6 @@
 class Koopa : public CGameObject
 {
 protected:
-
-
-
 	float ax = 0;
 	float ay = 0;
 	CMario* player;

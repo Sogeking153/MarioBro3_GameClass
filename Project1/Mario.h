@@ -123,6 +123,9 @@
 
 class CMario : public CGameObject
 {
+	CGameObject* holding_something = NULL;
+	BOOLEAN isHolding = false;
+
 	BOOLEAN isSitting;
 	float maxVx;
 	float ax;				// acceleration on x 
@@ -185,4 +188,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	bool GetIsHolding() { return isHolding; };
+	void SetIsHolding(bool temp) { isHolding = temp; };
 };
