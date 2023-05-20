@@ -7,6 +7,7 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Koopa.h"
+#include "Brick.h"
 
 #include "Collision.h"
 
@@ -14,6 +15,8 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	vy_store = vy;//can jump from below
+
 	if (state != MARIO_STATE_FLY)
 		vy += ay * dt;
 	vx += ax * dt;
@@ -50,7 +53,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects, y_store);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -78,6 +81,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<Koopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+		OnCollisionWithBrick(e);
 
 	if (holding_something != NULL)
 	{
@@ -90,6 +95,16 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
+{
+	if (e->ny > 0)
+	{
+		vy = vy_store;
+		y += y_store * 2;
+		DebugOut(L"[INFO] vy value is: %f\n", vy);
+	}
+}
+
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -97,15 +112,15 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		/*if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
+		}*/
 	}
 	else // hit by Goomba
 	{
-		if (untouchable == 0)
+		/*if (untouchable == 0)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
 			{
@@ -119,8 +134,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 					SetState(MARIO_STATE_DIE);
 				}
 			}
-		}
-		DebugOut(L"[INFO] trung Koopa khong ben trong %d\n");
+		}*/
+		//DebugOut(L"[INFO] trung Koopa khong ben trong %d\n");
 	}
 	DebugOut(L"[INFO] trung Koopa khong ben ngoai %d\n");
 }

@@ -72,7 +72,8 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	float nothing;
+	CCollision::GetInstance()->Process(this, dt, coObjects, nothing);
 
 	float ml, mt, mr, mb;
 	float il, it, ir, ib;

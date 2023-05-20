@@ -63,7 +63,8 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 
 	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+	float nothing;
+	CCollision::GetInstance()->Process(this, dt, coObjects, nothing);
 
 	float ml, mt, mr, mb;
 	float il, it, ir, ib;
@@ -73,9 +74,8 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//DebugOut(L"[INFO] mario l value %f \n",ml);
 	if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
 	{
-
-		DebugOut(L"[INFO] inside checkoverlap function \n");
-		this->SetState(GOOMBA_STATE_DIE);
+		/*DebugOut(L"[INFO] inside checkoverlap function \n");
+		this->SetState(GOOMBA_STATE_DIE);*/
 	}
 }
 
