@@ -43,6 +43,7 @@
 #include "AssetIDs.h"
 #include "MarioBullet.h"
 #include "Koopa.h"
+#include "ParaGoomba.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -63,6 +64,7 @@
 #define TEXTURE_PATH_MARIOPRO TEXTURES_DIR "\\MARIOPRO.png"
 #define TEXTURE_PATH_TAIL TEXTURES_DIR "\\MARIO_TAIL_SPIN.png"
 #define TEXTURE_PATH_ENEMY_1 TEXTURES_DIR "\\enemy.png"
+#define TEXTURE_PATH_VINEANDFLY TEXTURES_DIR "\\VineAndFly.png"
 
 CGame *game;
 CMario *mario;
@@ -95,6 +97,7 @@ void LoadAssetsMario()
 	LPTEXTURE texMarioPro = textures->Get(30);
 	LPTEXTURE texMarioTail = textures->Get(40);
 	LPTEXTURE texEnemy = textures->Get(50);
+	LPTEXTURE texVineAndFly = textures->Get(109);
 
 	// IDLE
 	sprites->Add(ID_SPRITE_MARIO_BIG_IDLE_RIGHT + 1, 246,154,259,181, texMario);
@@ -197,6 +200,8 @@ void LoadAssetsMario()
 	sprites->Add(ID_SPRITE_KOOPA_WALKING_LEFT + 1, 50, 118, 50 + 16, 118 + 27, texEnemy);
 
 	sprites->Add(ID_SPRITE_KOOPA_INDENT_IN, 32, 149, 32 + 16, 149 + 16, texEnemy);
+
+	sprites->Add(ID_SPRITE_PARA_GOOMPA_WALKING, 104, 70, 104 + 16, 70 + 16, texVineAndFly);
 
 	LPANIMATION ani;
 
@@ -382,6 +387,11 @@ void LoadAssetsMario()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_KOOPA_INDENT_IN);
 	animations->Add(ID_ANI_KOOPA_INDENT_IN, ani);
+
+	//red shroom
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_PARA_GOOMPA_WALKING);
+	animations->Add(ID_ANI_PARA_GOOMBA_WALKING, ani);
 }
 
 void LoadAssetsGoomba()
@@ -468,6 +478,7 @@ void LoadResources()
 	textures->Add(30, TEXTURE_PATH_MARIOPRO);
 	textures->Add(40, TEXTURE_PATH_TAIL);
 	textures->Add(50, TEXTURE_PATH_ENEMY_1);
+	textures->Add(109, TEXTURE_PATH_VINEANDFLY);
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
@@ -577,6 +588,9 @@ void Reload()
 
 	Koopa* koopa = new Koopa(400, 800, mario);
 	objects.push_back(koopa);
+
+	ParaGoompa* paragoompa = new ParaGoompa(500, 800, mario);
+	objects.push_back(paragoompa);
 }
 
 bool IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
