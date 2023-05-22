@@ -26,6 +26,8 @@ protected:
 	CMario* player;
 	ULONGLONG die_start;
 
+	ULONGLONG walking_start;
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 

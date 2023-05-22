@@ -570,11 +570,11 @@ void Reload()
 	mario = new CMario(MARIO_START_X, 1200);
 	objects.push_back(mario);
 
-	for (int j = 0; j < 4; j++)
+	/*for (int j = 0; j < 4; j++)
 	{
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f, mario);
 		objects.push_back(goomba);
-	}
+	}*/
 	
 	// COINS 
 	/*for (int i = 0; i < 10; i++)
@@ -586,8 +586,8 @@ void Reload()
 	//CBrick* c = new CBrick(300, 1100);
 	//objects.push_back(c);
 
-	Koopa* koopa = new Koopa(400, 800, mario);
-	objects.push_back(koopa);
+	/*Koopa* koopa = new Koopa(400, 800, mario);
+	objects.push_back(koopa);*/
 
 	ParaGoompa* paragoompa = new ParaGoompa(500, 800, mario);
 	objects.push_back(paragoompa);
