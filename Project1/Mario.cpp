@@ -54,6 +54,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects, y_store);
+
+	if (jump_down_to_up == true)
+	{
+		SetPosition(x, y - 1);
+		jump_down_to_up = false;
+	}
+	DebugOut(L"[INFO] x value: %f\n", x);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -66,11 +73,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
+		vy_store = vy;
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
+	if (e->nx > 0 && e->obj->IsBlocking()) //<0 is move from left to right //origin: e->nx != 0
 	{
 		vx = 0;
 	}
@@ -99,9 +107,9 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
 	if (e->ny > 0)
 	{
+		jump_down_to_up = true;
 		vy = vy_store;
-		y += y_store * 2;
-		DebugOut(L"[INFO] vy value is: %f\n", vy);
+		//y += y_store * 2;
 	}
 }
 
@@ -141,9 +149,13 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
-{
+{/*
 	e->obj->Delete();
-	coin++;
+	coin++;*/
+	//DebugOut(L"[INFO] collided with brick?\n");
+	//DebugOut(L"[INFO] x before %f\n",x);
+	//SetPosition(x+300, y);
+	//DebugOut(L"[INFO] x after %f\n", x);
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)

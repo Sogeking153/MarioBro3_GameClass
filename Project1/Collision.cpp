@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #include "debug.h"
-#include "GameObject.h"
+#include "Brick.h"
 
 int CCollisionEvent::WasCollided() {
 	return
@@ -334,8 +334,18 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		else 
 			if (colY != NULL)
 			{
+				DebugOut(L"[INFO] Y Col??\n");
 				x += dx;
+				//dynamic_cast<CBrick*>(e->obj)
+
+				//if (dynamic_cast<CBrick*>(colY->obj) && colY->ny > 0)
+				//{
+
+				//}
+				//else
 				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+
+				//temp= colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
 				objSrc->OnCollisionWith(colY);
 			}
 			else // both colX & colY are NULL 

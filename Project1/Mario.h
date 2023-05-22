@@ -127,6 +127,7 @@ class CMario : public CGameObject
 	float vy_store = 0;
 
 	float y_store = 0;
+	bool jump_down_to_up = false;
 
 	CGameObject* holding_something = NULL;
 	BOOLEAN isHolding = false;
