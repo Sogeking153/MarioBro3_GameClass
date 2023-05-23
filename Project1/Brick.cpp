@@ -16,7 +16,7 @@ void CBrick::Render()
 
 	animations->Get(10001)->Render(x, y);
 
-	DebugOut(L"[INFO] brick state %d\n", state);
+	//DebugOut(L"[INFO] brick state %d\n", state);
 
 	RenderBoundingBox();
 }
@@ -31,10 +31,10 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (LPGAMEOBJECT debris : vec_debris)
 	{
 		debris->Update(dt, coObjects);
-		DebugOut(L"[INFO]updating %d\n", vec_debris.size());
+		//DebugOut(L"[INFO]updating %d\n", vec_debris.size());
 
 	}
-	DebugOut(L"[INFO]Does it goes inside Brick? %d\n", vec_debris.size());
+	//DebugOut(L"[INFO]Does it goes inside Brick? %d\n", vec_debris.size());
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
@@ -52,9 +52,9 @@ void CBrick::SetState(int state)
 	switch (state)
 	{
 	case BRICK_BLINK_STATE_IS_HIT:
-		BrickDebris* debrick_brick = NULL;
+		//BrickDebris* debrick_brick = NULL;
 
-		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, 1, 1.5);
+		/*debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, 1, 1.5);
 		vec_debris.push_back(debrick_brick);
 
 		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y + DEBRIS_DISTANCE, 1, 1);
@@ -65,7 +65,10 @@ void CBrick::SetState(int state)
 
 		debrick_brick = new BrickDebris(x - DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, -1, 1.5);
 
-		vec_debris.push_back(debrick_brick);
+		vec_debris.push_back(debrick_brick);*/
+		break;
+	case BRICK_BLINK_STATE_COIN:
+		is_block = false;
 		break;
 	}
 	CGameObject::SetState(state);

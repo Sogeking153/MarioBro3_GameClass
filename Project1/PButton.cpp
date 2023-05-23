@@ -39,6 +39,8 @@ void PButton::Transform(list<LPGAMEOBJECT> list_bricklink)
 {
 	for (int i = 0; i < list_bricklink.size(); i++)
 	{
-		
+		//list_bricklink->at
+		//list_bricklink[i]->set
+			//list_bricklink.at(i)->SetState(100);
 	}
 }

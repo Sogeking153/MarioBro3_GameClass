@@ -334,7 +334,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 		else 
 			if (colY != NULL)
 			{
-				DebugOut(L"[INFO] Y Col??\n");
+				//DebugOut(L"[INFO] Y Col??\n");
 				x += dx;
 				//dynamic_cast<CBrick*>(e->obj)
 
