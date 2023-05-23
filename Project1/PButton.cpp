@@ -1,4 +1,5 @@
 #include "PButton.h"
+#include "Brick.h"
 
 extern vector<LPGAMEOBJECT> list_bricklink;
 
@@ -26,7 +27,7 @@ void PButton::SetState(int state)
 
 		for (int i = 0; i < list_bricklink.size(); i++)
 		{
-			list_bricklink[i]->SetState(200);
+			list_bricklink[i]->SetState(BRICK_BLINK_STATE_COIN);
 		}
 
 		break;

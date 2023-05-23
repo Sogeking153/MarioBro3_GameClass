@@ -115,7 +115,7 @@ void CMario::OnCollisionWithPButton(LPCOLLISIONEVENT e)
 	{
 		DebugOut(L"step on Da Pppp \n");
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
-		dynamic_cast<PButton*>(e->obj)->SetState(100);
+		dynamic_cast<PButton*>(e->obj)->SetState(PBUTTON_STATE_IS_HIT);
 	}
 }
 
@@ -131,7 +131,7 @@ void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 		if (e->ny > 0)
 		{
 			dynamic_cast<CBrick*>(e->obj)->is_hit = true;
-			dynamic_cast<CBrick*>(e->obj)->SetState(100);
+			dynamic_cast<CBrick*>(e->obj)->SetState(BRICK_BLINK_STATE_IS_HIT);
 		}
 	}
 }
