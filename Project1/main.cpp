@@ -590,11 +590,11 @@ void Reload()
 	}*/
 	
 	// COINS 
-	/*for (int i = -5; i < 10; i++)
+	for (int i = -5; i < 10; i++)
 	{
 		CCoin* c = new CCoin(COIN_X + i * (COIN_WIDTH * 2) + 200, GROUND_Y - 96.0f +1150);
 		objects.push_back(c);
-	}*/
+	}
 
 	CBrick* c = new CBrick(300, 1100);
 	objects.push_back(c);

@@ -14,7 +14,7 @@ class BrickDebris :public CGameObject
 public:
 
 	BrickDebris(float brick_pos_x, float brick_pos_y, int nx, float height);
-	virtual void Update(DWORD dt);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 

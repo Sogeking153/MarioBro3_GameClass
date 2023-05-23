@@ -1,4 +1,5 @@
 #include "BrickDebris.h"
+#include "debug.h"
 
 BrickDebris::BrickDebris(float brick_pos_x, float brick_pos_y, int nx, float height)
 {
@@ -8,8 +9,13 @@ BrickDebris::BrickDebris(float brick_pos_x, float brick_pos_y, int nx, float hei
 	y = brick_pos_y;
 }
 
-void BrickDebris::Update(DWORD dt)
+void BrickDebris::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//CGameObject::Update(dt);
+	DebugOut(L"[INFO]does it get inside brick debris update?\n");
+	vy += DEBRIS_BRICK_GRAVITY * dt;
+	x += vx * dt;
+	y += vy * dt;
 }
 
 void BrickDebris::Render()

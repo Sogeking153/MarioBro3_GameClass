@@ -7,7 +7,10 @@ void CBrick::Render()
 	if (state == BRICK_BLINK_STATE_IS_HIT)
 		//animations->Get(ID_ANI_DEBRIS_BRICK)->Render(x, y);
 	{
-		vec_debris[0]->Render();
+		for (int i = 0; i < vec_debris.size(); i++)
+		{
+			vec_debris[i]->Render();
+		}
 		return;
 	}
 
@@ -20,10 +23,18 @@ void CBrick::Render()
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	for (int i = 0; i < vec_debris.size(); i++)
+	/*for (int i = 0; i < vec_debris.size(); i++)
 	{
 		vec_debris[i]->Update(dt);
+	}*/
+
+	for (LPGAMEOBJECT debris : vec_debris)
+	{
+		debris->Update(dt, coObjects);
+		DebugOut(L"[INFO]updating %d\n", vec_debris.size());
+
 	}
+	DebugOut(L"[INFO]Does it goes inside Brick? %d\n", vec_debris.size());
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
