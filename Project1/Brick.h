@@ -11,6 +11,7 @@
 #define BRICK_BBOX_WIDTH 48
 #define BRICK_BBOX_HEIGHT 48
 #define BRICK_BLINK_STATE_IS_HIT 100
+#define DEBRIS_DISTANCE 9
 
 class CBrick : public CGameObject {
 public:
