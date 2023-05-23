@@ -93,6 +93,9 @@
     <ClInclude Include="FlatForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp">
@@ -159,6 +162,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FlatForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
