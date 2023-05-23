@@ -8,6 +8,7 @@
 #include "Coin.h"
 #include "Koopa.h"
 #include "Brick.h"
+#include "FlatForm.h"
 
 #include "Collision.h"
 
@@ -55,12 +56,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	CCollision::GetInstance()->Process(this, dt, coObjects, y_store);
 
-	if (jump_down_to_up == true)
+	/*if (jump_down_to_up == true)
 	{
 		SetPosition(x, y - 1);
 		jump_down_to_up = false;
 	}
-	DebugOut(L"[INFO] x value: %f\n", x);
+	DebugOut(L"[INFO] x value: %f\n", x);*/
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -73,12 +74,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
-		vy_store = vy;
+		//vy_store = vy;
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else 
-	if (e->nx > 0 && e->obj->IsBlocking()) //<0 is move from left to right //origin: e->nx != 0
+	if (e->nx != 0 && e->obj->IsBlocking()) //<0 is move from left to right //origin: e->nx != 0
 	{
 		vx = 0;
 	}
@@ -91,6 +92,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 		OnCollisionWithBrick(e);
+	else if (dynamic_cast<FlatForm*>(e->obj))
+		OnCollisionWithFlatForm(e);
 
 	if (holding_something != NULL)
 	{
@@ -105,11 +108,28 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBrick(LPCOLLISIONEVENT e)
 {
+	//e->obj->Delete();
+	dynamic_cast<CBrick*>(e->obj)->is_hit = true;
+	dynamic_cast<CBrick*>(e->obj)->SetState(100);
+}
+
+void CMario::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
+{
 	if (e->ny > 0)
 	{
-		jump_down_to_up = true;
-		vy = vy_store;
-		//y += y_store * 2;
+		/*DebugOut(L"[INFO] impact from below up?\n");
+		float x_, y_;
+		GetPosition(x_, y_);*/
+
+		/*if (e->ny > 0)
+		{
+			jump_down_to_up = true;
+			vy = vy_store;
+			//y += y_store*2;
+		}*/
+
+		//SetPosition(x_, y+400);
+		//vy = vy_store;
 	}
 }
 
@@ -483,6 +503,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	{
 		if (isSitting)
 		{
+			DebugOut(L"[INFO] enter isSitting\n");
 			left = x - MARIO_BIG_SITTING_BBOX_WIDTH / 2;
 			top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
@@ -490,6 +511,7 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		}
 		else 
 		{
+			DebugOut(L"[INFO] not enter isSitting\n");
 			left = x - MARIO_BIG_BBOX_WIDTH/2;
 			top = y - MARIO_BIG_BBOX_HEIGHT/2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
