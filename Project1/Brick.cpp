@@ -14,7 +14,7 @@ void CBrick::Render()
 		return;
 	}
 
-	animations->Get(10001)->Render(x, y);
+	animations->Get(ID_ANI_COIN_STAND_STILL)->Render(x, y);
 
 	//DebugOut(L"[INFO] brick state %d\n", state);
 

@@ -5,8 +5,11 @@ extern vector<LPGAMEOBJECT> list_bricklink;
 
 void PButton::Render()
 {
+	int ani = ID_ANI_PBUTTON;
+	if (state == PBUTTON_STATE_IS_HIT)
+		ani = ID_ANI_PBUTTON_IS_HIT;
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_BRICK)->Render(x, y);
+	animations->Get(ani)->Render(x, y);
 }
 
 void PButton::GetBoundingBox(float& l, float& t, float& r, float& b)
