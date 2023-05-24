@@ -14,6 +14,7 @@
 #define DEBRIS_DISTANCE 9
 #define BRICK_BLINK_STATE_COIN 200
 #define ID_ANI_COIN_STAND_STILL 10020
+#define BRICK_BLINK_STATE_BRICK 300
 
 class CBrick : public CGameObject {
 public:

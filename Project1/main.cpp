@@ -634,7 +634,7 @@ void Reload()
 	FlatForm* f = new FlatForm(500, 1250, 2000, 5);
 	objects.push_back(f);
 
-	PButton* p_button = new PButton(370, 1200);
+	PButton* p_button = new PButton(450, 1200);
 	objects.push_back(p_button);
 }
 
