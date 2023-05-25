@@ -9,6 +9,7 @@
 #include "ParaGoomba.h"
 #include "TextAndNumber.h"
 #include "GameTime.h"
+#include "Map.h"
 //#include "Koopas.h"
 
 
@@ -16,6 +17,7 @@ class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
+	Map* map;
 	LPGAMEOBJECT player;	
 	TextAndNumber temp;
 	GameTime* game_time;

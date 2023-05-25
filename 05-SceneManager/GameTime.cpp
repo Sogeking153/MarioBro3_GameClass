@@ -10,14 +10,14 @@ GameTime* GameTime::GetInstance()
 
 void GameTime::Update(DWORD dt)
 {
-	if (currentTotalTime + dt > ONE_SECOND_UNIT)
+	/*if (currentTotalTime + dt > ONE_SECOND_UNIT)
 	{
 		//get the excess of dt
 		currentTotalTime = (currentTotalTime + dt) % ONE_SECOND_UNIT;
 		gameTime++;
 	}
 	else
-		currentTotalTime += dt;
+		currentTotalTime += dt;*/
 }
 
 GameTime::GameTime()
