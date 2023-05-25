@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "FlatForm.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -29,8 +30,36 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define ASSETS_SECTION_UNKNOWN -1
 #define ASSETS_SECTION_SPRITES 1
 #define ASSETS_SECTION_ANIMATIONS 2
+#define ASSETS_SECTION_SPRITES_PLUS 3
 
 #define MAX_SCENE_LINE 1024
+
+void CPlayScene::_ParseSection_SPRITES_PLUS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 6) return; // skip invalid lines
+
+	int ID = atoi(tokens[0].c_str());
+	int l = atoi(tokens[1].c_str());
+	int t = atoi(tokens[2].c_str());
+	int w = atoi(tokens[3].c_str());
+	int h = atoi(tokens[4].c_str());
+
+	int texID = atoi(tokens[5].c_str());
+
+	int r = l + w;
+	int b = t + h;
+
+	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
+	if (tex == NULL)
+	{
+		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		return;
+	}
+
+	CSprites::GetInstance()->Add(ID, l, t, r, b, tex);
+}
 
 void CPlayScene::_ParseSection_SPRITES(string line)
 {
@@ -181,6 +210,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		if (line[0] == '#') continue;	// skip comment lines	
 
 		if (line == "[SPRITES]") { section = ASSETS_SECTION_SPRITES; continue; };
+		if (line == "[SPRITES_PLUS]") { section = ASSETS_SECTION_SPRITES_PLUS; continue; };
 		if (line == "[ANIMATIONS]") { section = ASSETS_SECTION_ANIMATIONS; continue; };
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
@@ -191,6 +221,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 		{
 		case ASSETS_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
 		case ASSETS_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case ASSETS_SECTION_SPRITES_PLUS: _ParseSection_SPRITES_PLUS(line); break;
 		}
 	}
 
@@ -201,6 +232,9 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 
 void CPlayScene::Load()
 {
+	//temp = new TextAndNumber();
+	game_time = new GameTime();
+
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
 
 	ifstream f;
@@ -266,12 +300,17 @@ void CPlayScene::Update(DWORD dt)
 	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 
 	PurgeDeletedObjects();
+
+	game_time->Update(dt);
+	DebugOut(L"[INFO] game time value is: %d\n", game_time->gameTime);
 }
 
 void CPlayScene::Render()
 {
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+
+	temp.Render(1, 2, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
 }
 
 /*

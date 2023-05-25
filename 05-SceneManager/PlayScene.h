@@ -7,6 +7,8 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "ParaGoomba.h"
+#include "TextAndNumber.h"
+#include "GameTime.h"
 //#include "Koopas.h"
 
 
@@ -14,11 +16,14 @@ class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
-	LPGAMEOBJECT player;					
+	LPGAMEOBJECT player;	
+	TextAndNumber temp;
+	GameTime* game_time;
 
 	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_SPRITES(string line);
+	void _ParseSection_SPRITES_PLUS(string line);
 	void _ParseSection_ANIMATIONS(string line);
 
 	void _ParseSection_ASSETS(string line);

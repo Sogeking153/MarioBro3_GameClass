@@ -18,7 +18,7 @@ goomba.txt
 2	80	10
 
 #para goomba
-7	80	5
+#7	80	5
 
 #COIN
 4	100	120

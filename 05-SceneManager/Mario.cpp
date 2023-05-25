@@ -3,6 +3,7 @@
 
 #include "Mario.h"
 #include "Game.h"
+#include "GameTime.h"
 
 #include "Goomba.h"
 #include "Coin.h"
@@ -258,11 +259,21 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
 
+	/*int count = 402;
+	GameTime* game_time = GameTime::GetInstance();
+	if (game_time->gameTime % 4 == 1)
+	{
+		DebugOut(L"Helloooooo %d\n", count);
+	}*/
+
+	/*for(int i=0;i<5;i++)
+		animations->Get(447 +i)->Render(x +i*60, y);*/
+
 	animations->Get(aniId)->Render(x, y);
 
 	RenderBoundingBox();
 	
-	DebugOutTitle(L"Coins: %d", coin);
+	//DebugOutTitle(L"Coins: %d", coin);
 }
 
 void CMario::SetState(int state)

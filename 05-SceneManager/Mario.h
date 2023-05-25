@@ -40,8 +40,8 @@
 
 #pragma region ANIMATION_ID
 
-#define ID_ANI_MARIO_IDLE_RIGHT 400
-#define ID_ANI_MARIO_IDLE_LEFT 401
+#define ID_ANI_MARIO_IDLE_RIGHT 502
+#define ID_ANI_MARIO_IDLE_LEFT 503
 
 #define ID_ANI_MARIO_WALKING_RIGHT 500
 #define ID_ANI_MARIO_WALKING_LEFT 501
@@ -119,6 +119,7 @@
 
 class CMario : public CGameObject
 {
+	ULONGLONG change_ani = GetTickCount64();
 	BOOLEAN isSitting;
 	float maxVx;
 	float ax;				// acceleration on x 
