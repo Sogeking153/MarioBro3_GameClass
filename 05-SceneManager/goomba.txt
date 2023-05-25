@@ -7,7 +7,42 @@
 #DIE
 32001	44	19	62	30	10
 
+# RED GOOMBA
+# walking with swing
+40029	116	40	136	59	109
+40030	140	40	160	59	109
+
+# swing small
+40031	66	35	86	59	109
+
+# swing big
+40032	116	35	136	59	109
+
+#walking without swing
+40033	104	70	120	86	109
+40034	125	70	141	86	109
+
+#dead
+40035	145	70	161	86	109
+
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
+# ==== GOOMBA ====
+#walking
 5000	31001	100	31002	100
+
+#DIE
 5001	32001	100
+
+# ==== RED GOOMBA ====
+# walking with swing
+5020	40029	100	40030	100
+# jumb swing small
+5021	40031	100
+# jumb swing big
+5022	40031	40	40032	40
+# walking without swing
+5023	40033	100	40034	100
+# die
+5024	40035	100

@@ -7,6 +7,7 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "ParaGoomba.h"
 
 #include "Collision.h"
 
@@ -54,6 +55,26 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<ParaGoomba*>(e->obj))
+		OnCollisionWithParaGoomba(e);
+}
+
+void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
+{
+	ParaGoomba* paragoomba = dynamic_cast<ParaGoomba*>(e->obj);
+	if (e->ny < 0)
+	{
+		//score += 100;
+		if (paragoomba->GetState() == PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING)
+		{
+			paragoomba->SetState(PARA_GOOMBA_STATE_DIE);
+			//paragoomba->used = true;
+			DebugOut(L"[ERROR-------------para die?----------------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
+		}
+		else
+			paragoomba->SetState(PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING);
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -239,7 +260,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

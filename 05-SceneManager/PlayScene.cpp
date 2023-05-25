@@ -116,7 +116,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
+	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y,player); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 
@@ -148,6 +148,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	break;
 
+	case 7: 
+		obj = new ParaGoomba(x, y, player); 
+		break;
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

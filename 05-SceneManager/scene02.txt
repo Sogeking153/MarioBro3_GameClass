@@ -4,6 +4,7 @@ mario.txt
 coin.txt
 cloud.txt
 brick.txt
+goomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -12,6 +13,12 @@ brick.txt
 
 # MARIO
 0	120	10
+
+# goomba
+2	80	10
+
+#para goomba
+7	80	5
 
 #COIN
 4	100	120
