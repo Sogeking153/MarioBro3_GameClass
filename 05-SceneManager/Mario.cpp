@@ -81,8 +81,9 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
-	coin++;
+	BrickCoin* brick = dynamic_cast<BrickCoin*>(e->obj);
+	if (brick->is_hit == false)
+		brick->SetState(BRICK_COIN_STATE_HIT);
 }
 
 void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
@@ -141,7 +142,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
-	DebugOut(L"[INFO] Delete coin! %d\n");
+	//DebugOut(L"[INFO] Delete coin! %d\n");
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

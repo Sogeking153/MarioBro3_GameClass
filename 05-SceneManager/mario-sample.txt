@@ -38,3 +38,4 @@ height	240
 111	textures\status_bar.png
 112	textures\misc_1.png
 113	textures\MARIO_TAIL_SPIN.png
+114	textures\super_leaf.png

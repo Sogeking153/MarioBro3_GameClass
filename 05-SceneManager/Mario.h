@@ -98,8 +98,9 @@
 
 
 
-#define	MARIO_LEVEL_SMALL	1
-#define	MARIO_LEVEL_BIG		2
+#define	MARIO_LEVEL_SMALL		1
+#define	MARIO_LEVEL_BIG			2
+#define	MARIO_LEVEL_BIG_TAIL	3
 
 #define MARIO_BIG_BBOX_WIDTH  14*3
 #define MARIO_BIG_BBOX_HEIGHT 24*3
@@ -158,6 +159,7 @@ public:
 		isOnPlatform = false;
 		coin = 0;
 	}
+	int GetLevel() { return level; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

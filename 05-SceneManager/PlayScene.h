@@ -18,7 +18,8 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	Map* map;
-	LPGAMEOBJECT player;	
+	//LPGAMEOBJECT player;	
+	CMario* player;
 	TextAndNumber temp;
 	GameTime* game_time;
 
@@ -34,6 +35,7 @@ protected:
 	void LoadAssets(LPCWSTR assetFile);
 	
 public: 
+	void DropItem(int itemType, float x, float y);
 	CPlayScene(int id, LPCWSTR filePath);
 
 	virtual void Load();

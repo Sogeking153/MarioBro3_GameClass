@@ -4,6 +4,16 @@ void Mushroom::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_COIN)->Render(x, y);
+
+	animations->Get(724)->Render(x, y);
+
+	animations->Get(720)->Render(x+50, y);
+	animations->Get(722)->Render(x+100, y);
+	animations->Get(723)->Render(x+150, y);
+	animations->Get(746)->Render(x+200, y);
+	animations->Get(747)->Render(x+250, y);
+	animations->Get(748)->Render(x+300, y);
+
 	RenderBoundingBox();
 }
 

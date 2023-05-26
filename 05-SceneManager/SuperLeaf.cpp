@@ -3,7 +3,7 @@
 void SuperLeaf::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_COIN)->Render(x, y);
+	animations->Get(722)->Render(x, y);
 	RenderBoundingBox();
 }
 

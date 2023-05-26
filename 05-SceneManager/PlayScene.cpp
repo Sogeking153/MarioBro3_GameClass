@@ -299,6 +299,25 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+
+		if (dynamic_cast<BrickCoin*>(objects[i]))
+		{
+			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
+			if (brick->is_hit == true && brick->dropped == false)
+			{
+				if (player->GetLevel() == MARIO_LEVEL_SMALL)
+				{
+					Mushroom* mushroom = new Mushroom(600, 800);
+					objects.push_back(mushroom);
+				}
+				else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+				{
+					SuperLeaf* superleaf = new SuperLeaf(600, 800);
+					objects.push_back(superleaf);
+				}
+				brick->dropped = true;
+			}
+		}
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -360,6 +379,29 @@ void CPlayScene::Unload()
 	player = NULL;
 
 	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
+}
+
+void CPlayScene::DropItem(int itemType, float x, float y)
+{
+	switch (itemType)
+	{
+	case 4:
+	{
+		/*if (player->GetLevel() == MARIO_LEVEL_SMALL)
+		{
+			Mushroom* mushroom = new Mushroom(x, y);
+			if (player->y < 567)
+				mushroom->is_read_mushroom = false;
+			itemsMarioCanEat.push_back(mushroom);
+		}
+		else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+		{
+			SuperLeaf* superleaf = new SuperLeaf(x, y);
+			itemsMarioCanEat.push_back(superleaf);
+		}
+		break;*/
+	}
+	}
 }
 
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
