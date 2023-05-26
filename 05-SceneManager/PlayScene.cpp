@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "FlatForm.h"
+#include "BrickCoin.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -177,10 +178,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	break;
 
+	case OBJECT_TYPE_FLATFORM_NEN: 
+		obj = new FlatForm(x, y, 2000, 5); 
+		break;
+
 	case 7: 
 		obj = new ParaGoomba(x, y, player); 
 		break;
-
+	case 8: 
+		obj = new BrickCoin(x, y); 
+		break;
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;

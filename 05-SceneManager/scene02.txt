@@ -20,6 +20,9 @@ goomba.txt
 #para goomba
 #7	80	5
 
+#brick coin
+#8	600	820
+
 #COIN
 #4	100	120
 #4	120	120
