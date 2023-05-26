@@ -226,7 +226,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 
 	coEvents.clear();
 
-	if (objSrc->IsCollidable())
+	if (objSrc->IsCollidable()) // Collision object iself? else update fall down virtual int IsCollidable() { return 1; };
 	{
 		Scan(objSrc, dt, coObjects, coEvents);
 	}

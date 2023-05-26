@@ -9,6 +9,9 @@
 #include "Coin.h"
 #include "Portal.h"
 #include "ParaGoomba.h"
+#include "BrickCoin.h"
+#include "Mushroom.h"
+#include "SuperLeaf.h"
 
 #include "Collision.h"
 
@@ -58,6 +61,28 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<ParaGoomba*>(e->obj))
 		OnCollisionWithParaGoomba(e);
+	else if (dynamic_cast<BrickCoin*>(e->obj))
+		OnCollisionWithBrickCoin(e);
+	else if (dynamic_cast<Mushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<SuperLeaf*>(e->obj))
+		OnCollisionWithSuperLeaf(e);
+}
+
+void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
+{
+	e->obj->Delete();
+	coin++;
+}
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	e->obj->Delete();
+	coin++;
+}
+void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
+{
+	e->obj->Delete();
+	coin++;
 }
 
 void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
@@ -116,6 +141,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+	DebugOut(L"[INFO] Delete coin! %d\n");
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

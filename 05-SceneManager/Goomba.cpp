@@ -61,7 +61,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		return;
 	}
 
-	CGameObject::Update(dt, coObjects);
+	CGameObject::Update(dt, coObjects); // is this needed here?
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
@@ -117,8 +117,8 @@ void CGoomba::SetState(int state)
 			ay = 0; 
 			break;
 		case GOOMBA_STATE_WALKING: 
-			//vx = -GOOMBA_WALKING_SPEED;
-			vx = 0;
+			vx = -GOOMBA_WALKING_SPEED;
+			//vx = 0;
 			break;
 	}
 }
