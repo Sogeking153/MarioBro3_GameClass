@@ -16,7 +16,7 @@ goomba.txt
 0	20	600
 
 # goomba
-2	80	600
+#2	80	600
 
 #para goomba
 #7	80	5
@@ -25,10 +25,10 @@ goomba.txt
 #8	600	820
 
 #mushroom
-9	600	910
+#9	600	910
 
 #super leaf
-10	700	910
+10	300	1100
 
 #COIN
 #4	100	120
