@@ -187,8 +187,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new ParaGoomba(x, y, player); 
 		break;
 	case 8: 
-		obj = new BrickCoin(x, y); 
+	{
+		int has_item = (int)atof(tokens[3].c_str());
+		obj = new BrickCoin(x, y, has_item); 
 		break;
+	}
 	case 9: 
 		obj = new Mushroom(x, y); 
 		break;
@@ -291,9 +294,14 @@ void CPlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
+	}
+
+	for (int i = 0; i < itemsMarioCanEat.size(); i++)
+	{
+		coObjects.push_back(itemsMarioCanEat[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
@@ -303,21 +311,28 @@ void CPlayScene::Update(DWORD dt)
 		if (dynamic_cast<BrickCoin*>(objects[i]))
 		{
 			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
-			if (brick->is_hit == true && brick->dropped == false)
+			if (brick->is_hit == true && brick->dropped == false && brick->has_item == true)
 			{
+				float x, y;
+				brick->GetPosition(x, y);
 				if (player->GetLevel() == MARIO_LEVEL_SMALL)
 				{
-					Mushroom* mushroom = new Mushroom(600, 800);
-					objects.push_back(mushroom);
+					Mushroom* mushroom = new Mushroom(x, y);
+					itemsMarioCanEat.push_back(mushroom);
 				}
 				else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
 				{
-					SuperLeaf* superleaf = new SuperLeaf(600, 800);
-					objects.push_back(superleaf);
+					SuperLeaf* superleaf = new SuperLeaf(x, y);
+					itemsMarioCanEat.push_back(superleaf);
 				}
 				brick->dropped = true;
 			}
 		}
+	}
+
+	for (int i = 0; i < itemsMarioCanEat.size(); i++)
+	{
+		itemsMarioCanEat[i]->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -344,6 +359,11 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->Draw();
+
+	for (int i = 0; i < itemsMarioCanEat.size(); i++)
+	{
+		itemsMarioCanEat[i]->Render();
+	}	
 
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -416,6 +436,20 @@ void CPlayScene::PurgeDeletedObjects()
 		{
 			delete o;
 			*it = NULL;
+		}
+	}
+
+	for (size_t i = 0; i < itemsMarioCanEat.size(); i++)
+	{
+		if (itemsMarioCanEat[i]->IsDeleted() == true)
+		{
+			/*if (dynamic_cast<CoinEffect*>(itemsMarioCanEat[i]))
+			{
+			}*/
+			delete itemsMarioCanEat[i];
+			itemsMarioCanEat[i] = nullptr;
+			//DebugOut(L"hihihi, delete roi ne\n");
+			itemsMarioCanEat.erase(itemsMarioCanEat.begin() + i);
 		}
 	}
 

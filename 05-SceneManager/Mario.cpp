@@ -77,13 +77,16 @@ void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	coin++;
+	SetLevel(MARIO_LEVEL_BIG);
 }
 void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 {
 	BrickCoin* brick = dynamic_cast<BrickCoin*>(e->obj);
-	if (brick->is_hit == false)
-		brick->SetState(BRICK_COIN_STATE_HIT);
+	if (e->ny > 0)
+	{
+		if (brick->is_hit == false)
+			brick->SetState(BRICK_COIN_STATE_HIT);
+	}
 }
 
 void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
@@ -107,6 +110,9 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+
+	goomba->SetState(GOOMBA_STATE_DIE);
+	vy = -MARIO_JUMP_DEFLECT_SPEED;
 
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
