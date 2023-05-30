@@ -51,6 +51,19 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (dynamic_cast<FlatForm*>(e->obj))
+		OnCollisionWithFlatForm(e);
+}
+
+void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
+{
+	FlatForm* flatform = dynamic_cast<FlatForm*>(e->obj);
+
+	if (this->x > flatform->GetX() + flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+		vx = -abs(vx);
+	else if (this->x < flatform->GetX() - flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+		vx = abs(vx);
 }
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -167,12 +180,13 @@ void Koopa::SetState(int state)
 		break;
 	case CONCO_STATE_WALKING_LEFT:
 		vx = -GOOMBA_WALKING_SPEED;
-		vx = 0;
+		//vx = 0;
 		break;
 	case GOOMBA_STATE_INDENT_IN:
 		//vx = -GOOMBA_WALKING_SPEED;
 		vx = 0;
 		vy = 0;
+		time_to_indent_out = GetTickCount64();
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
 		vx = 0.02;

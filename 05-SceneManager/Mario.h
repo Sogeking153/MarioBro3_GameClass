@@ -160,6 +160,9 @@ public:
 		isOnPlatform = false;
 		coin = 0;
 	}
+
+	float vy_store = 0;
+	bool jump_down_to_up = false;
 	int GetLevel() { return level; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -174,6 +177,7 @@ public:
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithFlatForm(LPCOLLISIONEVENT e);
 
 	void SetLevel(int l);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }

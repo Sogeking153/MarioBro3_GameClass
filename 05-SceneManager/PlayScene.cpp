@@ -181,9 +181,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 		break;
 	case OBJECT_TYPE_FLATFORM_NEN: 
-		obj = new FlatForm(x, y, 2000, 5); 
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		obj = new FlatForm(x, y, width, height);
 		break;
-
+	}
 	case 7: 
 		obj = new ParaGoomba(x, y, player); 
 		break;

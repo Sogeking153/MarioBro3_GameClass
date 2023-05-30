@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "FlatForm.h"
 
 #define GOOMBA_GRAVITY 0.002f
 #define GOOMBA_WALKING_SPEED 0.02f
@@ -73,6 +74,7 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithFlatForm(LPCOLLISIONEVENT e);
 
 public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

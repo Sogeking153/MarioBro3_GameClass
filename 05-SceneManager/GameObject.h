@@ -36,6 +36,8 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
+	float GetX() { return x; };
+	float GetY() { return y; };
 
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }

@@ -18,6 +18,8 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	vy_store = vy;
+
 	vy += ay * dt;
 	vx += ax * dt;
 
@@ -33,6 +35,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	if (jump_down_to_up == true)
+	{
+		SetPosition(x, y - 1);
+		jump_down_to_up = false;
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -70,6 +78,17 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithSuperLeaf(e);
 	else if (dynamic_cast<Koopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<FlatForm*>(e->obj))
+		OnCollisionWithFlatForm(e);
+}
+
+void CMario::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
+{
+	if (e->ny > 0)
+	{
+		jump_down_to_up = true;
+		vy = vy_store;
+	}
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -78,7 +97,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 
 	if (e->ny < 0)
 	{
-		if ((koopa->GetState() == GOOMBA_STATE_INDENT_IN))
+		if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
+			koopa->GetState() == CONCO_STATE_SHELL_MOVING)
 		{
 			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
 			DebugOut(L">>> And now? >>> \n");
