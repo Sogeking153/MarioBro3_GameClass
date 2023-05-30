@@ -13,6 +13,7 @@
 #include "BrickCoin.h"
 #include "Mushroom.h"
 #include "SuperLeaf.h"
+#include "Koopa.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -197,6 +198,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case 10: 
 		obj = new SuperLeaf(x, y); 
+		break;
+	case 11: 
+		obj = new Koopa(x, y); 
 		break;
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
