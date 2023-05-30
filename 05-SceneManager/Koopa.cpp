@@ -7,14 +7,16 @@ Koopa::Koopa(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	//this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	SetState(GOOMBA_STATE_WALKING);
+	SetState(CONCO_STATE_WALKING_LEFT);
 
 	//player = mario;
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == GOOMBA_STATE_INDENT_IN || state == GOOMBA_STATE_SHELL_RUNNING || state == GOOMBA_STATE_BEING_HOLDED)
+	if (state == GOOMBA_STATE_INDENT_IN || state == GOOMBA_STATE_SHELL_RUNNING || 
+		state == CONCO_STATE_WAS_BROUGHT || state == CONCO_STATE_SHELL_MOVING ||
+		state == CONCO_STATE_INDENT_OUT)
 	{
 		left = x - GOOMBA_BBOX_WIDTH_INDENT_IN / 2;
 		top = y - GOOMBA_BBOX_HEIGHT_INDENT_IN / 2;
@@ -54,18 +56,18 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	//DebugOut(L"[INFO] state koopa %d \n",state);
-	if (state == GOOMBA_STATE_BEING_HOLDED)
+	if (state == CONCO_STATE_WAS_BROUGHT)
 	{
 		float x, y;
 		player->GetPosition(x, y);
 		SetPosition(x + 50, y - 40);
 		//return;
 	}
-	if (state != GOOMBA_STATE_BEING_HOLDED)
+	if (state != CONCO_STATE_WAS_BROUGHT)
 		vy += 0.002 * dt;
 	//vx += ax * dt;
 
-	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
@@ -74,6 +76,22 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+	if (state == GOOMBA_STATE_INDENT_IN && GetTickCount64() - time_to_indent_out > 7000)
+	{
+		SetState(CONCO_STATE_SHELL_MOVING);
+
+	}
+	if (state == CONCO_STATE_SHELL_MOVING && GetTickCount64() - time_to_indent_out > 10000)
+	{
+		SetState(CONCO_STATE_INDENT_OUT);
+
+	}
+	if (state == CONCO_STATE_INDENT_OUT && GetTickCount64() - time_to_indent_out > 12000)
+	{
+		SetPosition(this->x, this->y - 32);//so that shell wont fall off when indent out
+		SetState(CONCO_STATE_WALKING_LEFT);
+	}
 
 	//float ml, mt, mr, mb;
 	//float il, it, ir, ib;
@@ -92,13 +110,39 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Koopa::Render()
 {
 	int aniId = CONCO_ANI_GREEN_WALKING_LEFT;
-	if (state == GOOMBA_STATE_DIE)
+	if (state == CONCO_STATE_DIE)
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
-	else if (state == GOOMBA_STATE_INDENT_IN || state == 400 || state == GOOMBA_STATE_BEING_HOLDED)
+	/*else if (state == GOOMBA_STATE_INDENT_IN || state == 400 || state == GOOMBA_STATE_BEING_HOLDED)
 	{
 		aniId = ID_ANI_KOOPA_INDENT_IN;
+	}*/
+	else
+	{
+		if (state == CONCO_STATE_WALKING_LEFT)
+		{
+			if (vx > 0)
+				aniId = CONCO_ANI_GREEN_WALKING_RIGHT;
+			else
+				aniId = CONCO_ANI_GREEN_WALKING_LEFT;
+		}
+		else if (state == GOOMBA_STATE_INDENT_IN)
+		{
+			aniId = CONCO_ANI_GREEN_INDENT;
+		}
+		else if (state == GOOMBA_STATE_SHELL_RUNNING)
+		{
+			aniId = CONCO_ANI_GREEN_RUNNING_SHELL;
+		}
+		else if (state == CONCO_STATE_SHELL_MOVING)
+		{
+			aniId = CONCO_ANI_GREEN_SHELL_MOVING;
+		}
+		else if (state == CONCO_STATE_INDENT_OUT)
+		{
+			aniId = CONCO_ANI_GREEN_INDENT_OUT;
+		}
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -114,14 +158,14 @@ void Koopa::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case GOOMBA_STATE_DIE:
+	case CONCO_STATE_DIE:
 		die_start = GetTickCount64();
 		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;
 		break;
-	case GOOMBA_STATE_WALKING:
+	case CONCO_STATE_WALKING_LEFT:
 		vx = -GOOMBA_WALKING_SPEED;
 		vx = 0;
 		break;
@@ -133,9 +177,11 @@ void Koopa::SetState(int state)
 	case GOOMBA_STATE_SHELL_RUNNING:
 		vx = 0.02;
 		break;
-	case GOOMBA_STATE_BEING_HOLDED:
+	case CONCO_STATE_WAS_BROUGHT:
 		vx = 0;
 		vy = 0;
+		break;
+	case CONCO_STATE_INDENT_OUT:
 		break;
 	}
 }

@@ -12,6 +12,7 @@
 #include "BrickCoin.h"
 #include "Mushroom.h"
 #include "SuperLeaf.h"
+#include "Koopa.h"
 
 #include "Collision.h"
 
@@ -67,6 +68,32 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<SuperLeaf*>(e->obj))
 		OnCollisionWithSuperLeaf(e);
+	else if (dynamic_cast<Koopa*>(e->obj))
+		OnCollisionWithKoopa(e);
+}
+
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		if ((koopa->GetState() == GOOMBA_STATE_INDENT_IN))
+		{
+			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+			DebugOut(L">>> And now? >>> \n");
+		}
+		else
+		{
+			koopa->SetState(GOOMBA_STATE_INDENT_IN);
+			DebugOut(L">>> Did i kill it? >>> \n");
+		}
+
+		koopa->UpdatePositionVertiacally();
+
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	}
+
 }
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)

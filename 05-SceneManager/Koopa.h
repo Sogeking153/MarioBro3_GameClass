@@ -15,11 +15,18 @@
 
 #define GOOMBA_DIE_TIMEOUT 500
 
-#define GOOMBA_STATE_WALKING 100
-#define GOOMBA_STATE_DIE 200
-#define GOOMBA_STATE_INDENT_IN 300
-#define GOOMBA_STATE_SHELL_RUNNING 400
-#define GOOMBA_STATE_BEING_HOLDED 500
+#define CONCO_STATE_WALKING_LEFT		100
+#define CONCO_STATE_DIE					200
+#define CONCO_STATE_WALKING_RIGHT		300
+#define GOOMBA_STATE_INDENT_IN			400
+#define GOOMBA_STATE_SHELL_RUNNING		500
+#define CONCO_STATE_SHELL_RUNNING_LEFT	501
+#define CONCO_STATE_FLY_LEFT			600
+#define CONCO_STATE_FLY_RIGHT			700
+#define CONCO_STATE_WAS_BROUGHT			800
+#define CONCO_STATE_INDENT_OUT			1000
+#define CONCO_STATE_SHELL_MOVING		1100
+#define CONCO_STATE_RED_FLY_Y			1200
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
@@ -52,11 +59,11 @@
 class Koopa : public CGameObject
 {
 protected:
+	ULONGLONG time_to_indent_out;
 	float ax = 0;
 	float ay = 0;
 	CMario* player;
 	ULONGLONG die_start;
-
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
