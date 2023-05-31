@@ -23,7 +23,7 @@ goomba.txt
 
 #brick coin
 8	300	1110	1
-8	600	1110	0
+#8	600	1110	0
 
 #mushroom
 #9	600	910

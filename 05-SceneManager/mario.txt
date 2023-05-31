@@ -323,6 +323,23 @@
 50009	74	127	18	16	50
 50010	31	149	16	16	50
 
+##################################################
+# FLOWER
+# venus fire trap  . ha mieng nguoc xuuong, kep mieng nguoc xuong,ha mieng len,khep mieng xuong
+40050	219	81	16	32	109
+40051	242	81	16	32	109
+40052	267	81	16	32	109
+40053	289	81	16	32	109
+
+# green fire flower
+40054	219	43	16	24	109
+40055	244	43	16	24	109
+40056	267	43	16	24	109
+40057	289	43	16	24	109
+
+# GREEN FLOWER
+40058	7	107	16	24	50
+40059	7	137	16	24	50
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -567,3 +584,27 @@
 722	50007	10	50008	10
 # indent leg
 723	50009	15	50010	15
+
+# ==== RED FIRE cap cap nguoc xuông ====
+725	40050	200	40051	200
+
+# ==== RED FIRE cap cap nguoc len ====
+726	40052	200	40053	200
+
+# ==== RED FIRE ha mieng nguoc xuong ====
+727	40050	200
+
+# ==== RED FIRE ha mieng nguoc len ====
+728	40052	200
+
+# ==== GREEN FIRE cap cap nguoc xuong ====
+729	40054	200	40055	200
+
+# ==== GREEN  FIRE cap cap nguoc len ====
+730	40056	200	40057	200
+
+# ==== GREEN FIRE ha mieng nguoc xuong ====
+731	40054	200
+
+# ==== GREEN FIRE ATTACK UP ====
+732	40056	200

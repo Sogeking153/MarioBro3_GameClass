@@ -6,7 +6,9 @@ void BrickCoin::Render()
 	if (state == BRICK_COIN_STATE_HIT)
 		idAni = ID_ANI_BRICK_QUESION_IS_HIT;
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(idAni)->Render(x, y);
+	//animations->Get(idAni)->Render(x, y);
+	for (int i = 0; i < 8; i++)
+		animations->Get(725 + i)->Render(x + i * 50, y);
 	RenderBoundingBox();
 }
 
