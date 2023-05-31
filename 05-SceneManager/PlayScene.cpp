@@ -16,6 +16,7 @@
 #include "Koopa.h"
 #include "Pipe.h"
 #include "PlantBullet.h"
+#include "VenusFireTrap.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -213,8 +214,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 13:
 	{
 		int direction = (int)atof(tokens[3].c_str());
-		obj = new PlantBullet(x, y, direction); break;
+		obj = new PlantBullet(x, y, direction); 
+		break;
 	}
+	case 14: 
+		obj = new VenusFireTrap(x, y, player); 
+		break;
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
