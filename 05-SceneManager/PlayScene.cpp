@@ -14,6 +14,8 @@
 #include "Mushroom.h"
 #include "SuperLeaf.h"
 #include "Koopa.h"
+#include "Pipe.h"
+#include "PlantBullet.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -205,6 +207,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 11: 
 		obj = new Koopa(x, y); 
 		break;
+	case 12: 
+		obj = new Pipe(x, y); 
+		break;
+	case 13:
+	{
+		int direction = (int)atof(tokens[3].c_str());
+		obj = new PlantBullet(x, y, direction); break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
