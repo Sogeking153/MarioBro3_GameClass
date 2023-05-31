@@ -325,19 +325,31 @@
 
 ##################################################
 # FLOWER
-# venus fire trap  . ha mieng nguoc xuuong, kep mieng nguoc xuong,ha mieng len,khep mieng xuong
+# venus fire trap left . ha mieng nguoc xuuong, kep mieng nguoc xuong,ha mieng len,khep mieng xuong
 40050	219	81	16	32	109
 40051	242	81	16	32	109
 40052	267	81	16	32	109
 40053	289	81	16	32	109
 
-# green fire flower
+# green fire flower left
 40054	219	43	16	24	109
 40055	244	43	16	24	109
 40056	267	43	16	24	109
 40057	289	43	16	24	109
 
-# GREEN FLOWER
+# venus fire trap right . ha mieng nguoc xuuong, kep mieng nguoc xuong,ha mieng len,khep mieng xuong
+41050	289	261	16	32	109
+41051	266	261	16	32	109
+41052	241	261	16	32	109
+41053	219	261	16	32	109
+
+# green fire flower right
+41054	289	223	16	24	109
+41055	264	223	16	24	109
+41056	241	223	16	24	109
+41057	219	223	16	24	109
+
+# green flower
 40058	7	107	16	24	50
 40059	7	137	16	24	50
 
@@ -585,26 +597,50 @@
 # indent leg
 723	50009	15	50010	15
 
-# ==== RED FIRE cap cap nguoc xuông ====
+# ==== RED FIRE cap cap nguoc xuông l ====
 725	40050	200	40051	200
 
-# ==== RED FIRE cap cap nguoc len ====
+# ==== RED FIRE cap cap nguoc len l ====
 726	40052	200	40053	200
 
-# ==== RED FIRE ha mieng nguoc xuong ====
+# ==== RED FIRE ha mieng nguoc xuong l ====
 727	40050	200
 
-# ==== RED FIRE ha mieng nguoc len ====
+# ==== RED FIRE ha mieng nguoc len l ====
 728	40052	200
 
-# ==== GREEN FIRE cap cap nguoc xuong ====
+# ==== GREEN FIRE cap cap nguoc xuong l ====
 729	40054	200	40055	200
 
-# ==== GREEN  FIRE cap cap nguoc len ====
+# ==== GREEN  FIRE cap cap nguoc len l ====
 730	40056	200	40057	200
 
-# ==== GREEN FIRE ha mieng nguoc xuong ====
+# ==== GREEN FIRE ha mieng nguoc xuong l ====
 731	40054	200
 
-# ==== GREEN FIRE ATTACK UP ====
+# ==== GREEN FIRE ATTACK UP l ====
 732	40056	200
+
+# ==== RED FIRE cap cap nguoc xuông r====
+825	41050	200	41051	200
+
+# ==== RED FIRE cap cap nguoc len r====
+826	41052	200	41053	200
+
+# ==== RED FIRE ha mieng nguoc xuong r====
+827	41050	200
+
+# ==== RED FIRE ha mieng nguoc len r====
+828	41052	200
+
+# ==== GREEN FIRE cap cap nguoc xuong r====
+829	41054	200	41055	200
+
+# ==== GREEN  FIRE cap cap nguoc len r====
+830	41056	200	41057	200
+
+# ==== GREEN FIRE ha mieng nguoc xuong r====
+831	41054	200
+
+# ==== GREEN FIRE ATTACK UP r====
+832	41056	200
