@@ -36,6 +36,7 @@
 #define MARIO_STATE_STAND_SHOOT		700
 #define MARIO_STATE_SPIN			800
 #define MARIO_STATE_FLY				820
+#define MARIO_STATE_KICK			900
 
 
 #pragma region ANIMATION_ID
@@ -161,6 +162,8 @@ public:
 		coin = 0;
 	}
 
+	ULONGLONG kick_start = 0;
+	bool is_kick = false;
 	float vy_store = 0;
 	bool jump_down_to_up = false;
 	int GetLevel() { return level; }

@@ -41,6 +41,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		SetPosition(x, y - 1);
 		jump_down_to_up = false;
 	}
+
+	if (is_kick == true && GetTickCount64() - kick_start >= 200 && kick_start)
+	{
+		kick_start = 0;
+		is_kick = false;
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -113,13 +119,26 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
+	else
+	{
+		if (nx != 0)
+		{
+			if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
+				koopa->GetState() == CONCO_STATE_SHELL_MOVING)
+			{
+				if (GetState() == MARIO_STATE_WALKING_RIGHT || GetState() == MARIO_STATE_WALKING_LEFT)
+					koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+			}
+			this->SetState(MARIO_STATE_KICK);
+		}
+	}
 
 }
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	coin++;
+	//coin++;
 }
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
@@ -146,7 +165,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 		{
 			paragoomba->SetState(PARA_GOOMBA_STATE_DIE);
 			//paragoomba->used = true;
-			DebugOut(L"[ERROR-------------para die?----------------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
+			//DebugOut(L"[ERROR-------------para die?----------------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
 		}
 		else
 			paragoomba->SetState(PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING);
@@ -262,6 +281,9 @@ int CMario::GetAniIdSmall()
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
+	if (is_kick == true)
+		aniId = 439;
+
 	return aniId;
 }
 
@@ -323,6 +345,9 @@ int CMario::GetAniIdBig()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+
+	if (is_kick == true)
+		aniId = 440;
 
 	return aniId;
 }
@@ -430,6 +455,10 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
+		break;
+	case MARIO_STATE_KICK:
+		kick_start = GetTickCount64();
+		is_kick = true;
 		break;
 	}
 
