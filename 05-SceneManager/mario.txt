@@ -622,29 +622,29 @@
 # ==== RED FIRE ha mieng nguoc len l ====
 728	40052	200
 
-# ==== GREEN FIRE cap cap nguoc xuong l ====
-729	40054	200	40055	200
-
-# ==== GREEN  FIRE cap cap nguoc len l ====
-730	40056	200	40057	200
-
-# ==== GREEN FIRE ha mieng nguoc xuong l ====
-731	40054	200
-
-# ==== GREEN FIRE ATTACK UP l ====
-732	40056	200
-
 # ==== RED FIRE cap cap nguoc xuông r====
-825	41050	200	41051	200
+729	41050	200	41051	200
 
 # ==== RED FIRE cap cap nguoc len r====
-826	41052	200	41053	200
+730	41052	200	41053	200
 
 # ==== RED FIRE ha mieng nguoc xuong r====
-827	41050	200
+731	41050	200
 
 # ==== RED FIRE ha mieng nguoc len r====
-828	41052	200
+732	41052	200
+
+# ==== GREEN FIRE cap cap nguoc xuong l ====
+825	40054	200	40055	200
+
+# ==== GREEN  FIRE cap cap nguoc len l ====
+826	40056	200	40057	200
+
+# ==== GREEN FIRE ha mieng nguoc xuong l ====
+827	40054	200
+
+# ==== GREEN FIRE ATTACK UP l ====
+828	40056	200
 
 # ==== GREEN FIRE cap cap nguoc xuong r====
 829	41054	200	41055	200
@@ -657,6 +657,9 @@
 
 # ==== GREEN FIRE ATTACK UP r====
 832	41056	200
+
+# ==== GREEN FLOWER NO ATTACK ==== 
+744	40058	200	40059	200
 
 # ==== pipe ====
 740	40065	100

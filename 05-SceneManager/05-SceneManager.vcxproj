@@ -162,6 +162,7 @@
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="PiranaPlant.cpp" />
     <ClCompile Include="PlantBullet.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="Pipe.h" />
+    <ClInclude Include="PiranaPlant.h" />
     <ClInclude Include="PlantBullet.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayScene.h" />

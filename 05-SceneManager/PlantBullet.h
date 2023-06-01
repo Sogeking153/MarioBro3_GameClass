@@ -16,6 +16,9 @@
 class PlantBullet : public CGameObject
 {
 protected:
+	bool is_hit_mario = false;
+	LPGAMEOBJECT player;
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
@@ -26,7 +29,7 @@ protected:
 	//virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	PlantBullet(float x, float y);
+	PlantBullet(float x, float y, LPGAMEOBJECT player);
 	virtual void SetState(int state);
 };
 

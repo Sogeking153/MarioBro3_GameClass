@@ -10,8 +10,8 @@
 #include "TextAndNumber.h"
 #include "GameTime.h"
 #include "Map.h"
+#include "PiranaPlant.h"
 //#include "Koopas.h"
-
 
 class CPlayScene: public CScene
 {
