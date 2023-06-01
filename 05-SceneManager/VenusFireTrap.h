@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "PlantBullet.h"
 
 #define VENUS_WALKING_SPEED 0.06f;
 
@@ -40,6 +41,7 @@
 class VenusFireTrap : public CGameObject
 {
 protected:
+	vector<LPGAMEOBJECT> listFireball;
 	float origin_y = y;
 	ULONGLONG time_interval;
 

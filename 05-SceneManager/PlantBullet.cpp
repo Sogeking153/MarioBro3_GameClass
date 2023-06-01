@@ -25,16 +25,16 @@ void PlantBullet::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 }
 
-PlantBullet::PlantBullet(float x, float y, int direction)
+PlantBullet::PlantBullet(float x, float y)
 {
-	if (direction == 1)
+	/*if (direction == 1)
 		SetState(PLANT_BULLET_STATE_TOP_RIGHT);
 	else if (direction == 2)
 		SetState(PLANT_BULLET_STATE_BOT_RIGHT);
 	else if (direction == 3)
 		SetState(PLANT_BULLET_STATE_BOT_LEFT);
 	else if (direction == 4)
-		SetState(PLANT_BULLET_STATE_TOP_LEFT);
+		SetState(PLANT_BULLET_STATE_TOP_LEFT);*/
 }
 
 void PlantBullet::SetState(int state)

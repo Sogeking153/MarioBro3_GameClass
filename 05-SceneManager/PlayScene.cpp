@@ -213,8 +213,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case 13:
 	{
-		int direction = (int)atof(tokens[3].c_str());
-		obj = new PlantBullet(x, y, direction); 
+		//int direction = (int)atof(tokens[3].c_str());
+		obj = new PlantBullet(x, y); 
 		break;
 	}
 	case 14: 

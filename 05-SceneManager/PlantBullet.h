@@ -26,7 +26,7 @@ protected:
 	//virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	PlantBullet(float x, float y, int direction);
+	PlantBullet(float x, float y);
 	virtual void SetState(int state);
 };
 
