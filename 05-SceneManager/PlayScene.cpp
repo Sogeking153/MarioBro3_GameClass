@@ -206,7 +206,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new SuperLeaf(x, y);
 		break;
 	case 11:
-		obj = new Koopa(x, y);
+		obj = new Koopa(x, y, player);
 		break;
 	case 12:
 	{

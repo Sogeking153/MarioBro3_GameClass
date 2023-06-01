@@ -63,7 +63,7 @@ protected:
 	ULONGLONG time_to_indent_out;
 	float ax = 0;
 	float ay = 0;
-	CMario* player;
+	LPGAMEOBJECT player;
 	ULONGLONG die_start;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -78,7 +78,7 @@ protected:
 
 public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	Koopa(float x, float y);
+	Koopa(float x, float y, LPGAMEOBJECT mario);
 	virtual void SetState(int state);
 };
 

@@ -2,14 +2,14 @@
 #include "Mario.h"
 
 //extern  CMario* mario;
-Koopa::Koopa(float x, float y) :CGameObject(x, y)
+Koopa::Koopa(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
 {
 	this->ax = 0;
 	//this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	SetState(CONCO_STATE_WALKING_LEFT);
 
-	//player = mario;
+	player = mario;
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -189,7 +189,8 @@ void Koopa::SetState(int state)
 		time_to_indent_out = GetTickCount64();
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
-		vx = 0.02;
+		//vx = 0.02;
+		vx = player->GetX() > x ? -0.02 : 0.02;
 		break;
 	case CONCO_STATE_WAS_BROUGHT:
 		vx = 0;
