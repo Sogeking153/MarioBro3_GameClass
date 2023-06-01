@@ -142,18 +142,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
-		if (player!=NULL) 
+		if (player != NULL)
 		{
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x,y); 
-		player = (CMario*)obj;  
+		obj = new CMario(x, y);
+		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y,player); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
+	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y, player); break;
+	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM:
@@ -182,35 +182,38 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
-		break;
-	case OBJECT_TYPE_FLATFORM_NEN: 
+	break;
+	case OBJECT_TYPE_FLATFORM_NEN:
 	{
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
 		obj = new FlatForm(x, y, width, height);
 		break;
 	}
-	case 7: 
-		obj = new ParaGoomba(x, y, player); 
+	case 7:
+		obj = new ParaGoomba(x, y, player);
 		break;
-	case 8: 
+	case 8:
 	{
 		int has_item = (int)atof(tokens[3].c_str());
-		obj = new BrickCoin(x, y, has_item); 
+		obj = new BrickCoin(x, y, has_item);
 		break;
 	}
-	case 9: 
-		obj = new Mushroom(x, y); 
+	case 9:
+		obj = new Mushroom(x, y);
 		break;
-	case 10: 
-		obj = new SuperLeaf(x, y); 
+	case 10:
+		obj = new SuperLeaf(x, y);
 		break;
-	case 11: 
-		obj = new Koopa(x, y); 
+	case 11:
+		obj = new Koopa(x, y);
 		break;
-	case 12: 
-		obj = new Pipe(x, y); 
+	case 12:
+	{
+		int type = (int)atof(tokens[3].c_str());
+		obj = new Pipe(x, y, type); 
 		break;
+	}
 	case 13:
 	{
 		//int direction = (int)atof(tokens[3].c_str());

@@ -30,6 +30,6 @@ protected:
 
 public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	Pipe(float x, float y) { SetState(PIPE_STATE_TALL); };
+	Pipe(float x, float y, int type);
 	virtual void SetState(int state);
 };

@@ -1,5 +1,15 @@
 #include "Pipe.h"
 
+Pipe::Pipe(float x, float y, int type)
+{
+	if (type == 1)
+		SetState(PIPE_STATE_TALL);
+	else if (type == 2)
+		SetState(PIPE_STATE_SHORT);
+	else if (type == 3)
+		SetState(PIPE_STATE_BLACK);
+}
+
 void Pipe::Render()
 {
 	int ani = 0;
