@@ -7,13 +7,13 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.3f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_RUNNING_SPEED		0.7f
 
-#define MARIO_ACCEL_WALK_X	0.0005f
+#define MARIO_ACCEL_WALK_X	0.0003f
 #define MARIO_ACCEL_RUN_X	0.0007f
 
-#define MARIO_JUMP_SPEED_Y		1.0f
-#define MARIO_JUMP_RUN_SPEED_Y	0.6f
+#define MARIO_JUMP_SPEED_Y		0.8f
+#define MARIO_JUMP_RUN_SPEED_Y	0.95f
 
 #define MARIO_GRAVITY			0.002f
 
@@ -162,6 +162,7 @@ public:
 		coin = 0;
 	}
 
+	void CollideWithEnemy();
 	ULONGLONG kick_start = 0;
 	bool is_kick = false;
 	float vy_store = 0;

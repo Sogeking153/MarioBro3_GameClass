@@ -5,7 +5,7 @@ void Mushroom::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_COIN)->Render(x, y);
 
-	animations->Get(724)->Render(x, y);
+	animations->Get(7004)->Render(x, y);
 
 	/*animations->Get(720)->Render(x+50, y);
 	animations->Get(722)->Render(x+100, y);
@@ -56,7 +56,7 @@ void Mushroom::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case MUSHROOM_STATE_GOING_UP:
+	case MUSHROOM_STATE_GOING_UP:	
 		vx = 0;
 		vy = -0.1f;
 		break;

@@ -10,7 +10,7 @@
 
 class FlatForm : public CGameObject {
 public:
-
+	float dodoi = 24;
 	float width;
 	float height;
 	FlatForm(float x, float y, float w, float h) : CGameObject(x, y) { width = w; height = h; }

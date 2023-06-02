@@ -44,6 +44,7 @@ void ParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
+	if (dynamic_cast<CMario*>(e->obj)) return;
 
 	//DebugOut(L"[INFO] state of para goomba is: %d\n", state);
 

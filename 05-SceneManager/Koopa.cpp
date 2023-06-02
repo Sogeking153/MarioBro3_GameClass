@@ -43,6 +43,7 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	//if (dynamic_cast<Koopa*>(e->obj)) return;
+	if (dynamic_cast<CMario*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -108,12 +109,12 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 {
 	FlatForm* flatform = dynamic_cast<FlatForm*>(e->obj);
 
-	if (this->x > flatform->GetX() + flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+	if (this->x > flatform->GetX() + flatform->width - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
 	{
 		vx = -abs(vx);
 		DebugOut(L"[INFO] does it get in here?\n");
 	}
-	else if (this->x < flatform->GetX() - flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+	else if (this->x < flatform->GetX() - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
 	{
 		vx = abs(vx);
 		DebugOut(L"[INFO] does it get in here 222?\n");
