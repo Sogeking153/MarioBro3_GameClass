@@ -15,7 +15,7 @@
 
 #define  MUSHROOM_DISTANCE_MOVE_UP	 55
 
-#define  MUSHROOM_MOVING_SPEED	 0.02
+#define  MUSHROOM_MOVING_SPEED	 0.1
 
 class Mushroom : public CGameObject {
 	float ax;
@@ -30,6 +30,7 @@ public:
 	int IsBlocking() { return 0; };
 	int IsCollidable() { return 1; };
 
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 	virtual void OnNoCollision(DWORD dt);
 	virtual void SetState(int state);
 };

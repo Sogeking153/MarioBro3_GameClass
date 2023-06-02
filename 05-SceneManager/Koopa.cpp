@@ -238,11 +238,11 @@ void Koopa::SetState(int state)
 		ay = 0;
 		break;
 	case CONCO_STATE_WALKING_LEFT:
-		vx = -GOOMBA_WALKING_SPEED;
+		vx = -KOOPA_WALKING_SPEED;
 		//vx = 0;
 		break;
 	case GOOMBA_STATE_INDENT_IN:
-		//vx = -GOOMBA_WALKING_SPEED;
+		//vx = -KOOPA_WALKING_SPEED;
 		vx = 0;
 		vy = 0;
 		time_to_indent_out = GetTickCount64();
@@ -250,6 +250,7 @@ void Koopa::SetState(int state)
 	case GOOMBA_STATE_SHELL_RUNNING:
 		//vx = 0.02;
 		vx = player->GetX() > x ? -0.4 : 0.4;
+		is_blocking = 1;
 		break;
 	case CONCO_STATE_WAS_BROUGHT:
 		vx = 0;

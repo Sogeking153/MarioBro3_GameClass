@@ -4,7 +4,7 @@
 #include "FlatForm.h"
 
 #define GOOMBA_GRAVITY 0.002f
-#define GOOMBA_WALKING_SPEED 0.02f
+#define KOOPA_WALKING_SPEED 0.06f
 
 
 #define KOOPA_BBOX_WIDTH 16*3
@@ -61,6 +61,7 @@
 class Koopa : public CGameObject
 {
 public:
+	bool is_blocking = 0;
 	bool is_minus_vx = false;
 	bool is_colliable = 1;
 	ULONGLONG time_to_indent_out;
@@ -72,8 +73,8 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return is_colliable; }
+	virtual int IsCollidable() { return is_colliable; }
+	virtual int IsBlocking() { return is_blocking; }
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

@@ -20,7 +20,7 @@ void Mushroom::Render()
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (enable_gravity == true)
-		vy += 0.0002 * dt;
+		vy += 0.002 * dt;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -31,6 +31,20 @@ void Mushroom::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y - COIN_BBOX_HEIGHT / 2;
 	r = l + COIN_BBOX_WIDTH;
 	b = t + COIN_BBOX_HEIGHT;
+}
+
+void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return;
+
+	if (e->ny != 0)
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
 }
 
 void Mushroom::OnNoCollision(DWORD dt)
