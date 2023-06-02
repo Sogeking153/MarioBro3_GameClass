@@ -9,8 +9,15 @@ void FlatForm::Render()
 
 void FlatForm::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - width / 2;
+	/*l = x - width / 2;
 	t = y - height / 2;
 	r = l + width;
-	b = t + height;
+	b = t + height;*/
+
+	float dodoi = 24;
+
+	l = x - dodoi;
+	t = y - dodoi;
+	r = x + width - dodoi;
+	b = y + height - dodoi;
 }
