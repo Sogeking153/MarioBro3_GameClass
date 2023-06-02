@@ -1,5 +1,6 @@
 #include "Koopa.h"
 #include "Mario.h"
+#include "Goomba.h"
 
 //extern  CMario* mario;
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
@@ -25,10 +26,10 @@ void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	}
 	else
 	{
-		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - GOOMBA_BBOX_HEIGHT / 2;
-		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
+		left = x - KOOPA_BBOX_WIDTH / 2;
+		top = y - KOOPA_BBOX_HEIGHT / 2;
+		right = left + KOOPA_BBOX_WIDTH;
+		bottom = top + KOOPA_BBOX_HEIGHT;
 	}
 }
 
@@ -41,7 +42,7 @@ void Koopa::OnNoCollision(DWORD dt)
 void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<Koopa*>(e->obj)) return;
+	//if (dynamic_cast<Koopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -49,11 +50,58 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (e->nx != 0)
 	{
-		vx = -vx;
+		if (!dynamic_cast<Koopa*>(e->obj))
+			vx = -vx;
 	}
 
+	if (dynamic_cast<Koopa*>(e->obj))
+		OnCollisionWithKoopa(e);
+	//else if (dynamic_cast<CGoomba*>(e->obj))
+		//OnCollisionWithGoomba(e);
 	if (dynamic_cast<FlatForm*>(e->obj))
 		OnCollisionWithFlatForm(e);
+}
+
+void Koopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+
+	if (this->GetState() == GOOMBA_STATE_SHELL_RUNNING)
+	{
+		/*	if (goomba->GetX() < this->GetX())
+			{
+				goomba->is_minus_vx = true;
+			}*/
+	}
+	goomba->SetState(GOOMBA_STATE_WAS_SHOOTED);
+	DebugOut(L"[INFO] get in?\n");
+}
+
+void Koopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
+
+	/*if (koompas->GetState() == GOOMBA_STATE_SHELL_RUNNING)
+	{
+		if ( this->GetX() < koompas->GetX() )
+		{
+			is_minus_vx = true;
+			DebugOut(L"[INFO] getting shooted?\n");
+		}
+		this->SetState(CONCO_STATE_WAS_SHOOTED);
+	}*/
+
+	if (this->GetState() == GOOMBA_STATE_SHELL_RUNNING)
+	{
+
+		if (koopa->GetX() < this->GetX())
+		{
+			koopa->is_minus_vx = true;
+		}
+		koopa->SetState(CONCO_STATE_WAS_SHOOTED);
+	}
+
+
 }
 
 void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
@@ -61,9 +109,15 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 	FlatForm* flatform = dynamic_cast<FlatForm*>(e->obj);
 
 	if (this->x > flatform->GetX() + flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+	{
 		vx = -abs(vx);
+		DebugOut(L"[INFO] does it get in here?\n");
+	}
 	else if (this->x < flatform->GetX() - flatform->width / 2 && state == CONCO_STATE_WALKING_LEFT)
+	{
 		vx = abs(vx);
+		DebugOut(L"[INFO] does it get in here 222?\n");
+	}
 }
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -156,6 +210,10 @@ void Koopa::Render()
 		{
 			aniId = CONCO_ANI_GREEN_INDENT_OUT;
 		}
+		else if (state == CONCO_STATE_WAS_SHOOTED)
+		{
+			aniId = 542; //ani was shoot
+		}
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -190,13 +248,19 @@ void Koopa::SetState(int state)
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
 		//vx = 0.02;
-		vx = player->GetX() > x ? -0.02 : 0.02;
+		vx = player->GetX() > x ? -0.4 : 0.4;
 		break;
 	case CONCO_STATE_WAS_BROUGHT:
 		vx = 0;
 		vy = 0;
 		break;
 	case CONCO_STATE_INDENT_OUT:
+		break;
+	case CONCO_STATE_WAS_SHOOTED:
+		vy = -0.6;
+		vx = is_minus_vx ? -0.1 : 0.1;
+		//vx = 0.09;
+		is_colliable = 0;
 		break;
 	}
 }

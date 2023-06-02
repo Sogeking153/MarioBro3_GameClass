@@ -1,5 +1,6 @@
 #include "Goomba.h"
 #include "Mario.h"
+#include "Koopa.h"
 
 CGoomba::CGoomba(float x, float y, LPGAMEOBJECT mario):CGameObject(x, y)
 {
@@ -39,6 +40,17 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
+
+	if (dynamic_cast<Koopa*>(e->obj))
+	{
+		Koopa* Koopas = dynamic_cast<Koopa*>(e->obj);
+
+		if (Koopas->GetX() > this->GetX())
+		{
+			is_minus_vx = true;
+		}
+		this->SetState(GOOMBA_STATE_WAS_SHOOTED);
+	}
 
 	if (e->ny != 0 )
 	{
@@ -95,9 +107,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CGoomba::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
+	if (state == GOOMBA_STATE_DIE)
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
+	}
+	else if (state == GOOMBA_STATE_WAS_SHOOTED)
+	{
+		aniId = 540;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
@@ -119,6 +135,12 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
 			//vx = 0;
+			break;
+		case GOOMBA_STATE_WAS_SHOOTED:
+			vy = -0.6;
+			vx = is_minus_vx ? 0.1 : -0.1;
+			//vx = 0.09;
+			is_colliable = 0;
 			break;
 	}
 }
