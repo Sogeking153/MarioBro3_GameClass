@@ -15,6 +15,8 @@ CGoomba::CGoomba(float x, float y, LPGAMEOBJECT mario):CGameObject(x, y)
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
+	if (state == GOOMBA_STATE_WAS_SHOOTED)
+		return;
 	if (state == GOOMBA_STATE_DIE)
 	{
 		left = x - GOOMBA_BBOX_WIDTH/2;
@@ -116,7 +118,7 @@ void CGoomba::Render()
 	}
 	else if (state == GOOMBA_STATE_WAS_SHOOTED)
 	{
-		aniId = 540;
+		aniId = 5400;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);

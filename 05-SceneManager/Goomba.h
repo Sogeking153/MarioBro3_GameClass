@@ -3,7 +3,7 @@
 #include "Mario.h"
 
 #define GOOMBA_GRAVITY 0.002f
-#define GOOMBA_WALKING_SPEED 0.01f
+#define GOOMBA_WALKING_SPEED 0.04f
 
 
 #define GOOMBA_BBOX_WIDTH 16*3
