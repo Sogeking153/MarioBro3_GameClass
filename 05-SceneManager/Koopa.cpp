@@ -8,7 +8,8 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
 	this->ax = 0;
 	//this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	SetState(CONCO_STATE_WALKING_LEFT);
+	SetState(CONCO_STATE_FLY_LEFT);
+	//SetState(CONCO_STATE_WALKING_LEFT);
 
 	player = mario;
 }
@@ -47,7 +48,9 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->ny != 0)
 	{
-		vy = 0;
+		if (state == CONCO_STATE_FLY_LEFT)
+			vy = -KOOPA_FLYING_SPEED_Y;
+		else vy = 0;
 	}
 	else if (e->nx != 0)
 	{
@@ -92,17 +95,16 @@ void Koopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		this->SetState(CONCO_STATE_WAS_SHOOTED);
 	}*/
 
-	if (this->GetState() == GOOMBA_STATE_SHELL_RUNNING)
+	if (koopa->state == GOOMBA_STATE_SHELL_RUNNING)
 	{
 
-		if (koopa->GetX() < this->GetX())
+		if (koopa->GetX() > this->GetX())
 		{
+			//koompas->is_minus_vx = true;//vx=is_minus_vx?-0.1:0.1;
 			koopa->is_minus_vx = true;
 		}
-		koopa->SetState(CONCO_STATE_WAS_SHOOTED);
+		SetState(CONCO_STATE_WAS_SHOOTED);
 	}
-
-
 }
 
 void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
@@ -215,6 +217,13 @@ void Koopa::Render()
 		{
 			aniId = 5402; //ani was shoot
 		}
+		else if (state == CONCO_STATE_FLY_LEFT)
+		{
+			if (vx > 0)
+				aniId = CONCO_ANI_GREEN_FLY_RIGHT;
+			else
+				aniId = CONCO_ANI_GREEN_FLY_LEFT;
+		}
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
@@ -263,6 +272,9 @@ void Koopa::SetState(int state)
 		vx = is_minus_vx ? -0.1 : 0.1;
 		//vx = 0.09;
 		is_colliable = 0;
+		break;
+	case CONCO_STATE_FLY_LEFT:
+		vx = -KOOPA_FLYING_SPEED_Y;
 		break;
 	}
 }

@@ -109,16 +109,20 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	//koompas->SetState(CONCO_STATE_WAS_SHOOTED);
 	if (e->ny < 0)
 	{
-		if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
+		if (koopa->GetState() == CONCO_STATE_FLY_LEFT)
+		{
+			koopa->SetState(CONCO_STATE_WALKING_LEFT);
+		}
+		else if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
 			koopa->GetState() == CONCO_STATE_SHELL_MOVING)
 		{
 			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
-			DebugOut(L">>> And now? >>> \n");
+			//DebugOut(L">>> And now? >>> \n");
 		}
 		else
 		{
 			koopa->SetState(GOOMBA_STATE_INDENT_IN);
-			DebugOut(L">>> Did i kill it? >>> \n");
+			//DebugOut(L">>> Did i kill it? >>> \n");
 		}
 
 		koopa->UpdatePositionVertiacally();
@@ -414,7 +418,24 @@ int CMario::GetAniIdBig()
 int CMario::GetAniIdTail()
 {
 	int aniId = -1;
-	if (isSitting)
+	if (!isOnPlatform)
+	{
+		if (abs(vx) == MARIO_RUNNING_SPEED)
+		{
+			if (nx >= 0)
+				aniId = MARIO_ANI_TAIL_FLY_HIGH;
+			else
+				aniId = MARIO_ANI_TAIL_FLY_HIGH + TO_BECOME_LEFT;
+		}
+		else
+		{
+			if (nx >= 0)
+				aniId = MARIO_ANI_TAIL_JUMP_UP_RIGHT;
+			else
+				aniId = MARIO_ANI_TAIL_JUMP_UP_RIGHT + TO_BECOME_LEFT;
+		}
+	}
+	else if (isSitting)
 	{
 		if (nx > 0)
 			aniId = MARIO_ANI_TAIL_SITDOWN_RIGHT;
