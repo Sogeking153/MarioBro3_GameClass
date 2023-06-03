@@ -21,18 +21,21 @@
 #define PARA_GOOMBA_STATE_WALKING_RIGHT		700
 #define PARA_GOOMBA_STATE_WALKING_LEFT		800
 #define PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING		900
+#define PARA_GOOMBA_STATE_WAS_SHOOTED		1000
 
 #define ID_ANI_PARA_GOOMBA_WALKING 5020
 #define ID_ANI_PARA_GOOMBA_JUMP_SMALL 5021
 #define ID_ANI_PARA_GOOMBA_JUMP_BIG 5022
 #define ID_ANI_PARA_GOOMBA_WITHOUT_SWING 5023
 #define ID_ANI_PARA_GOOMBA_DIE 5024
+#define ID_ANI_PARA_GOOMBA_WAS_SHOOTED 5401
 
 class ParaGoomba : public CGameObject
 {
 protected:
+	int is_minus_vx = false;
+	int is_colliable = 1;
 	int count = 0;
-
 	float ax;
 	float ay;
 	LPGAMEOBJECT player;
@@ -43,7 +46,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return is_colliable; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 

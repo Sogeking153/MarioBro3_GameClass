@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "FlatForm.h"
+#include "Koopa.h"
 
 //extern  CMario* mario;
 ParaGoomba::ParaGoomba(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
@@ -18,6 +19,9 @@ ParaGoomba::ParaGoomba(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
 
 void ParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	if (state == PARA_GOOMBA_STATE_WAS_SHOOTED)
+		return;
+
 	if (state == GOOMBA_STATE_DIE)
 	{
 		left = x - GOOMBA_BBOX_WIDTH / 2;
@@ -121,6 +125,22 @@ void ParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+	else if (dynamic_cast<Koopa*>(e->obj))
+	{
+
+		Koopa* koopas = dynamic_cast<Koopa*>(e->obj);
+
+		if (koopas->GetState() == GOOMBA_STATE_SHELL_RUNNING)
+		{
+
+			if (koopas->GetX() < this->GetX())
+			{
+				is_minus_vx = true;
+			}
+			this->SetState(PARA_GOOMBA_STATE_WAS_SHOOTED);
+			//DebugOut(L"[INFO] bi ban rui huhu %d\n", state);
+		}
+	}
 }
 
 void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -167,6 +187,8 @@ void ParaGoomba::Render()
 			aniId = ID_ANI_PARA_GOOMBA_JUMP_BIG;
 		if (state == PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING)
 			aniId = ID_ANI_PARA_GOOMBA_WITHOUT_SWING;
+		if (state == PARA_GOOMBA_STATE_WAS_SHOOTED)
+			aniId = ID_ANI_PARA_GOOMBA_WAS_SHOOTED;
 	}
 	//DebugOut(L"[INFO] vy of para %f\n", vy);
 
@@ -204,6 +226,11 @@ void ParaGoomba::SetState(int state)
 		break;
 	case PARA_GOOMBA_STATE_JUMP_HIGH:
 		vy = -0.25 * 3.5;
+		break;
+	case PARA_GOOMBA_STATE_WAS_SHOOTED:
+		vy = -0.25 * 3.5;
+		vx = is_minus_vx ? 0.1 : -0.1;
+		is_colliable = 0;
 		break;
 	}
 }

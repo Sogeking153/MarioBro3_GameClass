@@ -113,9 +113,8 @@ goomba.txt
 #50	200	160	216	180	1
 
 #para goomba
-7	2900	1148
 #7	2900	548
-#7	2900	1148
+7	2900	1148
 
 #brick coin
 #8	300	1110	1
@@ -134,11 +133,13 @@ goomba.txt
 #super leaf
 #10	200	1100
 
-#koopa
-11	1761	1048
-#11	900	900
-11	2400	1048
-11	2900	1048	
+#koompas hai tham so cuoi là loại với state
+# type: 0=xanh 1=đỏ
+# state: 100=walk_left 300=walk_right 600=fly_left 700=fly_right
+11	1761	1048	1	100
+#11	900	900	1	600
+#11	2400	1048	0	600
+11	3200	1048	0	600	
 
 #pipe 
 #12	400	1150	1
@@ -160,11 +161,12 @@ goomba.txt
 #13	600	900	4
 
 #venus fire trap
-#14	400	1150	1
-#14	400	1150	2
+#14	1106	1080	1
+14	1082	1152	1
+14	5615	1130	2
 
 #piranha plant
-#15	700	1175
+15	5424	1160
 
 
 

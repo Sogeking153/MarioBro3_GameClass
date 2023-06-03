@@ -912,9 +912,9 @@ throw FIRE mario
 # ==== ENEMY WAS SHOOT =========
 #gooba shoot
 5400	54000	100
-# red goomba
+# red paragoomba shoot
 5401	54001	100
-# green koompas
-5402	54002	100
 # red koompas
-5403	54003	100
+5402	54003	100
+# green koompas
+5410	54002	100

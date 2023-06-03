@@ -206,8 +206,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new SuperLeaf(x, y);
 		break;
 	case 11:
-		obj = new Koopa(x, y, player);
+	{
+		int type = (int)atof(tokens[3].c_str());
+		int state = (int)atof(tokens[4].c_str());
+		obj = new Koopa(x, y, player,type, state);
 		break;
+	}
 	case 12:
 	{
 		int type = (int)atof(tokens[3].c_str());
