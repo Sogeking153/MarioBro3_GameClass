@@ -13,7 +13,7 @@ goomba.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	2200	700
+0	6000	700
 
 # goomba
 #2	860	600
@@ -127,6 +127,10 @@ goomba.txt
 8	1968	1152	1
 8	2112	1064	0
 
+8	6200	1100	2
+8	6300	1100	2
+8	6400	1100	1
+
 #mushroom
 #9	600	910
 
@@ -163,10 +167,15 @@ goomba.txt
 #venus fire trap
 #14	1106	1080	1
 14	1082	1152	1
-14	5615	1130	2
+#14	5615	1130	2
 
 #piranha plant
 15	5424	1160
+
+#BrickBlink
+16	6000	1100
+#P button
+17	6100	1100
 
 
 

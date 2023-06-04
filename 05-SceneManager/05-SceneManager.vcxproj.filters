@@ -114,6 +114,15 @@
     <ClCompile Include="PiranaPlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BrickDebris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBlink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -222,6 +231,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PiranaPlant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickDebris.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBlink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

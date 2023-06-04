@@ -13,6 +13,8 @@
 #include "Mushroom.h"
 #include "SuperLeaf.h"
 #include "Koopa.h"
+#include "PButton.h"
+#include "BrickBlink.h"
 
 #include "Collision.h"
 
@@ -92,6 +94,38 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<FlatForm*>(e->obj))
 		OnCollisionWithFlatForm(e);
+	else if (dynamic_cast<BrickBlink*>(e->obj))
+		OnCollisionWithBrickBlink(e);
+	else if (dynamic_cast<PButton*>(e->obj))
+		OnCollisionWithPButton(e);
+}
+
+void CMario::OnCollisionWithPButton(LPCOLLISIONEVENT e)
+{
+	PButton* pbutton = dynamic_cast<PButton*>(e->obj);
+	if (e->ny < 0 && pbutton->is_hit == false)
+	{
+		//DebugOut(L"step on P button \n");
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		dynamic_cast<PButton*>(e->obj)->SetState(PBUTTON_STATE_IS_HIT);
+		pbutton->is_hit = true;
+	}
+}
+void CMario::OnCollisionWithBrickBlink(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<BrickBlink*>(e->obj)->is_block == false)
+	{
+		dynamic_cast<BrickBlink*>(e->obj)->Delete();
+	}
+	else
+	{
+		if (e->ny > 0)
+		{
+			//dynamic_cast<CBrick*>(e->obj)->is_hit = true;
+			dynamic_cast<BrickBlink*>(e->obj)->SetState(BRICKBLINK_STATE_IS_HIT);
+		}
+	}
+
 }
 
 void CMario::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)

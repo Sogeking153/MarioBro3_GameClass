@@ -1,4 +1,6 @@
 #include "BrickCoin.h"
+#include "PButton.h"
+#include "PlayScene.h"
 
 void BrickCoin::Render()
 {
@@ -6,6 +8,10 @@ void BrickCoin::Render()
 	if (state == BRICK_COIN_STATE_HIT)
 		idAni = ID_ANI_BRICK_QUESION_IS_HIT;
 	CAnimations* animations = CAnimations::GetInstance();
+	
+	if (has_item == BRICKCOIN_CONTAINS_PBUTTON)
+		idAni = ID_ANI_BRICKBLINK;
+
 	animations->Get(idAni)->Render(x, y);
 	/*for (int i = 0; i < 8; i++)
 		animations->Get(825 + i)->Render(x + i * 50, y);*/
@@ -57,6 +63,14 @@ void BrickCoin::SetState(int state)
 	case BRICK_COIN_STATE_HIT:
 		vy = -0.2;
 		//vx = 0;
+		if (has_item == BRICKCOIN_CONTAINS_PBUTTON)
+		{
+			PButton* pbutton = new PButton(x, y - 48);
+
+			CGame* game = CGame::GetInstance();
+			CPlayScene* scene = (CPlayScene*)game->GetCurrentScene();
+			scene->objects.push_back(pbutton);
+		}
 		break;
 	}
 }

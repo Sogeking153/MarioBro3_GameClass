@@ -17,6 +17,9 @@
 #include "Pipe.h"
 #include "PlantBullet.h"
 #include "VenusFireTrap.h"
+#include "BrickBlink.h"
+#include "BrickDebris.h"
+#include "PButton.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -234,6 +237,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		//int type = (int)atof(tokens[3].c_str());
 		obj = new PiranaPlant(x, y, player); break;
 	}
+	case 16:
+	{
+		//int type = (int)atof(tokens[3].c_str());
+		//obj = new PiranhaPlant(x, y, player); break;
+		obj = new BrickBlink(x, y); break;
+	}
+	case 17:
+	{
+		//int type = (int)atof(tokens[3].c_str());
+		//obj = new PiranhaPlant(x, y, player); break;
+		//obj = new BrickDebris(x, y, -1, 1.5); break;
+		obj = new PButton(x, y); break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -242,8 +258,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	// General object setup
 	obj->SetPosition(x, y);
 
-
-	objects.push_back(obj);
+	if (dynamic_cast<BrickBlink*>(obj))
+	{
+		list_bricklink.push_back(obj);
+		//DebugOut(L"[ERR]brick? : %d\n", object_type);
+	}
+	else
+		objects.push_back(obj);
 }
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
@@ -340,6 +361,11 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(itemsMarioCanEat[i]);
 	}
 
+	for (int i = 0; i < list_bricklink.size(); i++)
+	{
+		coObjects.push_back(list_bricklink[i]);
+	}
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
@@ -347,8 +373,10 @@ void CPlayScene::Update(DWORD dt)
 		if (dynamic_cast<BrickCoin*>(objects[i]))
 		{
 			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
-			if (brick->is_hit == true && brick->dropped == false && brick->has_item == true)
+			if (brick->is_hit == true && brick->dropped == false && brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM)
 			{
+				DebugOut(L"[INFO] which type is it? %d\n", brick->has_item);
+
 				float x, y;
 				brick->GetPosition(x, y);
 				if (player->GetLevel() == MARIO_LEVEL_SMALL)
@@ -369,6 +397,11 @@ void CPlayScene::Update(DWORD dt)
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
 		itemsMarioCanEat[i]->Update(dt, &coObjects);
+	}
+
+	for (int i = 0; i < list_bricklink.size(); i++)
+	{
+		list_bricklink[i]->Update(dt, &coObjects);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -400,6 +433,11 @@ void CPlayScene::Render()
 	{
 		itemsMarioCanEat[i]->Render();
 	}	
+
+	for (int i = 0; i < list_bricklink.size(); i++)
+	{
+		list_bricklink[i]->Render();
+	}
 
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
@@ -486,6 +524,17 @@ void CPlayScene::PurgeDeletedObjects()
 			itemsMarioCanEat[i] = nullptr;
 			//DebugOut(L"hihihi, delete roi ne\n");
 			itemsMarioCanEat.erase(itemsMarioCanEat.begin() + i);
+		}
+	}
+
+	for (int i = 0; i < list_bricklink.size(); i++)
+	{
+		if (list_bricklink[i]->IsDeleted())
+		{
+			delete list_bricklink[i];
+			list_bricklink[i] = nullptr;
+
+			list_bricklink.erase(list_bricklink.begin() + i);
 		}
 	}
 

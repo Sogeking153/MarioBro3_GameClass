@@ -96,9 +96,6 @@
 
 #define GROUND_Y 160.0f
 
-
-
-
 #define	MARIO_LEVEL_SMALL		1
 #define	MARIO_LEVEL_BIG			2
 #define	MARIO_LEVEL_BIG_TAIL	3
@@ -201,6 +198,8 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithPButton(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrickBlink(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrickCoin(LPCOLLISIONEVENT e);
