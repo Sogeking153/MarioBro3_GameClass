@@ -13,7 +13,7 @@ goomba.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	7900	700
+0	7100	600
 
 # goomba
 #2	860	600
@@ -75,6 +75,8 @@ goomba.txt
 6	5952	1392	1536	48
 6	5952	1440	384	432
 6	5952	1872	1536	96
+
+#cống dưới đất
 6	7104	1440	384	432
 
 #gạch đối xứng				
@@ -156,6 +158,7 @@ goomba.txt
 
 12	6984	1177	2
 12	7035	1415	3
+#12	6318	1745	3
 
 
 #bullet 
@@ -174,6 +177,8 @@ goomba.txt
 
 #BrickBlink
 16	6000	1100
+16	7100	850
+
 #P button
 17	6100	1100
 

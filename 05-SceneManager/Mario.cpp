@@ -15,11 +15,43 @@
 #include "Koopa.h"
 #include "PButton.h"
 #include "BrickBlink.h"
+#include "Pipe.h"
 
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (is_set_position == true)
+	{
+		if (GetTickCount64() - time_to_go_down > 3000)
+		{
+			if (this->GetY() < 900)
+			{
+				SetPosition(6750, 1659);
+				is_set_position = false;
+				time_to_go_down = 0;
+			}
+			else if (this->GetY() >= 900 && this->GetY() <= 1170)
+			{
+				is_set_position = false;
+				time_to_go_down = 0;
+			}
+			else
+			{
+				SetPosition(6984, 1170);
+				time_to_go_down = GetTickCount64();
+			}
+		}
+		else
+		{
+			if (this->GetY() < 900)
+				y += 0.03 * dt;
+			else
+				y -= 0.03 * dt;
+			return;
+		}
+	}
+
 	if (is_auto)
 	{
 		x += 0.3 * dt;
@@ -103,6 +135,26 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrickBlink(e);
 	else if (dynamic_cast<PButton*>(e->obj))
 		OnCollisionWithPButton(e);
+	else if (dynamic_cast<Pipe*>(e->obj))
+		OnCollisionWithPipe(e);
+
+	if (dynamic_cast<BrickBlink*>(e->obj))
+	{
+		this->go_down = true;
+		//SetPosition(200, 100);
+	}
+	else
+		this->go_down = false;
+}
+
+void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
+{
+	if (e->ny > 0)
+	{
+		is_set_position = true;
+		time_to_go_down = GetTickCount64();
+		//SetPosition(7000,500);
+	}
 }
 
 void CMario::OnCollisionWithPButton(LPCOLLISIONEVENT e)
@@ -538,6 +590,17 @@ void CMario::Render()
 			aniId = MARIO_ANI_BIG_WALKING_RIGHT;
 		else if (level == MARIO_LEVEL_BIG_TAIL)
 			aniId = MARIO_ANI_TAIL_WALKING_RIGHT;
+		nx = 1;
+	}
+
+	if (is_set_position == true)
+	{
+		if (level == MARIO_LEVEL_SMALL)
+			aniId = MARIO_ANI_SMALL_GO_DOWN;
+		else if (level == MARIO_LEVEL_BIG)
+			aniId = MARIO_ANI_BIG_GO_DOWN;
+		else if (level == MARIO_LEVEL_BIG_TAIL)
+			aniId = MARIO_ANI_TAIL_GO_DOWN;
 		nx = 1;
 	}
 

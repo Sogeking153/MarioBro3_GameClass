@@ -14,10 +14,18 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_P:
-		mario->SetState(MARIO_STATE_KICK);
+		//mario->SetState(MARIO_STATE_KICK);
+		mario->SetPosition(200, 100);
 		break;
 	case DIK_DOWN:
-		mario->SetState(MARIO_STATE_SIT);
+		if (mario->go_down == true)
+		{
+			mario->is_set_position = true;
+			mario->time_to_go_down = GetTickCount64();
+			//mario->SetPosition(6750, 1659);
+		}
+		else
+			mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
 		mario->SetState(MARIO_STATE_JUMP);
