@@ -348,7 +348,7 @@ void CPlayScene::Load()
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 
-	map = new Map();
+	map = new Map(L"textures\\map_world1-1.txt", L"textures\\TileObject.png", 176, 41, 29, 30);
 	map->LoadTileSet();
 }
 

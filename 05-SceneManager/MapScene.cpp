@@ -350,7 +350,8 @@ void MapScene::Load()
 
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 
-	map = new Map();
+	//0	textures\world_map.txt	12	16	textures\tileset_worldmap.png	4 	8
+	map = new Map(L"textures\\world_map.txt", L"textures\\tileset_worldmap.png", 16, 12, 8, 4);
 	map->LoadTileSet();
 }
 
@@ -429,7 +430,7 @@ void MapScene::Update(DWORD dt)
 	if (player->GetY() > 1368)
 		CGame::GetInstance()->SetCamPos(cx, 1365);
 	else
-		CGame::GetInstance()->SetCamPos(cx, 700);
+		CGame::GetInstance()->SetCamPos(-20, -25);
 
 	PurgeDeletedObjects();
 
