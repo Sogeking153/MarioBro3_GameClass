@@ -225,6 +225,9 @@ public:
 		coin = 0;
 	}
 
+	bool is_hit_bonus = false;
+	bool is_auto = false;
+	int card_end_scene = 0;
 	void CollideWithEnemy();
 	ULONGLONG kick_start = 0;
 	bool is_kick = false;

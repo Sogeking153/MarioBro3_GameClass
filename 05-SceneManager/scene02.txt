@@ -13,7 +13,7 @@ goomba.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	6000	700
+0	7900	700
 
 # goomba
 #2	860	600
@@ -177,5 +177,6 @@ goomba.txt
 #P button
 17	6100	1100
 
-
+#random bonus
+18	8088	1029
 

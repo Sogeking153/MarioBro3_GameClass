@@ -20,6 +20,7 @@
 #include "BrickBlink.h"
 #include "BrickDebris.h"
 #include "PButton.h"
+#include "RandomBonus.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -250,6 +251,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		//obj = new BrickDebris(x, y, -1, 1.5); break;
 		obj = new PButton(x, y); break;
 	}
+	case 18:
+	{
+		CMario* mario = dynamic_cast<CMario*>(player);
+		obj = new RandomBonus(x, y, mario); 
+		break;
+	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -417,6 +424,8 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
+	if (cx > 8448 - 760) cx = 8448 - 760 - 10;
+
 	CGame::GetInstance()->SetCamPos(cx, 700.0f);
 
 	PurgeDeletedObjects();
@@ -442,7 +451,7 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 
-	//temp.Render(1, 2, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
+	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
 }
 
 /*
