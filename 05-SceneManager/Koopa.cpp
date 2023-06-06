@@ -10,6 +10,10 @@
 
 #define GAP_AVOID_FALLING_DOWN 32
 
+#define TIME_TO_SHELL_MOVING	7000
+#define TIME_TO_INDENT_OUT		10000
+#define TIME_TO_WALKING_LEFT	12000
+
 //extern  CMario* mario;
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state) :CGameObject(x, y)
 {
@@ -160,17 +164,17 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-	if (state == GOOMBA_STATE_INDENT_IN && GetTickCount64() - time_to_indent_out > 7000)
+	if (state == GOOMBA_STATE_INDENT_IN && GetTickCount64() - time_to_indent_out > TIME_TO_SHELL_MOVING)
 	{
 		SetState(CONCO_STATE_SHELL_MOVING);
 
 	}
-	if (state == CONCO_STATE_SHELL_MOVING && GetTickCount64() - time_to_indent_out > 10000)
+	if (state == CONCO_STATE_SHELL_MOVING && GetTickCount64() - time_to_indent_out > TIME_TO_INDENT_OUT)
 	{
 		SetState(CONCO_STATE_INDENT_OUT);
 
 	}
-	if (state == CONCO_STATE_INDENT_OUT && GetTickCount64() - time_to_indent_out > 12000)
+	if (state == CONCO_STATE_INDENT_OUT && GetTickCount64() - time_to_indent_out > TIME_TO_WALKING_LEFT)
 	{
 		SetPosition(this->x, this->y - GAP_AVOID_FALLING_DOWN);//so that shell wont fall off when indent out
 		SetState(CONCO_STATE_WALKING_LEFT);
