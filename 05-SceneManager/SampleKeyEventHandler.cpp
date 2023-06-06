@@ -15,7 +15,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	{
 	case DIK_P:
 		//mario->SetState(MARIO_STATE_KICK);
-		mario->SetPosition(200, 100);
+		mario->SetPosition(7100, 750);
 		break;
 	case DIK_DOWN:
 		if (mario->go_down == true)

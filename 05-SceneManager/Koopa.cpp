@@ -15,6 +15,8 @@
 #define TIME_TO_INDENT_OUT		10000
 #define TIME_TO_WALKING_LEFT	12000
 
+#define KOOMPAS_AY 0.002
+
 //extern  CMario* mario;
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state) :CGameObject(x, y)
 {
@@ -145,12 +147,12 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 	if (this->x > flatform->GetX() + flatform->width - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
 	{
 		vx = -abs(vx);
-		DebugOut(L"[INFO] does it get in here?\n");
+		//DebugOut(L"[INFO] does it get in here?\n");
 	}
 	else if (this->x < flatform->GetX() - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
 	{
 		vx = abs(vx);
-		DebugOut(L"[INFO] does it get in here 222?\n");
+		//DebugOut(L"[INFO] does it get in here 222?\n");
 	}
 }
 
@@ -163,11 +165,12 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		player->GetPosition(x, y);
 		SetPosition(x + 50, y - 40);
 		//return;
-	}
+	}*/
+
 	if (state != CONCO_STATE_WAS_BROUGHT)
-		vy += 0.002 * dt;
+		vy += KOOMPAS_AY * dt;
 	//vx += ax * dt;
-	*/
+
 	if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
