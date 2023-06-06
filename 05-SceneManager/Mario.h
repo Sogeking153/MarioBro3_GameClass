@@ -186,6 +186,7 @@
 
 class CMario : public CGameObject
 {
+	DWORD spin_start = 0;
 	ULONGLONG change_ani = GetTickCount64();
 	BOOLEAN isSitting;
 	float maxVx;
@@ -215,6 +216,7 @@ class CMario : public CGameObject
 	int GetAniIdBig();
 	int GetAniIdTail();
 
+	void attack();
 public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{

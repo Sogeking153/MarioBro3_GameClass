@@ -92,6 +92,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		kick_start = 0;
 		is_kick = false;
 	}
+
+	if (GetState() == MARIO_STATE_SPIN && GetTickCount64() - spin_start >= 300 && spin_start)
+	{
+		SetState(MARIO_STATE_IDLE);
+		spin_start = 0;
+		//DebugOut(L"[INFO] spin spin?\n");
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -563,6 +570,8 @@ int CMario::GetAniIdTail()
 			else
 				aniId = MARIO_ANI_TAIL_WALKING_RIGHT + TO_BECOME_LEFT;
 		}
+	if (state == MARIO_STATE_SPIN)
+		aniId = MARIO_ANI_TAIL_SPIN_TAIL_RIGHT;
 
 	if (aniId == -1) aniId = MARIO_ANI_TAIL_IDLE_RIGHT;
 	return aniId;
@@ -704,6 +713,9 @@ void CMario::SetState(int state)
 	case MARIO_STATE_KICK:
 		kick_start = GetTickCount64();
 		is_kick = true;
+		break;
+	case MARIO_STATE_SPIN:
+		spin_start = GetTickCount64();
 		break;
 	}
 
