@@ -32,20 +32,20 @@ void BrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//}else if (y > originalY)
 	//	vy = 0;
 
-	if (y < originalY - BRICKCOIN_GAP_BOUNCING && flag == false)
+	if (y < originalY - BRICKCOIN_GAP_BOUNCING && vy<0)
 	{
 		vy = -vy;
-		flag = true;
+		//flag = true;
 	}
 
-	else if (flag == true && y >= originalY)
+	else if (vy>0 && y >= originalY)
 	{
 		//DebugOut(L"[ERROR----vy of the brick-----] DINPUT::GetDeviceData failed. Error: %f\n",y);
 
 		vy = 0;
 		y = originalY;
 		is_hit = true;
-		flag = false;
+		//flag = false;
 	}
 }
 

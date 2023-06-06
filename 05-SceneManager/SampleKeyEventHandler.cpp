@@ -37,7 +37,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
 	case DIK_3:
-		mario->SetLevel(3);
+		mario->SetLevel(MARIO_LEVEL_BIG_TAIL);
 		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
