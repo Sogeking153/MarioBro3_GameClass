@@ -57,18 +57,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += 0.3 * dt;
 		return;
 	}
+
+	if (state != MARIO_STATE_FLY_LANDING)
+		vy += ay * dt;
+
 	vy_store = vy;
 
-	vy += ay * dt;
+	//vy += ay * dt;
 	vx += ax * dt;
 
 	if (abs(vx) > abs(maxVx))
 	{
 		vx = maxVx;
-		DebugOut(L"[INFO] maxVx? does it go in?\n");
+		//DebugOut(L"[INFO] maxVx? does it go in?\n");
 	}
 
-	DebugOut(L"[INFO]maxVx value: %f\n", maxVx);
+	//DebugOut(L"[INFO]maxVx value: %f\n", maxVx);
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
@@ -98,6 +102,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		SetState(MARIO_STATE_IDLE);
 		spin_start = 0;
 		//DebugOut(L"[INFO] spin spin?\n");
+	}
+
+	if (GetState() == MARIO_STATE_FLY_LANDING && GetTickCount64() - fly_start >= 300 && fly_start)
+	{
+		SetState(MARIO_STATE_IDLE);
+		fly_start = 0;
+		//DebugOut(L"[INFO] slowly slowly?\n");
 	}
 }
 
@@ -571,7 +582,20 @@ int CMario::GetAniIdTail()
 				aniId = MARIO_ANI_TAIL_WALKING_RIGHT + TO_BECOME_LEFT;
 		}
 	if (state == MARIO_STATE_SPIN)
-		aniId = MARIO_ANI_TAIL_SPIN_TAIL_RIGHT;
+	{
+		if (nx == 1)
+			aniId = MARIO_ANI_TAIL_SPIN_TAIL_RIGHT;
+		else
+			aniId = MARIO_ANI_TAIL_SPIN_TAIL_RIGHT + TO_BECOME_LEFT;
+	}
+
+	if (state == MARIO_STATE_FLY_LANDING)
+	{
+		if (nx == 1)
+			aniId = MARIO_ANI_ORANGE_FLY_DOWN;
+		else
+			aniId = MARIO_ANI_ORANGE_FLY_DOWN + TO_BECOME_LEFT;
+	}
 
 	if (aniId == -1) aniId = MARIO_ANI_TAIL_IDLE_RIGHT;
 	return aniId;
@@ -716,6 +740,10 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_SPIN:
 		spin_start = GetTickCount64();
+		break;
+	case MARIO_STATE_FLY_LANDING:
+		fly_start = GetTickCount64();
+		vy = 0.02;
 		break;
 	}
 

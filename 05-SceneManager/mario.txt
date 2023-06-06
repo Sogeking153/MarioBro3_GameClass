@@ -802,7 +802,7 @@
 # go down FIRE
 450	10112	100
 #Tail sLow Landing
-451	11000	70	11001	70	11002	70
+451	11000	100	11001	100	11002	100
 
 # ==== MARIO LEFT=========
 #idle NORMAL BIG left

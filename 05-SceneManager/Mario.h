@@ -35,7 +35,7 @@
 
 #define MARIO_STATE_STAND_SHOOT		700
 #define MARIO_STATE_SPIN			800
-#define MARIO_STATE_FLY				820
+#define MARIO_STATE_FLY_LANDING		820
 #define MARIO_STATE_KICK			900
 
 
@@ -175,6 +175,8 @@
 #define MARIO_ANI_BIG_GO_DOWN		448
 #define MARIO_ANI_TAIL_GO_DOWN		449
 
+#define MARIO_ANI_ORANGE_FLY_DOWN	451
+
 #define TO_BECOME_LEFT 100
 #pragma endregion
 
@@ -186,6 +188,9 @@
 
 class CMario : public CGameObject
 {
+public:
+	bool IsOnTheFlatForm() { return isOnPlatform; }
+	DWORD fly_start = 0;
 	DWORD spin_start = 0;
 	ULONGLONG change_ani = GetTickCount64();
 	BOOLEAN isSitting;
@@ -217,7 +222,7 @@ class CMario : public CGameObject
 	int GetAniIdTail();
 
 	void attack();
-public:
+//public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{
 		isSitting = false;
