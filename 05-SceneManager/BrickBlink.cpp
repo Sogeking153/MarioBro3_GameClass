@@ -2,6 +2,12 @@
 #include "debug.h"
 #include "BrickDebris.h"
 
+#define HIGH_DEBRIS 1.5
+#define LOW_DEBRIS 1
+
+#define RIGHT_DIRECTION 1
+#define LEFT_DIRECTION -1
+
 void BrickBlink::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -38,10 +44,10 @@ void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (LPGAMEOBJECT debris : vec_debris)
 	{
 		debris->Update(dt, coObjects);
-		DebugOut(L"[INFO]update %d\n", vec_debris.size());
+		//DebugOut(L"[INFO]update %d\n", vec_debris.size());
 
 	}
-	DebugOut(L"[INFO]inside brickblink update? %d\n", vec_debris.size());
+	//DebugOut(L"[INFO]inside brickblink update? %d\n", vec_debris.size());
 }
 
 void BrickBlink::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -69,18 +75,18 @@ void BrickBlink::SetState(int state)
 
 
 
-		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, 1, 1.5); // top right
+		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, RIGHT_DIRECTION, HIGH_DEBRIS); // top right
 		vec_debris.push_back(debrick_brick);
 
 
-		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y + DEBRIS_DISTANCE, 1, 1);// bottom right
+		debrick_brick = new BrickDebris(x + DEBRIS_DISTANCE, y + DEBRIS_DISTANCE, RIGHT_DIRECTION, LOW_DEBRIS);// bottom right
 		vec_debris.push_back(debrick_brick);
 
 
-		debrick_brick = new BrickDebris(x - DEBRIS_DISTANCE, y + DEBRIS_DISTANCE, -1, 1);// bottom left
+		debrick_brick = new BrickDebris(x - DEBRIS_DISTANCE, y + DEBRIS_DISTANCE, LEFT_DIRECTION, LOW_DEBRIS);// bottom left
 		vec_debris.push_back(debrick_brick);
 
-		debrick_brick = new BrickDebris(x - DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, -1, 1.5); // top left
+		debrick_brick = new BrickDebris(x - DEBRIS_DISTANCE, y - DEBRIS_DISTANCE, LEFT_DIRECTION, HIGH_DEBRIS); // top left
 		vec_debris.push_back(debrick_brick);
 
 		is_hit = true;

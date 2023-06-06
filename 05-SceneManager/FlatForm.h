@@ -8,9 +8,11 @@
 #define BRICK_BBOX_WIDTH 2000
 #define BRICK_BBOX_HEIGHT 8
 
+#define GAP 24
+
 class FlatForm : public CGameObject {
 public:
-	float dodoi = 24;
+	float dodoi = GAP;
 	float width;
 	float height;
 	FlatForm(float x, float y, float w, float h) : CGameObject(x, y) { width = w; height = h; }

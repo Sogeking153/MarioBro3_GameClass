@@ -2,6 +2,14 @@
 #include "Mario.h"
 #include "Goomba.h"
 
+#define KOOMPAS_VY_WAS_SHOOTED 0.6f
+#define KOOMPAS_VX_WAS_SHOOTED 0.1f
+#define KOOMPAS_VX_SHELL_RUNNING 0.4f
+
+#define GAP_ANI_TO_RED 8
+
+#define GAP_AVOID_FALLING_DOWN 32
+
 //extern  CMario* mario;
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state) :CGameObject(x, y)
 {
@@ -131,7 +139,7 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	//DebugOut(L"[INFO] state koopa %d \n",state);
-	if (state == CONCO_STATE_WAS_BROUGHT)
+	/*if (state == CONCO_STATE_WAS_BROUGHT)
 	{
 		float x, y;
 		player->GetPosition(x, y);
@@ -141,7 +149,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state != CONCO_STATE_WAS_BROUGHT)
 		vy += 0.002 * dt;
 	//vx += ax * dt;
-
+	*/
 	if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
@@ -164,7 +172,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (state == CONCO_STATE_INDENT_OUT && GetTickCount64() - time_to_indent_out > 12000)
 	{
-		SetPosition(this->x, this->y - 32);//so that shell wont fall off when indent out
+		SetPosition(this->x, this->y - GAP_AVOID_FALLING_DOWN);//so that shell wont fall off when indent out
 		SetState(CONCO_STATE_WALKING_LEFT);
 	}
 
@@ -227,7 +235,7 @@ void Koopa::Render()
 		}
 	}
 	if (type == KOOPA_RED)
-		aniId -= 8;
+		aniId -= GAP_ANI_TO_RED;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
@@ -265,7 +273,7 @@ void Koopa::SetState(int state)
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
 		//vx = 0.02;
-		vx = player->GetX() > x ? -0.4 : 0.4;
+		vx = player->GetX() > x ? -KOOMPAS_VX_SHELL_RUNNING : KOOMPAS_VX_SHELL_RUNNING;
 		is_blocking = 1;
 		break;
 	case CONCO_STATE_WAS_BROUGHT:
@@ -275,8 +283,8 @@ void Koopa::SetState(int state)
 	case CONCO_STATE_INDENT_OUT:
 		break;
 	case CONCO_STATE_WAS_SHOOTED:
-		vy = -0.6;
-		vx = is_minus_vx ? -0.1 : 0.1;
+		vy = -KOOMPAS_VY_WAS_SHOOTED;
+		vx = is_minus_vx ? -KOOMPAS_VX_WAS_SHOOTED : KOOMPAS_VX_WAS_SHOOTED;
 		//vx = 0.09;
 		is_colliable = 0;
 		break;

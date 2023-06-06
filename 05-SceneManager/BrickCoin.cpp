@@ -2,6 +2,9 @@
 #include "PButton.h"
 #include "PlayScene.h"
 
+#define BRICKCOIN_GAP_BOUNCING 20
+#define BRICKCOIN_VX 0.2
+
 void BrickCoin::Render()
 {
 	int idAni = ID_ANI_BRICK_QUESION;
@@ -29,7 +32,7 @@ void BrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//}else if (y > originalY)
 	//	vy = 0;
 
-	if (y < originalY - 20 && flag == false)
+	if (y < originalY - BRICKCOIN_GAP_BOUNCING && flag == false)
 	{
 		vy = -vy;
 		flag = true;
@@ -61,11 +64,11 @@ void BrickCoin::SetState(int state)
 	{
 
 	case BRICK_COIN_STATE_HIT:
-		vy = -0.2;
+		vy = -BRICKCOIN_VX;
 		//vx = 0;
 		if (has_item == BRICKCOIN_CONTAINS_PBUTTON)
 		{
-			PButton* pbutton = new PButton(x, y - 48);
+			PButton* pbutton = new PButton(x, y - BRICK_COIN_BBOX_WIDTH);
 
 			CGame* game = CGame::GetInstance();
 			CPlayScene* scene = (CPlayScene*)game->GetCurrentScene();
