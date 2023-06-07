@@ -21,6 +21,7 @@
 #include "BrickDebris.h"
 #include "PButton.h"
 #include "RandomBonus.h"
+#include "UI.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -272,6 +273,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	else
 		objects.push_back(obj);
+
+	game_ui = new UI();
 }
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
@@ -460,7 +463,9 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 
+	//game_time = GameTime::GetInstance();
 	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
+	//game_ui->Render(300 /*- game_time->GetTime()*/, 5, 2000, 4, 2);
 }
 
 /*

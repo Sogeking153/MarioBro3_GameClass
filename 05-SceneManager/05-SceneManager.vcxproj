@@ -178,6 +178,7 @@
     <ClCompile Include="SuperLeaf.cpp" />
     <ClCompile Include="TextAndNumber.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VenusFireTrap.cpp" />
   </ItemGroup>
@@ -221,6 +222,7 @@
     <ClInclude Include="TextAndNumber.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VenusFireTrap.h" />
   </ItemGroup>
