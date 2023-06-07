@@ -29,7 +29,7 @@ void CGameObject::CheckWetherBeingAttacked(CGameObject* obj_attack, int become_s
 	{
 
 		//DebugOut(L"[INFO] checkoverlap func being attack \n");
-		SetState(become_state);
+		
 		//DebugOut(L"[INFO] vy value: %f\n", vy);
 
 		if (this->GetX() < obj_attack->GetX())
@@ -39,7 +39,10 @@ void CGameObject::CheckWetherBeingAttacked(CGameObject* obj_attack, int become_s
 			this->DirectionWhenBeingAttack = -1;
 		}
 		else
+		{
 			this->DirectionWhenBeingAttack = 1;
+		}
+		SetState(become_state);
 	}
 }
 

@@ -165,15 +165,17 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float no_thing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-	float ml, mt, mr, mb;
+	/*float ml, mt, mr, mb;
 	float il, it, ir, ib;
 
 	this->GetBoundingBox(il, it, ir, ib);
-	player->GetBoundingBox(ml, mt, mr, mb);
+	player->GetBoundingBox(ml, mt, mr, mb);*/
 	//if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
 	//{
 	//	/*this->SetState(GOOMBA_STATE_DIE); */
 	//}
+
+	this->CheckWetherBeingAttacked(player, PARA_GOOMBA_STATE_WAS_SHOOTED);
 }
 
 
@@ -236,7 +238,7 @@ void ParaGoomba::SetState(int state)
 		break;
 	case PARA_GOOMBA_STATE_WAS_SHOOTED:
 		vy = -0.25 * 3.5;
-		vx = is_minus_vx ? 0.1 : -0.1;
+		vx = DirectionWhenBeingAttack == -1 ? 0.1 : -0.1;
 		is_colliable = 0;
 		break;
 	}
