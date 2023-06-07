@@ -28,7 +28,7 @@ void BrickBlink::Render()
 
 	animations->Get(ani)->Render(x, y);
 
-	DebugOut(L"[INFO] state of brick %d\n", state);
+	//DebugOut(L"[INFO] state of brick %d\n", state);
 
 	RenderBoundingBox();
 }

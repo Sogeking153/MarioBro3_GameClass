@@ -208,6 +208,8 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//	//this->SetState(GOOMBA_STATE_DIE);
 	//}
 	//DebugOut(L"[INFO] vy of koopa: %f\n", vy);
+
+	this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
 }
 
 
@@ -305,7 +307,7 @@ void Koopa::SetState(int state)
 		break;
 	case CONCO_STATE_WAS_SHOOTED:
 		vy = -KOOMPAS_VY_WAS_SHOOTED;
-		vx = is_minus_vx ? -KOOMPAS_VX_WAS_SHOOTED : KOOMPAS_VX_WAS_SHOOTED;
+		vx = DirectionWhenBeingAttack == -1 ? -KOOMPAS_VX_WAS_SHOOTED : KOOMPAS_VX_WAS_SHOOTED;
 		//vx = 0.09;
 		is_colliable = 0;
 		break;

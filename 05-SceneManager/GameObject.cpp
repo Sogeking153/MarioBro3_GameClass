@@ -17,6 +17,32 @@ CGameObject::CGameObject()
 	isDeleted = false;
 }
 
+void CGameObject::CheckWetherBeingAttacked(CGameObject* obj_attack, int become_state)
+{
+	float ml, mt, mr, mb;
+	float il, it, ir, ib;
+
+	this->GetBoundingBox(il, it, ir, ib);
+	obj_attack->GetBoundingBox(ml, mt, mr, mb);
+
+	if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
+	{
+
+		//DebugOut(L"[INFO] checkoverlap func being attack \n");
+		SetState(become_state);
+		//DebugOut(L"[INFO] vy value: %f\n", vy);
+
+		if (this->GetX() < obj_attack->GetX())
+		{
+			//DebugOut(L"[INFO] hello? %d\n", koompas->state);
+			//koompas->is_minus_vx = true;//vx=is_minus_vx?-0.1:0.1;
+			this->DirectionWhenBeingAttack = -1;
+		}
+		else
+			this->DirectionWhenBeingAttack = 1;
+	}
+}
+
 void CGameObject::RenderBoundingBox()
 {
 	D3DXVECTOR3 p(x, y, 0);
