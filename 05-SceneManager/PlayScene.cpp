@@ -426,7 +426,16 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx > 8448 - 760) cx = 8448 - 760 - 10;
 
-	CGame::GetInstance()->SetCamPos(cx, 700.0f);
+	if (player->y < 570) //in the sky
+	{
+		CGame::GetInstance()->SetCamPos(cx, cy);
+	}
+	else if (player->GetY() > 1368)
+		CGame::GetInstance()->SetCamPos(cx, 1365);
+	else
+		CGame::GetInstance()->SetCamPos(cx, 700);
+
+	//CGame::GetInstance()->SetCamPos(cx, 700.0f);
 
 	PurgeDeletedObjects();
 

@@ -130,7 +130,7 @@ goomba.txt
 
 #para goomba
 #7	2900	548
-7	2900	1148
+#7	2900	1148
 
 #brick coin
 #8	300	1110	1

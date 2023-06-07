@@ -13,6 +13,12 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 
 	switch (KeyCode)
 	{
+	case DIK_T:
+
+		if (abs(mario->vx) == MARIO_RUNNING_SPEED || mario->GetState() == MARIO_STATE_FLY_HIGH)
+			if (mario->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+				mario->SetState(MARIO_STATE_FLY_HIGH);
+		break;
 	case DIK_P:
 		//mario->SetState(MARIO_STATE_KICK);
 		mario->SetPosition(7100, 750);
@@ -79,6 +85,9 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
+	if (mario->GetState() == MARIO_STATE_FLY_HIGH)
+		return;
+
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))
@@ -98,6 +107,8 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		if (mario->GetState() == MARIO_STATE_SPIN)
 			return;
 		if (mario->GetState() == MARIO_STATE_FLY_LANDING)
+			return;
+		if (mario->GetState() == MARIO_STATE_FLY_HIGH)
 			return;
 		mario->SetState(MARIO_STATE_IDLE);
 	}
