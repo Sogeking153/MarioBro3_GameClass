@@ -781,10 +781,22 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		}
 		else
 		{
-			left = x - MARIO_BIG_TAIL_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_TAIL_BBOX_HEIGHT / 2;
-			right = left + MARIO_BIG_TAIL_BBOX_WIDTH;
-			bottom = top + MARIO_BIG_TAIL_BBOX_HEIGHT;
+			if (this->GetState() == MARIO_STATE_SPIN)
+			{
+				left = x - MARIO_TAIL_BBOX_WIDTH / 2 - 90;
+				//top = y - MARIO_TAIL_BBOX_HEIGHT / 2;
+				top = y - 5;
+
+				right = x + MARIO_TAIL_BBOX_WIDTH / 2 + 90;
+				bottom = y + MARIO_TAIL_BBOX_HEIGHT / 2;
+			}
+			else
+			{
+				left = x - MARIO_BIG_TAIL_BBOX_WIDTH / 2;
+				top = y - MARIO_BIG_TAIL_BBOX_HEIGHT / 2;
+				right = left + MARIO_BIG_TAIL_BBOX_WIDTH;
+				bottom = top + MARIO_BIG_TAIL_BBOX_HEIGHT;
+			}
 		}
 	}
 	else

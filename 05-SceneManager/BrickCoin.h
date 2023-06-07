@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "Mario.h"
 
 #define ID_ANI_BRICK_COIN 10000
 #define ID_ANI_BRICKBLINK 746
@@ -22,13 +23,14 @@
 
 class BrickCoin : public CGameObject {
 public:
+	CMario* player;
 	float originalX = x;
 	int has_item = NORMAL_BRICKCOIN;
 	bool dropped = false;
 	bool is_hit = false;
 	//bool flag = false;
 	float originalY = y;
-	BrickCoin(float x, float y, int hasItem) : CGameObject(x, y) { has_item = hasItem; }
+	BrickCoin(float x, float y, int hasItem, CMario* mario) : CGameObject(x, y) { has_item = hasItem; player = mario; }
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

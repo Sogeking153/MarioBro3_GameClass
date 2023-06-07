@@ -24,7 +24,7 @@ void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 	}
-	DebugOut(L"[INFO] vo khum ta \n");
+	//DebugOut(L"[INFO] vo khum ta \n");
 }
 
 void PButton::GetBoundingBox(float& l, float& t, float& r, float& b)
