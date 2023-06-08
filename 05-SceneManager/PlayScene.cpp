@@ -22,6 +22,7 @@
 #include "PButton.h"
 #include "RandomBonus.h"
 #include "UI.h"
+#include "VirtualBox.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -257,6 +258,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		CMario* mario = dynamic_cast<CMario*>(player);
 		obj = new RandomBonus(x, y, mario); 
 		break;
+	}
+	case 19:
+	{
+		//CMario* mario = dynamic_cast<CMario*>(player);
+		obj = new VirtualBox(x, y); break;
+
 	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

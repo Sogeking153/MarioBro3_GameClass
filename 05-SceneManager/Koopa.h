@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Mario.h"
 #include "FlatForm.h"
+#include "VirtualBox.h"
 
 #define GOOMBA_GRAVITY 0.002f
 #define KOOPA_WALKING_SPEED 0.06f
@@ -67,6 +68,7 @@
 class Koopa : public CGameObject
 {
 public:
+	VirtualBox* virtualbox = NULL;
 	int type = KOOPA_GREEN;
 	bool is_blocking = 1;
 	bool is_minus_vx = false;

@@ -181,6 +181,7 @@
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VenusFireTrap.cpp" />
+    <ClCompile Include="VirtualBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -225,6 +226,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VenusFireTrap.h" />
+    <ClInclude Include="VirtualBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

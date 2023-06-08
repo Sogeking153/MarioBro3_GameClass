@@ -29,13 +29,15 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 	SetState(koopa_state);
 
 	player = mario;
+
+	virtualbox = new VirtualBox(x - 50, y);
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (state == GOOMBA_STATE_INDENT_IN || state == GOOMBA_STATE_SHELL_RUNNING || 
 		state == CONCO_STATE_WAS_BROUGHT || state == CONCO_STATE_SHELL_MOVING ||
-		state == CONCO_STATE_INDENT_OUT)
+		state == CONCO_STATE_INDENT_OUT || state == CONCO_STATE_BEING_HOLDED)
 	{
 		left = x - GOOMBA_BBOX_WIDTH_INDENT_IN / 2;
 		top = y - GOOMBA_BBOX_HEIGHT_INDENT_IN / 2;
@@ -72,7 +74,18 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		if (!dynamic_cast<Koopa*>(e->obj))
-			vx = -vx;
+		{
+			if (this->state == CONCO_STATE_WALKING_LEFT)
+			{
+				this->SetState(CONCO_STATE_WALKING_RIGHT);
+				virtualbox->SetPosition(this->x + 50, y);
+			}
+			else if (this->state == CONCO_STATE_WALKING_RIGHT)
+			{
+				this->SetState(CONCO_STATE_WALKING_LEFT);
+				virtualbox->SetPosition(this->x - 50, y);
+			}
+		}
 	}
 
 	if (dynamic_cast<Koopa*>(e->obj))
@@ -144,20 +157,36 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 
 	FlatForm* flatform = dynamic_cast<FlatForm*>(e->obj);
 
-	if (this->x > flatform->GetX() + flatform->width - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
-	{
-		vx = -abs(vx);
-		//DebugOut(L"[INFO] does it get in here?\n");
-	}
-	else if (this->x < flatform->GetX() - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
-	{
-		vx = abs(vx);
-		//DebugOut(L"[INFO] does it get in here 222?\n");
-	}
+	//if (this->x > flatform->GetX() + flatform->width - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
+	//{
+	//	vx = -abs(vx);
+	//	//DebugOut(L"[INFO] does it get in here?\n");
+	//}
+	//else if (this->x < flatform->GetX() - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
+	//{
+	//	vx = abs(vx);
+	//	//DebugOut(L"[INFO] does it get in here 222?\n");
+	//}
 }
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	virtualbox->vx = this->vx;
+	virtualbox->Update(dt, coObjects);
+
+	if (abs(virtualbox->y - this->y) > 40)
+	{
+		if (this->state == CONCO_STATE_WALKING_LEFT)
+		{
+			this->SetState(CONCO_STATE_WALKING_RIGHT);
+			virtualbox->SetPosition(this->x + 50, y);
+		}
+		else if (this->state == CONCO_STATE_WALKING_RIGHT)
+		{
+			this->SetState(CONCO_STATE_WALKING_LEFT);
+			virtualbox->SetPosition(this->x - 50, y);
+		}
+	}
 	//DebugOut(L"[INFO] state koopa %d \n",state);
 	/*if (state == CONCO_STATE_WAS_BROUGHT)
 	{
@@ -167,7 +196,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//return;
 	}*/
 
-	if (state != CONCO_STATE_WAS_BROUGHT)
+	if (state != CONCO_STATE_BEING_HOLDED)
 		vy += KOOMPAS_AY * dt;
 	//vx += ax * dt;
 
@@ -215,6 +244,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Koopa::Render()
 {
+	virtualbox->Render();
 	int aniId = CONCO_ANI_GREEN_WALKING_LEFT;
 	if (state == CONCO_STATE_DIE)
 	{

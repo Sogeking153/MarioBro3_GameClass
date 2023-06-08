@@ -220,6 +220,7 @@ public:
 	void OnCollisionWithBrickCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithVirtalBox(LPCOLLISIONEVENT e);
 
 	int GetAniIdSmall();
 	int GetAniIdBig();

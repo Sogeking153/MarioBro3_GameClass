@@ -12,6 +12,8 @@ void PButton::Render()
 		ani = ID_ANI_PBUTTON;
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ani)->Render(x, y);
+
+	RenderBoundingBox();
 }
 
 void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
