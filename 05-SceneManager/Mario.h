@@ -190,6 +190,8 @@
 class CMario : public CGameObject
 {
 public:
+	bool is_holding = false;
+	CGameObject* holding_something = NULL;
 	bool IsOnTheFlatForm() { return isOnPlatform; }
 	DWORD fly_high_start = 0;
 	DWORD fly_start = 0;

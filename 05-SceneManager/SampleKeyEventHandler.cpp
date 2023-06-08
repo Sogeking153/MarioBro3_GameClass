@@ -13,8 +13,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 
 	switch (KeyCode)
 	{
+	case DIK_Z:
+		mario->is_holding = true;
+		break;
 	case DIK_T:
-
 		if (abs(mario->vx) == MARIO_RUNNING_SPEED || mario->GetState() == MARIO_STATE_FLY_HIGH)
 			if (mario->GetLevel() == MARIO_LEVEL_BIG_TAIL)
 				mario->SetState(MARIO_STATE_FLY_HIGH);
@@ -76,6 +78,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
+		break;
+	case DIK_Z:
+		mario->is_holding = false;
 		break;
 	}
 }

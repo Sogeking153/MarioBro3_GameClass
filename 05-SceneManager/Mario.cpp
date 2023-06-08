@@ -172,6 +172,24 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else
 		this->go_down = false;
+
+	if (holding_something != NULL)
+	{
+		if (is_holding == true)
+		{
+
+			if (nx == -1)
+				this->holding_something->SetPosition(this->x - 50, this->y);
+			else if (nx == 1)
+				this->holding_something->SetPosition(this->x + 50, this->y);
+		}
+		else
+		{
+			Koopa* koopa = dynamic_cast<Koopa*>(holding_something);
+			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+			holding_something = NULL;
+		}
+	}
 }
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
@@ -257,24 +275,38 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (e->nx != 0)
 		{
-			if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
-				koopa->GetState() == CONCO_STATE_SHELL_MOVING)
+			if (is_holding == false)
 			{
-				if (GetState() == MARIO_STATE_WALKING_RIGHT || GetState() == MARIO_STATE_WALKING_LEFT)
+				if (koopa->GetState() == GOOMBA_STATE_INDENT_IN || koopa->GetState() == CONCO_STATE_INDENT_OUT ||
+					koopa->GetState() == CONCO_STATE_SHELL_MOVING)
 				{
-					this->SetState(MARIO_STATE_KICK);
-					koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+					if (GetState() == MARIO_STATE_WALKING_RIGHT || GetState() == MARIO_STATE_WALKING_LEFT)
+					{
+						this->SetState(MARIO_STATE_KICK);
+						koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+					}
+				}
+				else
+				{
+					CollideWithEnemy();
 				}
 			}
 			else
 			{
-				CollideWithEnemy();
+				if (is_holding == true)
+				{
+					if (koopa->GetState() == GOOMBA_STATE_INDENT_IN)
+					{
+						holding_something = koopa;
+						koopa->SetState(CONCO_STATE_BEING_HOLDED);
+					}
+				}
+
 			}
 		}
 		else
-			CollideWithEnemy(); //jump from above down
+			CollideWithEnemy();
 	}
-
 }
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)

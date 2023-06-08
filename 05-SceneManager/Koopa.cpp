@@ -229,7 +229,7 @@ void Koopa::Render()
 			else
 				aniId = CONCO_ANI_GREEN_WALKING_LEFT;
 		}
-		else if (state == GOOMBA_STATE_INDENT_IN)
+		else if (state == GOOMBA_STATE_INDENT_IN || state == CONCO_STATE_BEING_HOLDED)
 		{
 			aniId = CONCO_ANI_GREEN_INDENT;
 		}
@@ -317,5 +317,8 @@ void Koopa::SetState(int state)
 	case CONCO_STATE_FLY_RIGHT:
 		vx = KOOPA_FLYING_SPEED_Y;
 		break;
+	case CONCO_STATE_BEING_HOLDED:
+		vx = 0;
+		vy = 0;
 	}
 }
