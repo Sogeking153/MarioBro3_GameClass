@@ -13,8 +13,8 @@ PiranaPlant::PiranaPlant(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y
 
 	player = mario;
 
-	min_y = y - VENUS_BBOX_HEIGHT + 15;
-	max_y = y;
+	min_y = y - VENUS_BBOX_HEIGHT + 7;
+	max_y = y + 10;
 
 	l_safe = x - 90;
 	t_safe = 0;

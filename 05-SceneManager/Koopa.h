@@ -12,8 +12,8 @@
 #define KOOPA_BBOX_HEIGHT 27*3
 #define GOOMBA_BBOX_HEIGHT_DIE 7
 
-#define GOOMBA_BBOX_WIDTH_INDENT_IN 16*3
-#define GOOMBA_BBOX_HEIGHT_INDENT_IN 16*3
+#define GOOMBA_BBOX_WIDTH_INDENT_IN 15*3
+#define GOOMBA_BBOX_HEIGHT_INDENT_IN 15*3
 
 #define GOOMBA_DIE_TIMEOUT 500
 
@@ -90,6 +90,8 @@ public:
 	void OnCollisionWithFlatForm(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrickCoin(LPCOLLISIONEVENT e);
+	void OnCollisionWithBrickBlink(LPCOLLISIONEVENT e);
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state);

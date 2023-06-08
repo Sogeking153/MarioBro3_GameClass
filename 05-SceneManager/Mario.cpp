@@ -16,6 +16,9 @@
 #include "PButton.h"
 #include "BrickBlink.h"
 #include "Pipe.h"
+#include "PiranaPlant.h"
+#include "VenusFireTrap.h"
+#include "VirtualBox.h"
 
 #include "Collision.h"
 
@@ -25,7 +28,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		if (GetTickCount64() - time_to_go_down > 3000)
 		{
-			if (this->GetY() < 900)
+			if (this->GetY() < 500)
 			{
 				SetPosition(6350, 1500);
 				is_set_position = false;
@@ -164,6 +167,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPButton(e);
 	else if (dynamic_cast<Pipe*>(e->obj))
 		OnCollisionWithPipe(e);
+	else if (dynamic_cast<VirtualBox*>(e->obj))
+		OnCollisionWithVirtualBox(e);
+	else if (dynamic_cast<PiranaPlant*>(e->obj))
+		OnCollisionWithPiranaPlant(e);
+	else if (dynamic_cast<VenusFireTrap*>(e->obj))
+		OnCollisionWithVenusFireTrap(e);
 
 	if (dynamic_cast<Pipe*>(e->obj))
 	{
@@ -179,9 +188,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 
 			if (nx == -1)
-				this->holding_something->SetPosition(this->x - 50, this->y);
+				this->holding_something->SetPosition(this->x - 60, this->y);
 			else if (nx == 1)
-				this->holding_something->SetPosition(this->x + 50, this->y);
+				this->holding_something->SetPosition(this->x + 60, this->y);
 		}
 		else
 		{
@@ -190,6 +199,16 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			holding_something = NULL;
 		}
 	}
+}
+
+void CMario::OnCollisionWithPiranaPlant(LPCOLLISIONEVENT e)
+{
+	CollideWithEnemy();
+}
+
+void CMario::OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e)
+{
+	CollideWithEnemy();
 }
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
@@ -307,6 +326,13 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		else
 			CollideWithEnemy();
 	}
+}
+
+void CMario::OnCollisionWithVirtualBox(LPCOLLISIONEVENT e)
+{
+	//e->obj->Delete();
+	//coin++;
+	e->obj->vx = this->vx;
 }
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
@@ -531,31 +557,44 @@ int CMario::GetAniIdBig()
 		else
 			if (vx == 0)
 			{
-				if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_IDLE_LEFT;
+				if (holding_something == NULL)
+				{
+					if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+					else aniId = ID_ANI_MARIO_IDLE_LEFT;
+				}
+				else
+				{
+					if (nx > 0) aniId = MARIO_ANI_BIG_STAND_HOLD;
+					else  aniId = MARIO_ANI_BIG_STAND_HOLD + TO_BECOME_LEFT;
+				}
 			}
 			else if (vx > 0)
 			{
-				if (ax < 0)
-					aniId = ID_ANI_MARIO_BRACE_LEFT;
-				/*else if (ax == MARIO_ACCEL_RUN_X)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
-				else if (ax == MARIO_ACCEL_WALK_X)
-					aniId = ID_ANI_MARIO_WALKING_RIGHT;
-					*/
-				else if (vx == MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+				if (holding_something == NULL)
+				{
+					if (ax < 0)
+						aniId = ID_ANI_MARIO_BRACE_LEFT;
+					else if (vx == MARIO_RUNNING_SPEED)
+						aniId = ID_ANI_MARIO_RUNNING_RIGHT;
+					else
+						aniId = ID_ANI_MARIO_WALKING_RIGHT;
+				}
 				else
-					aniId = ID_ANI_MARIO_WALKING_RIGHT;
+					aniId = MARIO_ANI_BRING_KOOMPASHELL_RIGHT;
 			}
 			else // vx < 0
 			{
-				if (ax > 0)
-					aniId = ID_ANI_MARIO_BRACE_RIGHT;
-				else if (vx == -MARIO_RUNNING_SPEED)
-					aniId = ID_ANI_MARIO_RUNNING_LEFT;
+				if (holding_something == NULL)
+				{
+					if (ax > 0)
+						aniId = ID_ANI_MARIO_BRACE_RIGHT;
+					else if (vx == -MARIO_RUNNING_SPEED)
+						aniId = ID_ANI_MARIO_RUNNING_LEFT;
+					else
+						aniId = ID_ANI_MARIO_WALKING_LEFT;
+				}
 				else
-					aniId = ID_ANI_MARIO_WALKING_LEFT;
+					aniId = MARIO_ANI_BRING_KOOMPASHELL_RIGHT + TO_BECOME_LEFT;
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;

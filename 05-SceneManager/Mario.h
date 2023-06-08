@@ -215,12 +215,14 @@ public:
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 	void OnCollisionWithPButton(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrickBlink(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranaPlant(LPCOLLISIONEVENT e);
+	void OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithBrickCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e);
-	void OnCollisionWithVirtalBox(LPCOLLISIONEVENT e);
+	void OnCollisionWithVirtualBox(LPCOLLISIONEVENT e);
 
 	int GetAniIdSmall();
 	int GetAniIdBig();
