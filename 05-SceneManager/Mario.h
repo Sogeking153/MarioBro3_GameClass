@@ -223,12 +223,12 @@ public:
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithVirtualBox(LPCOLLISIONEVENT e);
+	void CollideWithItems(vector<LPGAMEOBJECT>* itemsMarioCanEat);
 
 	int GetAniIdSmall();
 	int GetAniIdBig();
 	int GetAniIdTail();
 
-	void attack();
 //public:
 	CMario(float x, float y) : CGameObject(x, y)
 	{

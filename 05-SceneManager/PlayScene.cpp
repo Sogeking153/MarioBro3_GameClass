@@ -206,7 +206,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case 9:
-		obj = new Mushroom(x, y);
+		obj = new Mushroom(x, y, 1);
 		break;
 	case 10:
 		obj = new SuperLeaf(x, y);
@@ -390,21 +390,28 @@ void CPlayScene::Update(DWORD dt)
 		if (dynamic_cast<BrickCoin*>(objects[i]))
 		{
 			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
-			if (brick->is_hit == true && brick->dropped == false && brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM)
+			if (brick->is_hit == true && brick->dropped == false && 
+				(brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM || brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM))
 			{
-				DebugOut(L"[INFO] which type is it? %d\n", brick->has_item);
-
 				float x, y;
 				brick->GetPosition(x, y);
-				if (player->GetLevel() == MARIO_LEVEL_SMALL)
+				if (brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM)
 				{
-					Mushroom* mushroom = new Mushroom(x, y);
+					Mushroom* mushroom = new Mushroom(x, y, GREEN);
 					itemsMarioCanEat.push_back(mushroom);
 				}
-				else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+				else
 				{
-					SuperLeaf* superleaf = new SuperLeaf(x, y);
-					itemsMarioCanEat.push_back(superleaf);
+					if (player->GetLevel() == MARIO_LEVEL_SMALL)
+					{
+						Mushroom* mushroom = new Mushroom(x, y, RED);
+						itemsMarioCanEat.push_back(mushroom);
+					}
+					else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+					{
+						SuperLeaf* superleaf = new SuperLeaf(x, y);
+						itemsMarioCanEat.push_back(superleaf);
+					}
 				}
 				brick->dropped = true;
 			}
@@ -415,6 +422,8 @@ void CPlayScene::Update(DWORD dt)
 	{
 		itemsMarioCanEat[i]->Update(dt, &coObjects);
 	}
+
+	player->CollideWithItems(&itemsMarioCanEat);
 
 	for (int i = 0; i < list_bricklink.size(); i++)
 	{

@@ -202,7 +202,7 @@ void MapScene::_ParseSection_OBJECTS(string line)
 		int has_item = (int)atof(tokens[3].c_str());
 		obj = new BrickCoin(x, y, has_item,player); break;
 	}
-	case 9: obj = new Mushroom(x, y); break;
+	case 9: obj = new Mushroom(x, y,1); break;
 	case 10: obj = new SuperLeaf(x, y); break;
 	case 11:
 	{

@@ -1,11 +1,26 @@
 #include "Mushroom.h"
 
+Mushroom::Mushroom(float x, float y, int type) : CGameObject(x, y)
+{
+	SetState(MUSHROOM_STATE_GOING_UP);
+
+	/*if (y < 600)
+		type = GREEN;*/
+	this->type = type;
+
+}
+
 void Mushroom::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_COIN)->Render(x, y);
 
-	animations->Get(7004)->Render(x, y);
+	int IdAni = MUSHROOM_RED;
+
+	if (type == GREEN)
+		IdAni = MUSHROOM_GREEN;
+
+	animations->Get(IdAni)->Render(x, y);
 
 	/*animations->Get(720)->Render(x+50, y);
 	animations->Get(722)->Render(x+100, y);
