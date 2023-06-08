@@ -235,7 +235,7 @@ void MapScene::_ParseSection_OBJECTS(string line)
 	{
 		//int type = (int)atof(tokens[3].c_str());
 		//obj = new PiranhaPlant(x, y, player); break;
-		obj = new BrickBlink(x, y); break;
+		obj = new BrickBlink(x, y,player); break;
 	}
 	case 17:
 	{

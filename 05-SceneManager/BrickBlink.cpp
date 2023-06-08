@@ -8,6 +8,12 @@
 #define RIGHT_DIRECTION 1
 #define LEFT_DIRECTION -1
 
+BrickBlink::BrickBlink(float x, float y, CMario* mario) : CGameObject(x, y)
+{
+	player = mario;
+	this->SetState(BRICKBLINK_STATE_BRICK);
+}
+
 void BrickBlink::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -40,13 +46,14 @@ void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vec_debris[i]->Update(dt);
 	}
 
-
 	for (LPGAMEOBJECT debris : vec_debris)
 	{
 		debris->Update(dt, coObjects);
 		//DebugOut(L"[INFO]update %d\n", vec_debris.size());
-
 	}
+
+	if (state == BRICKBLINK_STATE_BRICK)
+		this->CheckWetherBeingAttacked(player, BRICKBLINK_STATE_IS_HIT);
 	//DebugOut(L"[INFO]inside brickblink update? %d\n", vec_debris.size());
 }
 

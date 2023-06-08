@@ -30,7 +30,7 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 
 	player = mario;
 
-	virtualbox = new VirtualBox(x - 50, y);
+	//virtualbox = new VirtualBox(x - 50, y);
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -78,12 +78,12 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (this->state == CONCO_STATE_WALKING_LEFT)
 			{
 				this->SetState(CONCO_STATE_WALKING_RIGHT);
-				virtualbox->SetPosition(this->x + 50, y);
+				//virtualbox->SetPosition(this->x + 50, y);
 			}
 			else if (this->state == CONCO_STATE_WALKING_RIGHT)
 			{
 				this->SetState(CONCO_STATE_WALKING_LEFT);
-				virtualbox->SetPosition(this->x - 50, y);
+				//virtualbox->SetPosition(this->x - 50, y);
 			}
 		}
 	}
@@ -171,10 +171,10 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	virtualbox->vx = this->vx;
-	virtualbox->Update(dt, coObjects);
+	//virtualbox->vx = this->vx;
+	//virtualbox->Update(dt, coObjects);
 
-	if (abs(virtualbox->y - this->y) > 40)
+	/*if (abs(virtualbox->y - this->y) > 40)
 	{
 		if (this->state == CONCO_STATE_WALKING_LEFT)
 		{
@@ -186,7 +186,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			this->SetState(CONCO_STATE_WALKING_LEFT);
 			virtualbox->SetPosition(this->x - 50, y);
 		}
-	}
+	}*/
 	//DebugOut(L"[INFO] state koopa %d \n",state);
 	/*if (state == CONCO_STATE_WAS_BROUGHT)
 	{
@@ -237,14 +237,14 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//	//this->SetState(GOOMBA_STATE_DIE);
 	//}
 	//DebugOut(L"[INFO] vy of koopa: %f\n", vy);
-
-	this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
+	if (player->GetState() == MARIO_STATE_SPIN)
+		this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
 }
 
 
 void Koopa::Render()
 {
-	virtualbox->Render();
+	//virtualbox->Render();
 	int aniId = CONCO_ANI_GREEN_WALKING_LEFT;
 	if (state == CONCO_STATE_DIE)
 	{

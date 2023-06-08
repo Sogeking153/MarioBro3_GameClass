@@ -14,7 +14,7 @@ goomba.txt
 
 # MARIO
 #0	7100	600
-0	2200	600
+0	6300	600
 
 # goomba
 #2	860	600
@@ -160,6 +160,8 @@ goomba.txt
 #11	900	900	1	600
 #11	2400	1048	0	600
 #11	3200	1048	0	600
+
+#con rua do tren hang gach 3 vien
 11	6000	600	1	100	
 
 #pipe 
@@ -195,8 +197,16 @@ goomba.txt
 #16	6000	1100
 #16	6288	1152
 
-#P button
-17	6100	1104
+#P button ( brick có chứa P button)
+#P button đúng
+8	6096	1104	2
+
+#nút cao hơn
+#8	6096	1004	2
+
+#17	6100	1104
+
+#17	6100	1104
 
 #random bonus
 18	8088	1029

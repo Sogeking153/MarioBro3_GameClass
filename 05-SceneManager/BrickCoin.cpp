@@ -47,6 +47,9 @@ void BrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		is_hit = true;
 		//flag = false;
 	}
+
+	if (state != BRICK_COIN_STATE_HIT)
+		this->CheckWetherBeingAttacked(player, BRICK_COIN_STATE_HIT);
 }
 
 void BrickCoin::GetBoundingBox(float& l, float& t, float& r, float& b)

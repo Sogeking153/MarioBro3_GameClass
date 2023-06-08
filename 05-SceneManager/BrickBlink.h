@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "Mario.h"
 //#include "BrickDebris.h"
 
 
@@ -21,12 +22,13 @@
 
 class BrickBlink : public CGameObject {
 public:
+	CMario* player;
 	bool is_block = true;
 	vector<LPGAMEOBJECT> vec_debris;
 
 
 	bool is_hit = false;
-	BrickBlink(float x, float y) : CGameObject(x, y) {   }//SetState(BRICK_BLINK_STATE_COIN);
+	BrickBlink(float x, float y, CMario* mario);//SetState(BRICK_BLINK_STATE_COIN);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
