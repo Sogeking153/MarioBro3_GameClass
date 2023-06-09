@@ -1,7 +1,9 @@
 #include "Pipe.h"
 
-Pipe::Pipe(float x, float y, int type)
+Pipe::Pipe(float x, float y, int type, int is_pine_can_go)
 {
+	this->is_pine_can_go = is_pine_can_go;
+
 	if (type == 1)
 		SetState(PIPE_STATE_TALL);
 	else if (type == 2)

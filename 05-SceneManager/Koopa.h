@@ -68,6 +68,7 @@
 class Koopa : public CGameObject
 {
 public:
+	bool is_picked = false;
 	VirtualBox* virtualbox = NULL;
 	int type = KOOPA_GREEN;
 	bool is_blocking = 1;

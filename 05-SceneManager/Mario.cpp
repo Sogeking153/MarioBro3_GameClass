@@ -50,7 +50,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (this->GetY() < 900)
 				y += 0.03 * dt;
 			else
-				y -= 0.03 * dt;
+				y -= 0.032 * dt;
 			return;
 		}
 	}
@@ -128,6 +128,28 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//SetState(MARIO_STATE_FLY_LANDING);
 		SetState(MARIO_STATE_IDLE);
 	}
+
+	if (holding_something != NULL)
+	{
+		//this->hold_somthing->SetPosition(this->x + 40, this->y);
+		if (is_holding == true)
+		{
+			//if (nx == -1)
+			this->holding_something->SetPosition(x + 40, y);
+			if (nx < 0)
+				this->holding_something->SetPosition(x - 40, y);
+
+
+			dynamic_cast<Koopa*>(holding_something)->is_picked = true;
+		}
+		else
+		{
+			Koopa* koopa = dynamic_cast<Koopa*>(holding_something);
+			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
+			koopa->is_picked = false;
+			holding_something = NULL;
+		}
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -180,31 +202,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<VenusFireTrap*>(e->obj))
 		OnCollisionWithVenusFireTrap(e);
 
-	if (dynamic_cast<Pipe*>(e->obj))
+	if (dynamic_cast<Pipe*>(e->obj) && dynamic_cast<Pipe*>(e->obj)->is_pine_can_go == true)
 	{
 		this->go_down = true;
 		//SetPosition(200, 100);
 	}
 	else
 		this->go_down = false;
-
-	if (holding_something != NULL)
-	{
-		if (is_holding == true)
-		{
-
-			if (nx == -1)
-				this->holding_something->SetPosition(this->x - 60, this->y);
-			else if (nx == 1)
-				this->holding_something->SetPosition(this->x + 60, this->y);
-		}
-		else
-		{
-			Koopa* koopa = dynamic_cast<Koopa*>(holding_something);
-			koopa->SetState(GOOMBA_STATE_SHELL_RUNNING);
-			holding_something = NULL;
-		}
-	}
 }
 
 void CMario::OnCollisionWithPiranaPlant(LPCOLLISIONEVENT e)
@@ -219,7 +223,7 @@ void CMario::OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPipe(LPCOLLISIONEVENT e)
 {
-	if (e->ny > 0)
+	if (e->ny > 0 && dynamic_cast<Pipe*>(e->obj)->is_pine_can_go == true && is_up_press == true)
 	{
 		is_set_position = true;
 		time_to_go_down = GetTickCount64();
@@ -259,7 +263,7 @@ void CMario::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 {
 	if (is_hit_bonus == true)
 		is_auto = true;
-	if (e->ny > 0)
+	if (e->ny > 0 && dynamic_cast<FlatForm*>(e->obj)->is_go_through == true)
 	{
 		jump_down_to_up = true;
 		vy = vy_store;
@@ -323,7 +327,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 					if (koopa->GetState() == GOOMBA_STATE_INDENT_IN)
 					{
 						holding_something = koopa;
-						koopa->SetState(CONCO_STATE_BEING_HOLDED);
+						//koopa->SetState(CONCO_STATE_BEING_HOLDED);
 					}
 				}
 
@@ -841,7 +845,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_FLY_LANDING:
 		fly_start = GetTickCount64();
-		vy = 0.02;
+		vy = 0.06;
 		break;
 	case MARIO_STATE_FLY_HIGH:
 		fly_high_start = GetTickCount64();

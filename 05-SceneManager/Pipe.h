@@ -4,7 +4,7 @@
 
 #define	 PIPE_TALL_BBOX_WIDTH 32*3
 #define	 PIPE_TALL_BBOX_HEIGHT 48*3
-#define	 PIPE_SHORT_BBOX_WIDTH 32*3
+#define	 PIPE_SHORT_BBOX_WIDTH 30*3
 #define	 PIPE_SHORT_BBOX_HEIGHT 32*3
 
 #define  PIPE_STATE_TALL				100
@@ -17,7 +17,8 @@
 
 class Pipe : public CGameObject
 {
-protected:
+public:
+	bool is_pine_can_go = false;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {};
 	virtual void Render();
@@ -28,8 +29,7 @@ protected:
 
 	//virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
-public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	Pipe(float x, float y, int type);
+	Pipe(float x, float y, int type, int is_pine_can_go);
 	virtual void SetState(int state);
 };

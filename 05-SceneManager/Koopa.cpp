@@ -218,6 +218,13 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			virtualbox->SetPosition(this->x - 50, y);
 		}
 	}
+
+	CGameObject::Update(dt, coObjects);
+	if (is_picked == false)
+	{
+		vy += KOOMPAS_AY * dt;
+
+	}
 	//DebugOut(L"[INFO] state koopa %d \n",state);
 	/*if (state == CONCO_STATE_WAS_BROUGHT)
 	{
@@ -227,8 +234,8 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//return;
 	}*/
 
-	if (state != CONCO_STATE_BEING_HOLDED)
-		vy += KOOMPAS_AY * dt;
+	//if (state != CONCO_STATE_BEING_HOLDED)
+
 	//vx += ax * dt;
 
 	if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
@@ -237,7 +244,6 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-	CGameObject::Update(dt, coObjects);
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 

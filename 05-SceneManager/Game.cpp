@@ -461,8 +461,8 @@ void CGame::_ParseSection_SCENES(string line)
 	LPSCENE scene = NULL;
 	if (id == 1 || id == 2 || id == 0)
 		scene = new CPlayScene(id, path); // Handle at this place if need other scene
-	else if (id == 3)
-		scene = new MapScene(id, path);
+	//else if (id == 3)
+		//scene = new MapScene(id, path);
 
 	scenes[id] = scene;
 }

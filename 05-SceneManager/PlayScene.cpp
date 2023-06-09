@@ -193,7 +193,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
-		obj = new FlatForm(x, y, width, height);
+		int is_go_through = (float)atof(tokens[5].c_str());
+		obj = new FlatForm(x, y, width, height, is_go_through);
 		break;
 	}
 	case 7:
@@ -221,7 +222,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 12:
 	{
 		int type = (int)atof(tokens[3].c_str());
-		obj = new Pipe(x, y, type); 
+		int is_can_go = (int)atof(tokens[4].c_str());
+		obj = new Pipe(x, y, type, is_can_go); break;
 		break;
 	}
 	case 13:
