@@ -22,6 +22,7 @@
 #define GOOMBA_STATE_WALKING_LEFT		800
 #define GOOMBA_STATE_WALKING_WITHOUT_SWING		900
 #define GOOMBA_STATE_WAS_SHOOTED			1000
+#define GOOMBA_ADJUST_HEIGHT 1100
 
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001
@@ -41,8 +42,8 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
-	virtual int IsBlocking() { return is_colliable; }
+	virtual int IsCollidable() { return is_colliable; };
+	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);

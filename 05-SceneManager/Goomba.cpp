@@ -45,19 +45,22 @@ void CGoomba::OnNoCollision(DWORD dt)
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
-	if (dynamic_cast<CGoomba*>(e->obj)) return; 
+	//if (dynamic_cast<CGoomba*>(e->obj)) return; 
 	if (dynamic_cast<ParaGoomba*>(e->obj)) return;
 	if (dynamic_cast<CMario*>(e->obj)) return;
 
 	if (dynamic_cast<Koopa*>(e->obj))
 	{
-		Koopa* Koopas = dynamic_cast<Koopa*>(e->obj);
+		Koopa* koopa = dynamic_cast<Koopa*>(e->obj);
 
-		if (Koopas->GetX() > this->GetX())
+		if (koopa->GetState() == GOOMBA_STATE_SHELL_RUNNING)
 		{
-			is_minus_vx = true;
+			if (koopa->GetX() > this->GetX())
+			{
+				is_minus_vx = true;
+			}
+			this->SetState(GOOMBA_STATE_WAS_SHOOTED);
 		}
-		this->SetState(GOOMBA_STATE_WAS_SHOOTED);
 	}
 
 	if (e->ny != 0 )
@@ -67,6 +70,12 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+	}
+
+	if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		// if 2 goomba collide, 1 will change direction at e->nx!=0 and 1 at here
+		dynamic_cast<CGoomba*>(e->obj)->vx = -vx;
 	}
 }
 
@@ -144,15 +153,19 @@ void CGoomba::SetState(int state)
 			ay = 0; 
 			break;
 		case GOOMBA_STATE_WALKING: 
-			vx = GOOMBA_WALKING_SPEED;
+			vx = -GOOMBA_WALKING_SPEED;
 			//vx = 0;
 			break;
 		case GOOMBA_STATE_WAS_SHOOTED:
 			vy = -GOOMBA_VY_WHEN_WAS_SHOOT;
-			DebugOut(L"[INFO] direction shot %d \n", DirectionWhenBeingAttack);
+			//DebugOut(L"[INFO] direction shot %d \n", DirectionWhenBeingAttack);
 			vx = DirectionWhenBeingAttack == -1 ? -GOOMBA_VX_WHEN_WAS_SHOOT : GOOMBA_VX_WHEN_WAS_SHOOT;
 			//vx = 0.09;
 			is_colliable = 0;
+			break;
+		case GOOMBA_ADJUST_HEIGHT:
+			y -= 5;
+			DebugOut(L"[INFO]adjust height innn %d \n", DirectionWhenBeingAttack);
 			break;
 	}
 }

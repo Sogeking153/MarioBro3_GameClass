@@ -3,10 +3,11 @@
 #include "Goomba.h"
 #include "BrickCoin.h"
 #include "BrickBlink.h"
+#include "PlayScene.h"
 
 #define KOOMPAS_VY_WAS_SHOOTED 0.6f
 #define KOOMPAS_VX_WAS_SHOOTED 0.1f
-#define KOOMPAS_VX_SHELL_RUNNING 0.7f
+#define KOOMPAS_VX_SHELL_RUNNING 0.1f //0.7f
 
 #define GAP_ANI_TO_RED 8
 
@@ -31,7 +32,10 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 
 	player = mario;
 
-	//virtualbox = new VirtualBox(x - 50, y);
+	virtualbox = new VirtualBox(x - 50, y, mario);
+	CGame* game = CGame::GetInstance();
+	CPlayScene* scene = (CPlayScene*)game->GetCurrentScene();
+	scene->objects.push_back(virtualbox);
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -66,6 +70,11 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	//if (dynamic_cast<Koopa*>(e->obj)) return;
 	if (dynamic_cast<CMario*>(e->obj)) return;
 
+	/*if (state == GOOMBA_STATE_SHELL_RUNNING)
+	{
+		if (dynamic_cast<CGoomba*>(e->obj)) return;
+	}*/
+
 	if (e->ny != 0)
 	{
 		if (state == CONCO_STATE_FLY_LEFT || state == CONCO_STATE_FLY_RIGHT)
@@ -76,6 +85,10 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (!dynamic_cast<Koopa*>(e->obj))
 			vx = -vx;
+		if (vx > 0)
+			virtualbox->SetPosition(this->x + 50, y - 2);
+		else
+			virtualbox->SetPosition(this->x - 50, y - 2);
 		//{
 		//	if (this->state == CONCO_STATE_WALKING_LEFT)
 		//	{
@@ -132,15 +145,14 @@ void Koopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-	if (state == GOOMBA_STATE_SHELL_RUNNING)
-	{
-		/*	if (goomba->GetX() < this->GetX())
-			{
-				goomba->is_minus_vx = true;
-			}*/
-	}
-	goomba->SetState(GOOMBA_STATE_WAS_SHOOTED);
-	DebugOut(L"[INFO] get in?\n");
+	//if (state == GOOMBA_STATE_SHELL_RUNNING)
+	//{
+	//	/*	if (goomba->GetX() < this->GetX())
+	//		{
+	//			goomba->is_minus_vx = true;
+	//		}*/
+	//}
+	//DebugOut(L"[INFO] get in?\n");
 }
 
 void Koopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -190,10 +202,10 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	//virtualbox->vx = this->vx;
+	virtualbox->vx = this->vx;
 	//virtualbox->Update(dt, coObjects);
 
-	/*if (abs(virtualbox->y - this->y) > 40)
+	if (abs(virtualbox->y - this->y) > 15)
 	{
 		if (this->state == CONCO_STATE_WALKING_LEFT)
 		{
@@ -205,7 +217,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			this->SetState(CONCO_STATE_WALKING_LEFT);
 			virtualbox->SetPosition(this->x - 50, y);
 		}
-	}*/
+	}
 	//DebugOut(L"[INFO] state koopa %d \n",state);
 	/*if (state == CONCO_STATE_WAS_BROUGHT)
 	{

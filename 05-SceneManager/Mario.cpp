@@ -332,7 +332,13 @@ void CMario::OnCollisionWithVirtualBox(LPCOLLISIONEVENT e)
 {
 	//e->obj->Delete();
 	//coin++;
-	e->obj->vx = this->vx;
+	//e->obj->vx = this->vx;
+	//DebugOut(L"virtual box before %f \n", e->obj->y);
+	if (e->ny < 0)
+	{
+		e->obj->SetState(VIRTUAL_BOX_ADJUST_HEIGHT);
+	}
+	//DebugOut(L"virtal box after %f \n", e->obj->y);
 }
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
