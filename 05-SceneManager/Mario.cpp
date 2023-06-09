@@ -122,6 +122,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		fly_high_start = 0;
 		//DebugOut(L"[INFO] fly awawyyyy?\n");
 	}
+
+	if (this->GetY() < 0)
+	{
+		//SetState(MARIO_STATE_FLY_LANDING);
+		SetState(MARIO_STATE_IDLE);
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)

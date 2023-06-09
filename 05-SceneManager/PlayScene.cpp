@@ -447,12 +447,17 @@ void CPlayScene::Update(DWORD dt)
 
 	if (player->y < 570) //in the sky
 	{
-		CGame::GetInstance()->SetCamPos(cx, cy);
+		CGame::GetInstance()->SetCamPos(cx, 0);
 	}
+	else if (player->GetY() >= 570 && player->GetY() <= 1368)
+	{
+		CGame::GetInstance()->SetCamPos(cx, 700 - 24);
+	}
+
 	else if (player->GetY() > 1368)
+	{
 		CGame::GetInstance()->SetCamPos(cx, 1365);
-	else
-		CGame::GetInstance()->SetCamPos(cx, 700);
+	}
 
 	//CGame::GetInstance()->SetCamPos(cx, 700.0f);
 
