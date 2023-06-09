@@ -46,6 +46,18 @@ void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vec_debris[i]->Update(dt);
 	}
 
+	for (int i = 0; i < vec_debris.size(); i++)
+	{
+		if (vec_debris[i]->IsDeleted())
+		{
+			delete vec_debris[i];
+			vec_debris[i] = nullptr;
+			vec_debris.erase(vec_debris.begin() + i);
+
+			//DebugOut(L"[INFO]delete %d\n", vec_debris.size());
+		}
+	}
+
 	for (LPGAMEOBJECT debris : vec_debris)
 	{
 		debris->Update(dt, coObjects);
@@ -54,7 +66,6 @@ void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == BRICKBLINK_STATE_BRICK)
 		this->CheckWetherBeingAttacked(player, BRICKBLINK_STATE_IS_HIT);
-	//DebugOut(L"[INFO]inside brickblink update? %d\n", vec_debris.size());
 }
 
 void BrickBlink::GetBoundingBox(float& l, float& t, float& r, float& b)

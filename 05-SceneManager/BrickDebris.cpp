@@ -16,6 +16,8 @@ void BrickDebris::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += DEBRIS_BRICK_GRAVITY * dt;
 	x += vx * dt;
 	y += vy * dt;
+
+	this->DeleteWhenOutOfCam();
 }
 
 void BrickDebris::Render()

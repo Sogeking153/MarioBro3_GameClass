@@ -14,7 +14,7 @@ ParaGoomba::ParaGoomba(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y)
 	//SetState(GOOMBA_STATE_WALKING_LEFT);
 	vx = -PARAGOOMBA_WALKING_SPEED; //initial setting to go left
 
-	player = mario;
+	player = dynamic_cast<CMario*>(mario);
 }
 
 void ParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -151,7 +151,8 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//	/*this->SetState(GOOMBA_STATE_DIE); */
 	//}
 
-	this->CheckWetherBeingAttacked(player, PARA_GOOMBA_STATE_WAS_SHOOTED);
+	if (player->GetState() == MARIO_STATE_SPIN)
+		this->CheckWetherBeingAttacked(player, PARA_GOOMBA_STATE_WAS_SHOOTED);
 }
 
 

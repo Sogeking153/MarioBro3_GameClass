@@ -76,7 +76,7 @@ public:
 	ULONGLONG time_to_indent_out;
 	float ax = 0;
 	float ay = 0;
-	LPGAMEOBJECT player;
+	CMario* player;
 	ULONGLONG die_start;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

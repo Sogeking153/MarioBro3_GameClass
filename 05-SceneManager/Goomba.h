@@ -36,7 +36,7 @@ public:
 	float ax;				
 	float ay; 
 
-	LPGAMEOBJECT player;
+	CMario* player;
 	ULONGLONG die_start;
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);

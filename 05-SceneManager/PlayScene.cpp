@@ -564,9 +564,6 @@ void CPlayScene::PurgeDeletedObjects()
 	{
 		if (itemsMarioCanEat[i]->IsDeleted() == true)
 		{
-			/*if (dynamic_cast<CoinEffect*>(itemsMarioCanEat[i]))
-			{
-			}*/
 			delete itemsMarioCanEat[i];
 			itemsMarioCanEat[i] = nullptr;
 			//DebugOut(L"hihihi, delete roi ne\n");

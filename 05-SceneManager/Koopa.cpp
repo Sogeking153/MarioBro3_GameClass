@@ -30,7 +30,7 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 	//SetState(CONCO_STATE_FLY_LEFT);
 	SetState(koopa_state);
 
-	player = mario;
+	player = dynamic_cast<CMario*>(mario);
 
 	virtualbox = new VirtualBox(x - 50, y, mario);
 	CGame* game = CGame::GetInstance();
