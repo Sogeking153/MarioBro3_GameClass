@@ -804,6 +804,13 @@
 #Tail sLow Landing
 451	11000	100	11001	100	11002	100
 
+#bring shell jump SMALL
+452	10030	100
+#bring shell jump BIG
+453	10013	100
+#bring shell jump RACCON
+454	10074	100
+
 # ==== MARIO LEFT=========
 #idle NORMAL BIG left
 500	10501	100
@@ -920,6 +927,13 @@ throw FIRE mario
 ####go down ko cần 447-450
 #tail slow landing
 551	11500	70	11501	70	11502	70
+
+#bring shell jump SMALL
+552	10530	100
+#bring shell jump BIG
+553	10513	100
+#bring shell jump RACCON
+554	10574	100
 
 # ==== QUESTION BRICK =========
 7000	40001	200	40002	200	40002	200	40003	200	40004	200
