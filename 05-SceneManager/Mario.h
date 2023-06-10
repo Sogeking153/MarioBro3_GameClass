@@ -194,6 +194,7 @@ class CMario : public CGameObject
 {
 public:
 	//ULONGLONG time_to_switch_scene = 0;
+	bool is_jumped = false;
 	bool is_up_press = false;
 	bool is_holding = false;
 	CGameObject* holding_something = NULL;

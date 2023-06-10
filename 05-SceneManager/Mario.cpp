@@ -159,6 +159,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			this->SetState(MARIO_STATE_KICK);
 		}
 	}
+
+	if (is_jumped)
+	{
+		this->SetPosition(x, y - 2);
+		is_jumped = false;
+	}
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -308,6 +314,12 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		koopa->UpdatePositionVertiacally();
 
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	}
+	else if (e->ny > 0)
+	{
+		CollideWithEnemy();
+		is_jumped = true;
+		DebugOut(L"collision above %d \n");
 	}
 	else
 	{

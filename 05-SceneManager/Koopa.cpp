@@ -32,10 +32,8 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 
 	player = dynamic_cast<CMario*>(mario);
 
-	virtualbox = new VirtualBox(x - 50, y, mario);
-	CGame* game = CGame::GetInstance();
-	CPlayScene* scene = (CPlayScene*)game->GetCurrentScene();
-	scene->objects.push_back(virtualbox);
+	if (type == 1)
+		virtualbox = new VirtualBox(x - 50, y, mario);
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -85,10 +83,11 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (!dynamic_cast<Koopa*>(e->obj))
 			vx = -vx;
-		if (vx > 0)
-			virtualbox->SetPosition(this->x + 50, y - 2);
-		else
-			virtualbox->SetPosition(this->x - 50, y - 2);
+		if (type == 1)
+			if (vx > 0)
+				virtualbox->SetPosition(this->x + 50, y - 2);
+			else
+				virtualbox->SetPosition(this->x - 50, y - 2);
 		//{
 		//	if (this->state == CONCO_STATE_WALKING_LEFT)
 		//	{
@@ -202,20 +201,24 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	virtualbox->vx = this->vx;
-	//virtualbox->Update(dt, coObjects);
 
-	if (abs(virtualbox->y - this->y) > 15)
+	if (type == 1)
 	{
-		if (this->state == CONCO_STATE_WALKING_LEFT)
+		virtualbox->vx = this->vx;
+		virtualbox->Update(dt, coObjects);
+
+		if (abs(virtualbox->y - this->y) > 15)
 		{
-			this->SetState(CONCO_STATE_WALKING_RIGHT);
-			virtualbox->SetPosition(this->x + 50, y);
-		}
-		else if (this->state == CONCO_STATE_WALKING_RIGHT)
-		{
-			this->SetState(CONCO_STATE_WALKING_LEFT);
-			virtualbox->SetPosition(this->x - 50, y);
+			if (this->state == CONCO_STATE_WALKING_LEFT)
+			{
+				this->SetState(CONCO_STATE_WALKING_RIGHT);
+				virtualbox->SetPosition(this->x + 50, y);
+			}
+			else if (this->state == CONCO_STATE_WALKING_RIGHT)
+			{
+				this->SetState(CONCO_STATE_WALKING_LEFT);
+				virtualbox->SetPosition(this->x - 50, y);
+			}
 		}
 	}
 
@@ -261,6 +264,19 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetPosition(this->x, this->y - GAP_AVOID_FALLING_DOWN);//so that shell wont fall off when indent out
 		SetState(CONCO_STATE_WALKING_LEFT);
+
+		if (this->is_picked == true)
+		{
+			player->CollideWithEnemy();
+			player->holding_something = NULL;
+			player->SetState(MARIO_STATE_IDLE);
+			player->is_holding = false;
+
+			this->is_picked = false;
+
+			DebugOut(L"enter how many time %d\n");
+
+		}
 	}
 
 	//float ml, mt, mr, mb;
@@ -281,7 +297,8 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Koopa::Render()
 {
-	//virtualbox->Render();
+	if (type ==1)
+		virtualbox->Render();
 	int aniId = CONCO_ANI_GREEN_WALKING_LEFT;
 	if (state == CONCO_STATE_DIE)
 	{
@@ -379,10 +396,10 @@ void Koopa::SetState(int state)
 		is_colliable = 0;
 		break;
 	case CONCO_STATE_FLY_LEFT:
-		vx = -KOOPA_FLYING_SPEED_Y;
+		vx = -KOOPA_FLYING_SPEED_X;
 		break;
 	case CONCO_STATE_FLY_RIGHT:
-		vx = KOOPA_FLYING_SPEED_Y;
+		vx = KOOPA_FLYING_SPEED_X;
 		break;
 	case CONCO_STATE_BEING_HOLDED:
 		vx = 0;
