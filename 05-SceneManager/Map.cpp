@@ -43,13 +43,13 @@ void Map::LoadTileSet()
 	CTextures* textures = CTextures::GetInstance();
 
 
-	textures->Add(100, tileSetFilePath);//"textures\\TileObject.png"
+	textures->Add(ID_MAP_TILE_SET, tileSetFilePath);//"textures\\TileObject.png"
 
 	int id = 0;
 	CSprites* sprites = CSprites::GetInstance();
 
 
-	LPTEXTURE titleset = textures->Get(100);
+	LPTEXTURE titleset = textures->Get(ID_MAP_TILE_SET);
 
 
 
@@ -57,8 +57,8 @@ void Map::LoadTileSet()
 	{
 		for (int j = 0; j < number_tile_set_width; j++)
 		{
-			sprites->Add(id++, j * width_tileset, i * height_tileset,
-				j * width_tileset + width_tileset, i * height_tileset + height_tileset, titleset);
+			sprites->Add(id++, j * width_tile, i * height_tile,
+				j * width_tile + width_tile, i * height_tile + height_tile, titleset);
 		}
 	}
 }
@@ -67,27 +67,26 @@ void Map::Draw()
 {
 	CSprites* sprites = CSprites::GetInstance();
 
-	int w = 48;
-	int h = 48;
+	//int w = 48;
+	//int h = 48;
 
-	int  SCREEN_WIDTH = 760;
-	int  SCREEN_HEIGHT = 730;
+
 
 	float cam_x = 0, cam_y = 0;
 	CGame::GetInstance()->GetCamPos(cam_x, cam_y);
 
-	int begin_row = cam_y / w + 1;
-	int end_row = (cam_y + SCREEN_HEIGHT) / w - 1;
+	int begin_row = cam_y / width_tile + 1;
+	int end_row = (cam_y + SCREEN_HEIGHT) / width_tile - 1;
 
-	if (begin_row < 0)
-		begin_row = 0;
+	if (begin_row < MIN_ROW)
+		begin_row = MIN_ROW;
 
 
-	int begin_column = cam_x / h; 
-	int end_column = (cam_x + SCREEN_WIDTH) / h + 1;
+	int begin_column = cam_x / height_tile;
+	int end_column = (cam_x + SCREEN_WIDTH) / height_tile + 1;
 
-	if (begin_column < 0)
-		begin_column = 0;
+	if (begin_column < MIN_COLUMN)
+		begin_column = MIN_COLUMN;
 
 	//DebugOut(L"end row %d \n", end_row);
 	//DebugOut(L"end column %d \n", end_column);
@@ -99,10 +98,10 @@ void Map::Draw()
 	{
 		for (int j = begin_column; j < end_column; j++)
 		{
-			if (map[i][j] <= 0)
+			if (map[i][j] <= IS_NOT_COLOURED_TILE)
 				continue;
 
-			sprites->Get(map[i][j] - 1)->Draw(j * width_tileset, (i)*height_tileset);
+			sprites->Get(map[i][j] - 1)->Draw(j * width_tile, (i)*height_tile);
 		}
 
 	}

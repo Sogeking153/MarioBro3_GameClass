@@ -1,4 +1,5 @@
 #include "Sprite.h"
+#define ZOOM_X3 3
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex)
 {
@@ -27,7 +28,10 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPTEXTURE tex
 	sprite.ColorModulate = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	sprite.TextureIndex = 0;
 
-	D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	if (id>900) // for map loading
+		D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth * ZOOM_X3, (FLOAT)spriteHeight * ZOOM_X3, 1.0f);
+	else
+		D3DXMatrixScaling(&this->matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
 }
 
 void CSprite::Draw(float x, float y)

@@ -20,7 +20,7 @@
 #define  SUPER_LEAF_SPEED_HORIZONTAL		0.15f
 
 #define SUPERLEAF_STATE_WALKING 100
-
+#define ANI_SUPER_LEAF 7003
 
 class SuperLeaf : public CGameObject {
 public:

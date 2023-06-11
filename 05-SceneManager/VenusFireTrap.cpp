@@ -13,16 +13,16 @@ VenusFireTrap::VenusFireTrap(float x, float y, LPGAMEOBJECT mario, int type) :CG
 
 	player = mario;
 
-	if (type == 1)
-		min_y = y - VENUS_BBOX_HEIGHT - 48 / 2;
+	if (type == VENUS_RED)
+		min_y = y - VENUS_BBOX_HEIGHT - VENUS_MIN_Y_RED;
 	else
-		min_y = y - VENUS_BBOX_HEIGHT - 10;
+		min_y = y - VENUS_BBOX_HEIGHT - VENUS_MIN_Y_GREEN;
 
 	max_y = y;
-	l_safe = x - 90;
+	l_safe = x - VENUS_WIDTH_SAFE;
 	t_safe = 0;
-	r_safe = x + 90;
-	b_safe = y + 90;
+	r_safe = x + VENUS_WIDTH_SAFE;
+	b_safe = y + VENUS_WIDTH_SAFE;
 }
 
 void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -71,15 +71,15 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = 0;
 	}
 
-	if (state == VENUS_STATE_GOING_UP && GetTickCount64() - time_interval > 2000)
+	if (state == VENUS_STATE_GOING_UP && GetTickCount64() - time_interval > VENUS_TIME_GO_UP)
 	{
 		SetState(VENUS_STATE_SEEING);
 	}
-	else if (state == VENUS_STATE_SEEING && GetTickCount64() - time_interval > 4000)
+	else if (state == VENUS_STATE_SEEING && GetTickCount64() - time_interval > VENUS_TIME_SEEING)
 	{
 		PlantBullet* venus_bullet;
-		venus_bullet = new PlantBullet(x, y - 35, player);
-		venus_bullet->SetPosition(x, y - 35);
+		venus_bullet = new PlantBullet(x, y - DISTANCE_BULLET_PLANT, player);
+		venus_bullet->SetPosition(x, y - DISTANCE_BULLET_PLANT);
 
 		if (player->GetX() < x)
 		{
@@ -102,7 +102,7 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(VENUS_STATE_GOING_DOWN);
 
 	}
-	else if (state == VENUS_STATE_GOING_DOWN && GetTickCount64() - time_interval > 9000)
+	else if (state == VENUS_STATE_GOING_DOWN && GetTickCount64() - time_interval > VENUS_TIME_TURNAROUND)
 	{
 		float l, t, r, b;
 		player->GetBoundingBox(l, t, r, b);
@@ -184,7 +184,7 @@ void VenusFireTrap::RenderToType(int type, int& aniId)
 	}
 
 	if (type == GREEN)
-		aniId += 100;
+		aniId += GAP_ANI_RED_TO_GREEN;
 }
 
 bool VenusFireTrap::CheckInArea(float l, float t, float r, float b)

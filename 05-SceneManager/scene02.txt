@@ -226,3 +226,6 @@ goomba.txt
 #virtal box
 19	2750	930
 19	1500	1200
+
+[MAP]
+textures\map_world1-1.txt	textures\TileObject.png	176	41	29	30

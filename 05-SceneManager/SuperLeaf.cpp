@@ -3,7 +3,7 @@
 void SuperLeaf::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(7003)->Render(x, y);
+	animations->Get(ANI_SUPER_LEAF)->Render(x, y);
 	RenderBoundingBox();
 }
 
