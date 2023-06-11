@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "FlatForm.h"
 #include "VirtualBox.h"
+#include "MoneyEffect.h"
 
 #define KOOPA_GREEN		0
 #define KOOPA_RED			1
@@ -84,6 +85,7 @@
 class Koopa : public CGameObject
 {
 public:
+	MoneyEffect* effect = NULL;
 	bool is_picked = false;
 	VirtualBox* virtualbox = NULL;
 	int type = KOOPA_GREEN;

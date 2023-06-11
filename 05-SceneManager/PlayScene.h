@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "PiranaPlant.h"
 #include "UI.h"
+#include "CoinEffect.h"
 //#include "Koopas.h"
 
 class CPlayScene: public CScene

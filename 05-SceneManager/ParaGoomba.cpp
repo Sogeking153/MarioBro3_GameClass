@@ -94,7 +94,7 @@ void ParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 				else
 					SetState(PARA_GOOMBA_STATE_WALKING_RIGHT);
 			}
-			if (GetTickCount64() - walking_start > 2000 && walking_start)
+			if (GetTickCount64() - walking_start > TIME_WALKING && walking_start)
 			{
 				walking_start = 0;
 				count++;
@@ -153,6 +153,16 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (player->GetState() == MARIO_STATE_SPIN)
 		this->CheckWetherBeingAttacked(player, PARA_GOOMBA_STATE_WAS_SHOOTED);
+
+	if (effect)
+	{
+		effect->Update(dt, coObjects);
+		if (effect->isDeleted == true)
+		{
+			delete effect;
+			effect = NULL;
+		}
+	}
 }
 
 
@@ -180,6 +190,9 @@ void ParaGoomba::Render()
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
+
+	if (effect)
+		effect->Render();
 }
 
 void ParaGoomba::SetState(int state)
@@ -188,6 +201,8 @@ void ParaGoomba::SetState(int state)
 	switch (state)
 	{
 	case PARA_GOOMBA_STATE_DIE:
+		if (effect == NULL)
+			effect = new MoneyEffect(this->x, this->y - EFFECT_GAP);
 		die_start = GetTickCount64();
 		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
@@ -206,6 +221,8 @@ void ParaGoomba::SetState(int state)
 		vy = -PARAGOOMBA_VY_SHORT_JUMP;
 		break;
 	case PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING:
+		if (effect == NULL)
+			effect = new MoneyEffect(this->x, this->y - EFFECT_GAP);
 		vx = -PARAGOOMBA_WALKING_SPEED;
 		break;
 	case PARA_GOOMBA_STATE_JUMP_SHORT_3:

@@ -10,7 +10,7 @@ CGoomba::CGoomba(float x, float y, LPGAMEOBJECT mario):CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
-	die_start = -1;
+	//die_start = -1;
 	SetState(GOOMBA_STATE_WALKING);
 
 	player = dynamic_cast<CMario*>(mario);
@@ -84,9 +84,15 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
+	/*if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{
 		isDeleted = true;
+		return;
+	}*/
+
+	if (time_to_disapear->IsTimeUp())
+	{
+		this->Delete();
 		return;
 	}
 
@@ -97,11 +103,23 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (player->GetState() == MARIO_STATE_SPIN)
 		this->CheckWetherBeingAttacked(player, GOOMBA_STATE_WAS_SHOOTED);
 
+	if (effect)
+	{
+		effect->Update(dt, coObjects);
+		if (effect->isDeleted == true)
+		{
+			delete effect;
+			effect = NULL;
+		}
+	}
 }
 
 
 void CGoomba::Render()
 {
+	if (effect)
+		effect->Render();
+
 	int aniId = ID_ANI_GOOMBA_WALKING;
 	if (state == GOOMBA_STATE_DIE)
 	{
@@ -122,7 +140,10 @@ void CGoomba::SetState(int state)
 	switch (state)
 	{
 		case GOOMBA_STATE_DIE:
-			die_start = GetTickCount64();
+			time_to_disapear->StartTime();
+
+			if (effect == NULL)
+				effect = new MoneyEffect(this->x, this->y - EFFECT_GAP);
 			y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE)/2;
 			vx = 0;
 			vy = 0;

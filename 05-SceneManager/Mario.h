@@ -3,9 +3,17 @@
 
 #include "Animation.h"
 #include "Animations.h"
+#include "TimeCustom.h"
 
 #include "debug.h"
+#include "Game.h"
 
+#define CORE 100
+
+#define EFFECT_GAP 50
+
+#define POS_Y_HOLD	1320
+#define POS_Y_END_MAP	8700
 #define MARIO_WALKING_SPEED		0.3f
 #define MARIO_RUNNING_SPEED		0.7f
 
@@ -227,6 +235,11 @@
 class CMario : public CGameObject
 {
 public:
+	int hit_brick_number = 0;
+	int score = 0;
+
+	bool is_on_the_ground = false;
+	TimeCustom* untouchtable_timer = new TimeCustom(2500);
 	//ULONGLONG time_to_switch_scene = 0;
 	bool is_jumped = false;
 	bool is_up_press = false;

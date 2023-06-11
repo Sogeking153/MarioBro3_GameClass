@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "MoneyEffect.h"
 
 #define GOOMBA_GRAVITY 0.002f
 #define PARAGOOMBA_WALKING_SPEED 0.06f
@@ -33,9 +34,12 @@
 #define ID_ANI_PARA_GOOMBA_DIE 5024
 #define ID_ANI_PARA_GOOMBA_WAS_SHOOTED 5401
 
+#define TIME_WALKING 2000
+
 class ParaGoomba : public CGameObject
 {
 protected:
+	MoneyEffect* effect = NULL;
 	int is_minus_vx = false;
 	int is_colliable = 1;
 	int count = 0;

@@ -14,7 +14,7 @@ goomba.txt
 
 # MARIO
 #0	6080	210
-0	2244	1130
+0	444	1130
 
 # goomba
 #2	860	600
@@ -25,7 +25,7 @@ goomba.txt
 2	2090	600
 
 #test
-#2	2790	600
+2	2790	600
 #2	2430	600
 #2	2470	600
 
@@ -134,7 +134,7 @@ goomba.txt
 
 #para goomba
 #7	2900	548
-#7	2900	1148
+7	2900	1148
 
 #brick coin
 #1: chứa item 	2: chứa PButton	3: chứa nấm xanh
@@ -172,14 +172,17 @@ goomba.txt
 #rùa đỏ color box
 11	1761	1048	1	100
 #11	900	900	1	600
-11	2400	1048	0	600
+#11	2400	1048	0	600
 #11	3200	1048	0	600
 
 #con rua do tren hang gach 3 vien
 #11	6000	600	1	100
 
 #rùa đỏ test koompas
-#11	2329	800	1	100	
+#11	2329	800	1	100
+
+#rùa xanh test
+#11	2400	1048	0	600	
 
 #pipe 1 cao 	2 thấp	3 đen
 #12	400	1150	1

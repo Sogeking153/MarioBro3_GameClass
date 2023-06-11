@@ -9,11 +9,8 @@
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state) :CGameObject(x, y)
 {
 	this->ax = 0;
-	//this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	type = koopa_type;
-
-	//SetState(CONCO_STATE_FLY_LEFT);
 	SetState(koopa_state);
 
 	player = dynamic_cast<CMario*>(mario);
@@ -159,7 +156,6 @@ void Koopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 
 		if (koopa->GetX() > this->GetX())
 		{
-			//koompas->is_minus_vx = true;//vx=is_minus_vx?-0.1:0.1;
 			koopa->is_minus_vx = true;
 		}
 		SetState(CONCO_STATE_WAS_SHOOTED);
@@ -172,17 +168,6 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 		return;
 
 	FlatForm* flatform = dynamic_cast<FlatForm*>(e->obj);
-
-	//if (this->x > flatform->GetX() + flatform->width - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
-	//{
-	//	vx = -abs(vx);
-	//	//DebugOut(L"[INFO] does it get in here?\n");
-	//}
-	//else if (this->x < flatform->GetX() - flatform->dodoi && state == CONCO_STATE_WALKING_LEFT)
-	//{
-	//	vx = abs(vx);
-	//	//DebugOut(L"[INFO] does it get in here 222?\n");
-	//}
 }
 
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -214,24 +199,12 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += KOOPA_AY * dt;
 
 	}
-	//DebugOut(L"[INFO] state koopa %d \n",state);
-	/*if (state == CONCO_STATE_WAS_BROUGHT)
-	{
-		float x, y;
-		player->GetPosition(x, y);
-		SetPosition(x + 50, y - 40);
-		//return;
-	}*/
 
-	//if (state != CONCO_STATE_BEING_HOLDED)
-
-	//vx += ax * dt;
-
-	if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	/*if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
-	}
+	}*/
 
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -260,24 +233,26 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			this->is_picked = false;
 
-			//DebugOut(L"enter how many time %d\n");
-
 		}
 	}
 
-	//float ml, mt, mr, mb;
-	//float il, it, ir, ib;
-
-	//this->GetBoundingBox(il, it, ir, ib);
-	//player->GetBoundingBox(ml, mt, mr, mb);
-	//if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
-	//{
-	//	DebugOut(L"[INFO] bump, kill koopa  \n");
-	//	//this->SetState(GOOMBA_STATE_DIE);
-	//}
-	//DebugOut(L"[INFO] vy of koopa: %f\n", vy);
 	if (player->GetState() == MARIO_STATE_SPIN)
 		this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
+
+	if (effect)
+	{
+		effect->Update(dt, coObjects);
+		if (effect->isDeleted == true)
+		{
+			delete effect;
+			effect = NULL;
+		}
+	}
+
+	if (y > POS_Y_HOLD)
+	{
+		this->Delete();
+	}
 }
 
 
@@ -332,8 +307,8 @@ void Koopa::Render()
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
-	//for (int i = 0; i < 9; i++)
-	//	animations->Get(716 + i)->Render(x + i * 50, y);
+	if (effect)
+		effect->Render();
 
 	RenderBoundingBox();
 }
@@ -352,20 +327,18 @@ void Koopa::SetState(int state)
 		break;
 	case CONCO_STATE_WALKING_LEFT:
 		vx = -KOOPA_WALKING_SPEED;
-		//vx = 0;
 		break;
 	case CONCO_STATE_WALKING_RIGHT:
 		vx = KOOPA_WALKING_SPEED;
-		//vx = 0;
 		break;
 	case GOOMBA_STATE_INDENT_IN:
-		//vx = -KOOPA_WALKING_SPEED;
+		if (effect == NULL)
+			effect = new MoneyEffect(this->x, this->y - EFFECT_GAP);
 		vx = 0;
 		vy = 0;
 		time_to_indent_out = GetTickCount64();
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
-		//vx = 0.02;
 		vx = player->GetX() > x ? -KOOPA_VX_SHELL_RUNNING : KOOPA_VX_SHELL_RUNNING;
 		is_blocking = 1;
 		break;
@@ -378,7 +351,6 @@ void Koopa::SetState(int state)
 	case CONCO_STATE_WAS_SHOOTED:
 		vy = -KOOPA_VY_WAS_SHOOTED;
 		vx = DirectionWhenBeingAttack == -1 ? -KOOPA_VX_WAS_SHOOTED : KOOPA_VX_WAS_SHOOTED;
-		//vx = 0.09;
 		is_colliable = 0;
 		break;
 	case CONCO_STATE_FLY_LEFT:

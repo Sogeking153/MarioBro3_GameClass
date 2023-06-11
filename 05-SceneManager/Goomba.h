@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "MoneyEffect.h"
+#include "TimeCustom.h"
 
 #define GOOMBA_GRAVITY 0.002f
 #define GOOMBA_WALKING_SPEED 0.04f
@@ -29,10 +31,14 @@
 #define ID_ANI_GOOMBA_WAS_SHOOTED 5400
 
 #define GOOMBA_GAP 5
+#define TIME_TO_DISAPEAR 600
 
 class CGoomba : public CGameObject
 {
 public:
+	MoneyEffect* effect = NULL;
+	TimeCustom* time_to_disapear = new TimeCustom(TIME_TO_DISAPEAR);
+
 	bool is_minus_vx = false;
 	bool is_colliable = 1;
 	float ax;				

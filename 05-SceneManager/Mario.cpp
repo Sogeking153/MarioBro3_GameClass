@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "GameTime.h"
+#include "TimeCustom.h"
 
 #include "Goomba.h"
 #include "Coin.h"
@@ -24,6 +25,9 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (is_on_the_ground == false && y > POS_Y_HOLD || x > POS_Y_END_MAP)
+		CGame::GetInstance()->InitiateSwitchScene(MAP_SCENE);
+
 	if (is_set_position == true)
 	{
 		if (GetTickCount64() - time_to_go_down > MARIO_TIME_TO_GO_PIPE)
@@ -43,6 +47,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				SetPosition(MARIO_POS_X_IN_GROUND, MARIO_POS_Y_IN_GROUND);
 				time_to_go_down = GetTickCount64();
+
+				is_on_the_ground = false;
 			}
 		}
 		else
@@ -80,12 +86,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//DebugOut(L"[INFO]maxVx value: %f\n", maxVx);
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	/*if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+	}*/
+	if (untouchtable_timer->IsTimeUp())
+	{
+		untouchtable_timer->Reset();
 	}
-
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -291,6 +300,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	//koompas->SetState(CONCO_STATE_WAS_SHOOTED);
 	if (e->ny < 0)
 	{
+		this->score += SCORE;
 		if (koopa->GetState() == CONCO_STATE_FLY_LEFT)
 		{
 			koopa->SetState(CONCO_STATE_WALKING_LEFT);
@@ -389,7 +399,10 @@ void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 	if (e->ny > 0)
 	{
 		if (brick->is_hit == false)
+		{
+			this->hit_brick_number++;
 			brick->SetState(BRICK_COIN_STATE_HIT);
+		}
 	}
 }
 
@@ -398,7 +411,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	ParaGoomba* paragoomba = dynamic_cast<ParaGoomba*>(e->obj);
 	if (e->ny < 0)
 	{
-		//score += 100;
+		this->score += SCORE;
 		if (paragoomba->GetState() == PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING)
 		{
 			paragoomba->SetState(PARA_GOOMBA_STATE_DIE);
@@ -425,9 +438,10 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
+		this->score += SCORE;
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
 		{
-			goomba->SetState(GOOMBA_STATE_WAS_SHOOTED);
+			goomba->SetState(GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -468,7 +482,7 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 
 void CMario::CollideWithEnemy()
 {
-	if (untouchable == 0)
+	/*if (untouchable == 0)
 	{
 		if (level > MARIO_LEVEL_BIG)
 		{
@@ -479,6 +493,24 @@ void CMario::CollideWithEnemy()
 		{
 			level = MARIO_LEVEL_SMALL;
 			StartUntouchable();
+		}
+		else
+			SetState(MARIO_STATE_DIE);
+	}*/
+	//untouchtable_timer
+
+	if (untouchtable_timer->startTime == 0)
+	{
+		if (level > MARIO_LEVEL_BIG)
+		{
+			level = MARIO_LEVEL_BIG;
+
+			untouchtable_timer->StartTime();
+		}
+		else if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			untouchtable_timer->StartTime();
 		}
 		else
 			SetState(MARIO_STATE_DIE);

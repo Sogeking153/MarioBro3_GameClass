@@ -150,8 +150,10 @@
     <ClCompile Include="BrickCoin.cpp" />
     <ClCompile Include="BrickDebris.cpp" />
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CoinEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="FlatForm.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapScene.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MoneyEffect.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="PButton.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="SuperLeaf.cpp" />
     <ClCompile Include="TextAndNumber.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="TimeCustom.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="VenusFireTrap.cpp" />
@@ -193,8 +197,10 @@
     <ClInclude Include="BrickCoin.h" />
     <ClInclude Include="BrickDebris.h" />
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="CoinEffect.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="FlatForm.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -205,6 +211,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapScene.h" />
     <ClInclude Include="Mario.h" />
+    <ClInclude Include="MoneyEffect.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="PButton.h" />
@@ -223,6 +230,7 @@
     <ClInclude Include="TextAndNumber.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="TimeCustom.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VenusFireTrap.h" />

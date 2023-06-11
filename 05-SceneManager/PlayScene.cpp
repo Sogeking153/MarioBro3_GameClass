@@ -394,11 +394,12 @@ void CPlayScene::Update(DWORD dt)
 		if (dynamic_cast<BrickCoin*>(objects[i]))
 		{
 			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
+			float x, y;
+			brick->GetPosition(x, y);
+
 			if (brick->is_hit == true && brick->dropped == false && 
 				(brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM || brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM))
 			{
-				float x, y;
-				brick->GetPosition(x, y);
 				if (brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM)
 				{
 					Mushroom* mushroom = new Mushroom(x, y, GREEN);
@@ -418,6 +419,16 @@ void CPlayScene::Update(DWORD dt)
 					}
 				}
 				brick->dropped = true;
+				player->score += CORE;
+			}
+			else if (brick->is_hit == true && brick->dropped == false)
+			{
+				DebugOut(L"[clang clang]\n");
+				CoinEffect* coineffect = new CoinEffect(x, y);
+				itemsMarioCanEat.push_back(coineffect);
+
+				brick->dropped = true;
+				player->score += CORE;
 			}
 		}
 	}
@@ -490,7 +501,7 @@ void CPlayScene::Render()
 
 	//game_time = GameTime::GetInstance();
 	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
-	//game_ui->Render(GAME_TIME  /*- game_time->GetTime()*/, EATEN_COIN, SCORE, LIFE, SCENE);
+	//game_ui->Render(GAME_TIME  /*- game_time->GetTime()*/, player->hit_brick_number, player->score, LIFE, SCENE);
 }
 
 void CPlayScene::_ParseSection_MAP(string line)
