@@ -35,7 +35,7 @@ void Mushroom::Render()
 void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (enable_gravity == true)
-		vy += 0.002 * dt;
+		vy += AY_MUSHROOM * dt;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -87,7 +87,7 @@ void Mushroom::SetState(int state)
 	{
 	case MUSHROOM_STATE_GOING_UP:	
 		vx = 0;
-		vy = -0.1f;
+		vy = -VY_MUSHROOM_GO_UP;
 		break;
 	case MUSHROOM_STATE_MOVING_LEFT:
 		vx = -MUSHROOM_MOVING_SPEED;

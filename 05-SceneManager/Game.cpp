@@ -459,10 +459,10 @@ void CGame::_ParseSection_SCENES(string line)
 	LPCWSTR path = ToLPCWSTR(tokens[1]);   // file: ASCII format (single-byte char) => Wide Char
 
 	LPSCENE scene = NULL;
-	if (id == 1 || id == 2 || id == 0)
+	if (id == SAMPLE_SCENE || id == FIRST_SCENE || id == SCENE_INTRO)
 		scene = new CPlayScene(id, path); // Handle at this place if need other scene
-	//else if (id == 3)
-		//scene = new MapScene(id, path);
+	else if (id == MAP_SCENE)
+		scene = new MapScene(id, path);
 
 	scenes[id] = scene;
 }

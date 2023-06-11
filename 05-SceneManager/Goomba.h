@@ -28,6 +28,8 @@
 #define ID_ANI_GOOMBA_DIE 5001
 #define ID_ANI_GOOMBA_WAS_SHOOTED 5400
 
+#define GOOMBA_GAP 5
+
 class CGoomba : public CGameObject
 {
 public:

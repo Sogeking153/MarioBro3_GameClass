@@ -94,31 +94,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	float nothing;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
-	/*float l_a, t_a, r_a, b_a;
-	float l_b, t_b, r_b, b_b;
-	this->GetBoundingBox(l_a, t_a, r_a, b_a);
-	player->GetBoundingBox(l_b, t_b, r_b, b_b);
-
-	if (this->CheckOverLap(l_a, t_a, r_a, b_a, l_b, t_b, r_b, b_b))
-	{
-		DebugOut(L"[INFO] inside checkoverlap \n");
-	}*/
-
-	float ml, mt, mr, mb;
-	float il, it, ir, ib;
-
-	this->GetBoundingBox(il, it, ir, ib);
-	player->GetBoundingBox(ml, mt, mr, mb);
-	//DebugOut(L"[INFO] mario l is %f \n",ml);
-
-	//if (this->CheckOverLap(il, it, ir, ib, ml, mt, mr, mb))
-	//{
-		//SetState(CONCO_STATE_WAS_SHOOTED);
-
-		/*DebugOut(L"[INFO] inside Checkoverlap \n");
-		this->SetState(GOOMBA_STATE_DIE);*/
-	//}
-
 	if (player->GetState() == MARIO_STATE_SPIN)
 		this->CheckWetherBeingAttacked(player, GOOMBA_STATE_WAS_SHOOTED);
 
@@ -165,8 +140,8 @@ void CGoomba::SetState(int state)
 			is_colliable = 0;
 			break;
 		case GOOMBA_ADJUST_HEIGHT:
-			y -= 5;
-			DebugOut(L"[INFO]adjust height innn %d \n", DirectionWhenBeingAttack);
+			y -= GOOMBA_GAP;
+			//DebugOut(L"[INFO]adjust height innn %d \n", DirectionWhenBeingAttack);
 			break;
 	}
 }

@@ -48,19 +48,19 @@ void RandomBonus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case STATE_RANDOM_BONUS_MUSHROOM:
 			SetState(STATE_GOT_BONUS_MUSHROOM);
 			//cart_after_text = 1;
-			player->card_end_scene = 1;
+			player->card_end_scene = CARD_MUSHROOM;
 			//scene->mario_end_bonus = MUSHROOM_CARD;
 			break;
 		case STATE_RANDOM_BONUS_FIRE_FLOWER:
 			SetState(STATE_GOT_BONUS_FIRE_FLOWER);
 			//cart_after_text = 2;
-			player->card_end_scene = 2;
+			player->card_end_scene = CARD_FIRE_FLOWER;
 			//scene->mario_end_bonus = FIRE_FLOWER_CARD;
 			break;
 		case STATE_RANDOM_BONUS_STAR:
 			SetState(STATE_GOT_BONUS_STAR);
 			//cart_after_text = 3;
-			player->card_end_scene = 3;
+			player->card_end_scene = CARD_BONUS_STAR;
 			//scene->mario_end_bonus = STAR_MAN_CARD;
 			break;
 		}

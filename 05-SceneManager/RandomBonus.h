@@ -22,6 +22,10 @@
 #define ANI_GOT_BONUS_STAR			753
 #define ANI_GOT_BONUS_FIRE_FLOWER	754
 
+#define CARD_MUSHROOM			1
+#define CARD_FIRE_FLOWER		2
+#define CARD_BONUS_STAR			3
+
 class RandomBonus : public CGameObject
 {
 public:

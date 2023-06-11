@@ -19,16 +19,16 @@ CGameObject::CGameObject()
 
 void CGameObject::DeleteWhenOutOfCam()
 {
-	if (x< CGame::GetInstance()->GetCamX() || x> CGame::GetInstance()->GetCamX() + 760)
+	if (x< CGame::GetInstance()->GetCamX() || x> CGame::GetInstance()->GetCamX() + SCREEN_WIDTH)
 	{
 		this->Delete();
 		//DebugOut(L"[ERROR-----Delete---------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
 	}
 
-	if (y< CGame::GetInstance()->GetCamY() || y> CGame::GetInstance()->GetCamY() + 730)
+	if (y< CGame::GetInstance()->GetCamY() || y> CGame::GetInstance()->GetCamY() + SCREEN_HEIGHT)
 	{
 		this->Delete();
-		DebugOut(L"[ERROR------Delete--------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
+		//DebugOut(L"[ERROR------Delete--------] DINPUT::GetDeviceData failed. Error: %f\n", vx);
 	}
 }
 

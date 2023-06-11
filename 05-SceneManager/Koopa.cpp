@@ -5,20 +5,6 @@
 #include "BrickBlink.h"
 #include "PlayScene.h"
 
-#define KOOMPAS_VY_WAS_SHOOTED 0.6f
-#define KOOMPAS_VX_WAS_SHOOTED 0.1f
-#define KOOMPAS_VX_SHELL_RUNNING 0.1f //0.7f
-
-#define GAP_ANI_TO_RED 8
-
-#define GAP_AVOID_FALLING_DOWN 32
-
-#define TIME_TO_SHELL_MOVING	7000
-#define TIME_TO_INDENT_OUT		10000
-#define TIME_TO_WALKING_LEFT	12000
-
-#define KOOMPAS_AY 0.002
-
 //extern  CMario* mario;
 Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_state) :CGameObject(x, y)
 {
@@ -32,7 +18,7 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 
 	player = dynamic_cast<CMario*>(mario);
 
-	if (type == 1)
+	if (type == KOOPA_RED)
 		virtualbox = new VirtualBox(x - 50, y, mario);
 }
 
@@ -83,11 +69,11 @@ void Koopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (!dynamic_cast<Koopa*>(e->obj))
 			vx = -vx;
-		if (type == 1)
+		if (type == KOOPA_RED)
 			if (vx > 0)
-				virtualbox->SetPosition(this->x + 50, y - 2);
+				virtualbox->SetPosition(this->x + GAP_VIRTUAL_BOX_TURAROUND_X, y - GAP_VIRTUAL_BOX_TURAROUND_Y);
 			else
-				virtualbox->SetPosition(this->x - 50, y - 2);
+				virtualbox->SetPosition(this->x - GAP_VIRTUAL_BOX_TURAROUND_X, y - GAP_VIRTUAL_BOX_TURAROUND_Y);
 		//{
 		//	if (this->state == CONCO_STATE_WALKING_LEFT)
 		//	{
@@ -202,22 +188,22 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
-	if (type == 1)
+	if (type == KOOPA_RED)
 	{
 		virtualbox->vx = this->vx;
 		virtualbox->Update(dt, coObjects);
 
-		if (abs(virtualbox->y - this->y) > 15)
+		if (abs(virtualbox->y - this->y) > GAP_VIRTUAL_BOX_TO_KOOPA)
 		{
 			if (this->state == CONCO_STATE_WALKING_LEFT)
 			{
 				this->SetState(CONCO_STATE_WALKING_RIGHT);
-				virtualbox->SetPosition(this->x + 50, y);
+				virtualbox->SetPosition(this->x + GAP_VIRTUAL_BOX_TURAROUND_X, y);
 			}
 			else if (this->state == CONCO_STATE_WALKING_RIGHT)
 			{
 				this->SetState(CONCO_STATE_WALKING_LEFT);
-				virtualbox->SetPosition(this->x - 50, y);
+				virtualbox->SetPosition(this->x - GAP_VIRTUAL_BOX_TURAROUND_X, y);
 			}
 		}
 	}
@@ -225,7 +211,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	if (is_picked == false)
 	{
-		vy += KOOMPAS_AY * dt;
+		vy += KOOPA_AY * dt;
 
 	}
 	//DebugOut(L"[INFO] state koopa %d \n",state);
@@ -274,7 +260,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			this->is_picked = false;
 
-			DebugOut(L"enter how many time %d\n");
+			//DebugOut(L"enter how many time %d\n");
 
 		}
 	}
@@ -297,7 +283,7 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Koopa::Render()
 {
-	if (type ==1)
+	if (type == KOOPA_RED)
 		virtualbox->Render();
 	int aniId = CONCO_ANI_GREEN_WALKING_LEFT;
 	if (state == CONCO_STATE_DIE)
@@ -380,7 +366,7 @@ void Koopa::SetState(int state)
 		break;
 	case GOOMBA_STATE_SHELL_RUNNING:
 		//vx = 0.02;
-		vx = player->GetX() > x ? -KOOMPAS_VX_SHELL_RUNNING : KOOMPAS_VX_SHELL_RUNNING;
+		vx = player->GetX() > x ? -KOOPA_VX_SHELL_RUNNING : KOOPA_VX_SHELL_RUNNING;
 		is_blocking = 1;
 		break;
 	case CONCO_STATE_WAS_BROUGHT:
@@ -390,8 +376,8 @@ void Koopa::SetState(int state)
 	case CONCO_STATE_INDENT_OUT:
 		break;
 	case CONCO_STATE_WAS_SHOOTED:
-		vy = -KOOMPAS_VY_WAS_SHOOTED;
-		vx = DirectionWhenBeingAttack == -1 ? -KOOMPAS_VX_WAS_SHOOTED : KOOMPAS_VX_WAS_SHOOTED;
+		vy = -KOOPA_VY_WAS_SHOOTED;
+		vx = DirectionWhenBeingAttack == -1 ? -KOOPA_VX_WAS_SHOOTED : KOOPA_VX_WAS_SHOOTED;
 		//vx = 0.09;
 		is_colliable = 0;
 		break;

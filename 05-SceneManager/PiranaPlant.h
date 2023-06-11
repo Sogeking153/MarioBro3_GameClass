@@ -20,6 +20,15 @@
 
 #define GOOMBA_BBOX_HEIGHT_DIE 9
 
+#define ANI_PIRANA_PLANT 744
+#define PIRANA_WIDTH_SAFE 90
+
+#define TIME_TO_GO_UP 2000
+#define TIME_TO_GO_DOWN 5000
+
+#define GAP_MIN_Y 7
+#define GAP_MAX_Y 10
+
 class PiranaPlant : public CGameObject
 {
 protected:

@@ -4,11 +4,11 @@ Pipe::Pipe(float x, float y, int type, int is_pine_can_go)
 {
 	this->is_pine_can_go = is_pine_can_go;
 
-	if (type == 1)
+	if (type == PIPE_TALL)
 		SetState(PIPE_STATE_TALL);
-	else if (type == 2)
+	else if (type == PIPE_SHORT)
 		SetState(PIPE_STATE_SHORT);
-	else if (type == 3)
+	else if (type == PIPE_BLACK)
 		SetState(PIPE_STATE_BLACK);
 }
 

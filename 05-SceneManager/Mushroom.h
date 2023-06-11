@@ -23,6 +23,9 @@
 #define RED		1
 #define GREEN	2
 
+#define AY_MUSHROOM 0.002
+#define VY_MUSHROOM_GO_UP 0.1f
+
 class Mushroom : public CGameObject {
 	float ax;
 	float ay;

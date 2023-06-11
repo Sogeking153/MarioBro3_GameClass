@@ -18,7 +18,7 @@ void PButton::Render()
 
 void PButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (GetState() == PBUTTON_STATE_IS_HIT && GetTickCount64() - stranform_start >= 3000 && stranform_start)
+	if (GetState() == PBUTTON_STATE_IS_HIT && GetTickCount64() - stranform_start >= TIME_TO_TRANSFER && stranform_start)
 	{
 		SetState(PBUTTON_STATE_TRANFORM_COIN_TO_BRICK);
 		stranform_start = 0;

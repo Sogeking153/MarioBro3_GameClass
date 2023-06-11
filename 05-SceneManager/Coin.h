@@ -10,6 +10,8 @@
 #define COIN_BBOX_WIDTH 10
 #define COIN_BBOX_HEIGHT 16
 
+#define ANI_COIN 777
+
 class CCoin : public CGameObject {
 public:
 	CCoin(float x, float y) : CGameObject(x, y) {}

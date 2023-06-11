@@ -35,7 +35,7 @@ void PlantBullet::Render()
 {
 	int ani = 0;
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(704)->Render(x, y);
+	animations->Get(ANI_PLANT_BULLET)->Render(x, y);
 
 	RenderBoundingBox();
 }

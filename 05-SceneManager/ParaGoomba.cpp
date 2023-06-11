@@ -203,7 +203,7 @@ void ParaGoomba::SetState(int state)
 		vx = PARAGOOMBA_WALKING_SPEED;
 		break;
 	case PARA_GOOMBA_STATE_JUMP_SHORT_1:
-		vy = -0.25 * 1.5;
+		vy = -PARAGOOMBA_VY_SHORT_JUMP;
 		break;
 	case PARA_GOOMBA_STATE_WALKING_WITHOUT_SWING:
 		vx = -PARAGOOMBA_WALKING_SPEED;
@@ -211,11 +211,11 @@ void ParaGoomba::SetState(int state)
 	case PARA_GOOMBA_STATE_JUMP_SHORT_3:
 		break;
 	case PARA_GOOMBA_STATE_JUMP_HIGH:
-		vy = -0.25 * 3.5;
+		vy = -PARAGOOMBA_VY_HIGH_JUMP;
 		break;
 	case PARA_GOOMBA_STATE_WAS_SHOOTED:
-		vy = -0.25 * 3.5;
-		vx = DirectionWhenBeingAttack == -1 ? 0.1 : -0.1;
+		vy = -PARAGOOMBA_VY_BEING_SHOOT;
+		vx = DirectionWhenBeingAttack == -1 ? PARAGOOMBA_VX_BEING_SHOOT : -PARAGOOMBA_VX_BEING_SHOOT;
 		is_colliable = 0;
 		break;
 	}

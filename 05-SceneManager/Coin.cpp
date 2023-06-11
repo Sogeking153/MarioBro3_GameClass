@@ -3,7 +3,7 @@
 void CCoin::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(777)->Render(x, y);
+	animations->Get(ANI_COIN)->Render(x, y);
 
 	//RenderBoundingBox();
 }

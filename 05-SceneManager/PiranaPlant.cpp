@@ -13,13 +13,13 @@ PiranaPlant::PiranaPlant(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y
 
 	player = mario;
 
-	min_y = y - VENUS_BBOX_HEIGHT + 7;
-	max_y = y + 10;
+	min_y = y - VENUS_BBOX_HEIGHT + GAP_MIN_Y;
+	max_y = y + GAP_MAX_Y;
 
-	l_safe = x - 90;
+	l_safe = x - PIRANA_WIDTH_SAFE;
 	t_safe = 0;
-	r_safe = x + 90;
-	b_safe = y + 90;
+	r_safe = x + PIRANA_WIDTH_SAFE;
+	b_safe = y + PIRANA_WIDTH_SAFE;
 }
 
 void PiranaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -44,12 +44,12 @@ void PiranaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = 0;
 	}
 
-	if (state == VENUS_STATE_GOING_UP && GetTickCount64() - time_interval > 2000)
+	if (state == VENUS_STATE_GOING_UP && GetTickCount64() - time_interval > TIME_TO_GO_UP)
 	{
 		SetState(VENUS_STATE_GOING_DOWN);
 	}
 
-	else if (state == VENUS_STATE_GOING_DOWN && GetTickCount64() - time_interval > 5000)
+	else if (state == VENUS_STATE_GOING_DOWN && GetTickCount64() - time_interval > TIME_TO_GO_DOWN)
 	{
 		float l, t, r, b;
 		player->GetBoundingBox(l, t, r, b);
@@ -64,7 +64,7 @@ void PiranaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PiranaPlant::Render()
 {
-	CAnimations::GetInstance()->Get(744)->Render(x, y);
+	CAnimations::GetInstance()->Get(ANI_PIRANA_PLANT)->Render(x, y);
 
 	//CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();

@@ -8,6 +8,7 @@
 #include "Animations.h"
 #include "Sprites.h"
 #include "Collision.h"
+#include "AssetIDs.h"
 
 using namespace std;
 

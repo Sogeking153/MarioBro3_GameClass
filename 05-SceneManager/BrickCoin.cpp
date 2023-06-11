@@ -25,13 +25,6 @@ void BrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy * dt;
 
-	//if (y < originalY - 20)
-	//{
-	//	vy = abs(vy);
-	//	//return;
-	//}else if (y > originalY)
-	//	vy = 0;
-
 	if (y < originalY - BRICKCOIN_GAP_BOUNCING && vy<0)
 	{
 		vy = -vy;
@@ -40,8 +33,6 @@ void BrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	else if (vy>0 && y >= originalY)
 	{
-		//DebugOut(L"[ERROR----vy of the brick-----] DINPUT::GetDeviceData failed. Error: %f\n",y);
-
 		vy = 0;
 		y = originalY;
 		is_hit = true;
@@ -68,7 +59,6 @@ void BrickCoin::SetState(int state)
 
 	case BRICK_COIN_STATE_HIT:
 		vy = -BRICKCOIN_VX;
-		//vx = 0;
 		if (has_item == BRICKCOIN_CONTAINS_PBUTTON)
 		{
 			PButton* pbutton = new PButton(x, y - BRICK_COIN_BBOX_WIDTH);

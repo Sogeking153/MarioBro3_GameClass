@@ -15,6 +15,10 @@
 #define  ANI_PIPE_SHORT				741
 #define  ANI_PIPE_BLACK				742
 
+#define  PIPE_TALL				1
+#define  PIPE_SHORT				2
+#define  PIPE_BLACK				3
+
 class Pipe : public CGameObject
 {
 public:
