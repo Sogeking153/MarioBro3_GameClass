@@ -382,6 +382,9 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < enemies.size(); i++)
 		coObjects.push_back(enemies[i]);
 
+	for (size_t i = 0; i < items.size(); i++)
+		coObjects.push_back(items[i]);
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
@@ -397,19 +400,14 @@ void CPlayScene::Update(DWORD dt)
 		coObjects.push_back(list_bricklink[i]);
 	}
 
-	for (size_t i = 0; i < enemies.size(); i++)
+	for (size_t i = 0; i < items.size(); i++)
 	{
-		enemies[i]->Update(dt, &coObjects);
-		enemies[i]->is_appeared = false;
-	}
+		items[i]->Update(dt, &coObjects);
+		items[i]->is_appeared = false;
 
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-
-		if (dynamic_cast<BrickCoin*>(objects[i]))
+		if (dynamic_cast<BrickCoin*>(items[i]))
 		{
-			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
+			BrickCoin* brick = dynamic_cast<BrickCoin*>(items[i]);
 			float x, y;
 			brick->GetPosition(x, y);
 
@@ -447,6 +445,17 @@ void CPlayScene::Update(DWORD dt)
 				player->score += CORE;
 			}
 		}
+	}
+
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->Update(dt, &coObjects);
+		enemies[i]->is_appeared = false;
+	}
+
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		objects[i]->Update(dt, &coObjects);
 	}
 
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
@@ -489,6 +498,7 @@ void CPlayScene::Update(DWORD dt)
 	else if (player->GetY() > BOT_IN_GROUND)
 	{
 		CGame::GetInstance()->SetCamPos(cx, BOT_IN_GROUND);
+		grid->UpdatePositionInGrid(game->GetCamX(), BOT_IN_GROUND);
 	}
 
 	//CGame::GetInstance()->SetCamPos(cx, 700.0f);
@@ -502,6 +512,9 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->Draw();
+
+	for (int i = 0; i < items.size(); i++)
+		items[i]->Render();
 
 	for (int i = 0; i < enemies.size(); i++)
 		enemies[i]->Render();
@@ -623,6 +636,16 @@ void CPlayScene::_ParseSection_OBJECTS_GRID(string line)
 
 void CPlayScene::PurgeDeletedObjects()
 {
+	for (size_t i = 0; i < items.size(); i++)
+	{
+		if (items[i]->IsDeleted() == true)
+		{
+			delete items[i];
+			items[i] = nullptr;
+			items.erase(items.begin() + i);
+		}
+	}
+
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i]->IsDeleted() == true)

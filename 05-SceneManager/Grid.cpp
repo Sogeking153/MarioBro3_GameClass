@@ -9,16 +9,23 @@
 #include <fstream>
 #include "debug.h"
 #include "PlayScene.h"
+#include "BrickCoin.h"
+#include "Koopa.h"
+#include "VenusFireTrap.h"
+#include "PiranaPlant.h"
+#include "Coin.h"
+#include "BrickBlink.h"
+#include "RandomBonus.h"
 
 #include "Utils.h"
 
 void CGrid::Classify(LPGAMEOBJECT obj)
 {
-	//type 1 moving flatform, 2 la is brickblink
-	if (obj->type == 1)
+	//type is use to create different type of same object also for sorting in grid
+	if (obj->type == OBJECT_TYPE_COIN || obj->type == OBJECT_TYPE_BRICK_COIN || obj->type == OBJECT_TYPE_RANDOM_BONUS)
 		items.push_back(obj);
-	else if (obj->type == 2)
-		bricks.push_back(obj);
+	else if (obj->type == OBJECT_TYPE_BRICK_BLINK)
+		bricks_blink.push_back(obj);
 	else
 		enemies.push_back(obj);
 }
@@ -28,8 +35,8 @@ void CGrid::GetListObjInGrid(float cam_x, float cam_y)
 	CGame* game = CGame::GetInstance();
 
 	enemies.clear();
-	//items.clear();
-	//bricks.clear();
+	items.clear();
+	bricks_blink.clear();
 
 	int top = (int)((cam_y) / CELL_HEIGHT);
 	int bottom = (int)((cam_y + 730) / CELL_HEIGHT);
@@ -82,6 +89,8 @@ void CGrid::GetListObjInGrid(float cam_x, float cam_y)
 	//if (dynamic_cast<CPlayScene*>(game->GetCurrentScene()))
 	//{
 	dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetEnemiesInScene(enemies);
+	dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetItems(items);
+	dynamic_cast<CPlayScene*>(game->GetCurrentScene())->SetBrickBlink(bricks_blink);
 	//}
 }
 
@@ -98,11 +107,11 @@ void CGrid::UpdatePositionInGrid(float cam_x, float cam_y)
 	if (dynamic_cast<CPlayScene*>(game->GetCurrentScene()))
 	{
 		enemies.clear();
+		items.clear();
+		bricks_blink.clear();
 
 		CPlayScene* scene = (CPlayScene*)game->GetCurrentScene();
 		enemies = scene->enemies;
-		//items = scene->items;
-		// update  enemy pos from cell to cell
 		for (int m = 0; m < enemies.size(); m++) {
 			LPGAMEOBJECT enemy = enemies[m];
 
@@ -121,19 +130,68 @@ void CGrid::UpdatePositionInGrid(float cam_x, float cam_y)
 			int bottom = (int)((enemy->GetY() + enemy->h) / CELL_HEIGHT);
 			int left = (int)(enemy->GetX() / CELL_WIDTH);
 			int right = (int)((enemy->GetX() + enemy->w) / CELL_WIDTH);
-			/*DebugOut(L"***********\n");
-			DebugOut(L"left %d\n", left);
-			DebugOut(L"right %d\n", right);*/
 
 			for (int i = top; i <= bottom; i++)
 				for (int j = left; j <= right; j++) {
 					cells[i][j].push_back(enemy);
 				}
 		}
+
+		items = scene->items;
+		for (int m = 0; m < items.size(); m++) {
+			LPGAMEOBJECT item = items[m];
+
+			for (int i = top_cell - 1; i <= bottom_cell + 1; i++)
+				for (int j = left_cell - 2; j <= right_cell + 2; j++) {
+					if (j < 0) j = 0;
+					if (i < 0) i = 0;
+					for (int k = 0; k < cells[i][j].size(); k++) {
+						if (cells[i][j].at(k)->id_grid == item->id_grid) {
+							cells[i][j].erase(cells[i][j].begin() + k);
+						}
+					}
+				}
+
+			int top = (int)(item->GetY() / CELL_HEIGHT);
+			int bottom = (int)((item->GetY() + item->h) / CELL_HEIGHT);
+			int left = (int)(item->GetX() / CELL_WIDTH);
+			int right = (int)((item->GetX() + item->w) / CELL_WIDTH);
+
+			for (int i = top; i <= bottom; i++)
+				for (int j = left; j <= right; j++) {
+					cells[i][j].push_back(item);
+				}
+		}
+
+		bricks_blink = scene->list_bricklink;
+		for (int m = 0; m < bricks_blink.size(); m++) {
+			LPGAMEOBJECT blink = bricks_blink[m];
+
+			for (int i = top_cell - 1; i <= bottom_cell + 1; i++)
+				for (int j = left_cell - 2; j <= right_cell + 2; j++) {
+					if (j < 0) j = 0;
+					if (i < 0) i = 0;
+					for (int k = 0; k < cells[i][j].size(); k++) {
+						if (cells[i][j].at(k)->id_grid == blink->id_grid) {
+							cells[i][j].erase(cells[i][j].begin() + k);
+						}
+					}
+				}
+
+			int top = (int)(blink->GetY() / CELL_HEIGHT);
+			int bottom = (int)((blink->GetY() + blink->h) / CELL_HEIGHT);
+			int left = (int)(blink->GetX() / CELL_WIDTH);
+			int right = (int)((blink->GetX() + blink->w) / CELL_WIDTH);
+
+			for (int i = top; i <= bottom; i++)
+				for (int j = left; j <= right; j++) {
+					cells[i][j].push_back(blink);
+				}
+		}
 	}
 }
 
-LPGAMEOBJECT CGrid::CreateNewObj(int obj_type, float x, float y, float w, float h, int ani_id, int type, int extra0, int extra1, int extra2, int id_grid)
+LPGAMEOBJECT CGrid::CreateNewObj(int id_grid, int obj_type, float x, float y, float w, float h, int extra0, int extra1)
 {
 	///CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 
@@ -143,6 +201,42 @@ LPGAMEOBJECT CGrid::CreateNewObj(int obj_type, float x, float y, float w, float 
 	{
 
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y, player); break;
+	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_PARA_GOOMBA: obj = new ParaGoomba(x, y, player); break;
+
+	case OBJECT_TYPE_BRICK_COIN:
+	{
+		int has_item = extra0;
+		obj = new BrickCoin(x, y, has_item, player); break;
+	}
+	case OBJECT_TYPE_KOOPA:
+	{
+		int type = extra0;
+		int state = extra1;
+
+		obj = new Koopa(x, y, player, type, state); break;
+	}
+
+	case OBJECT_TYPE_VENUS_FIRE_TRAP:
+	{
+		int type = extra0;
+		obj = new VenusFireTrap(x, y, player, type); break;
+	}
+	case OBJECT_TYPE_PIRANA_PLANT:
+	{
+		obj = new PiranaPlant(x, y, player); break;
+	}
+	case OBJECT_TYPE_BRICK_BLINK:
+	{
+
+		obj = new BrickBlink(x, y, player); break;
+	}
+
+	case OBJECT_TYPE_RANDOM_BONUS:
+	{
+		CMario* mario = dynamic_cast<CMario*>(player);
+		obj = new RandomBonus(x, y, mario); break;
+	}
 		/*case 7:
 		{
 			int lv = type;
@@ -212,29 +306,22 @@ void CGrid::ReadFileObj()
 		if (line[0] == '#') {
 			continue;
 		}
-		if (tokens.size() < 8) continue;
+		if (tokens.size() < 6) continue;
 		int id_grid = atoi(tokens[0].c_str());
-		int object_type = atoi(tokens[1].c_str());
+		int obj_type = atoi(tokens[1].c_str());
 		float x = atof(tokens[2].c_str());
 		float y = atof(tokens[3].c_str());
 
 		float w = atof(tokens[4].c_str());
 		float h = atof(tokens[5].c_str());
+		int extra0 = atoi(tokens[6].c_str());
+		int extra1 = atoi(tokens[7].c_str());
+		//int extra2 = atoi(tokens[8].c_str());
 
-		int ani_id = atoi(tokens[6].c_str());
-
-
-		int type = atoi(tokens[7].c_str());
-		int extra = 0;
-		if (object_type == 2 || object_type == 3 ||
-			object_type == 6 || object_type == 11 ||
-			object_type == 1)
-			extra = atoi(tokens[8].c_str());
 
 		//AddObjectIntoGrid(object_type, x, y, w, h, ani_id, type, extra);
-		LPGAMEOBJECT obj = CreateNewObj(object_type, x, y, w, h, ani_id, type, extra, 1, 1, id_grid);
-		total_obj.push_back(obj);											//extra0, extra1,extra2
-
+		LPGAMEOBJECT obj = CreateNewObj(id_grid, obj_type, x, y, w, h, extra0, extra1);
+		total_obj.push_back(obj);
 	}
 
 	DebugOut(L"total obj la---------------] DINPUT::GetDeviceData failed. Error: %d\n", total_obj.size());
