@@ -1,6 +1,10 @@
 #pragma once
 
 #include "KeyEventHandler.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 
 /*
 *  Abstract class for a game scene

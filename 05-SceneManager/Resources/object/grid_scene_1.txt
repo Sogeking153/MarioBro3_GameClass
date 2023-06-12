@@ -1,0 +1,3 @@
+#i	j	id
+#con cua
+6	3	9

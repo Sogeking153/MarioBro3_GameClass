@@ -18,6 +18,13 @@ using namespace std;
 class CGameObject
 {
 public:
+	int type;
+	int w;
+	int h;
+	int id_grid;
+	int id;
+	bool is_appeared = false;
+
 	int DirectionWhenBeingAttack = 0;
 
 	float x; 

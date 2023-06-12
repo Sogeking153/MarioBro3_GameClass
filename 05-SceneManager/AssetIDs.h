@@ -4,6 +4,8 @@
 // This file contains all IDs of game assets 
 //
 
+#define MAX_SCENE_LINE	1024
+
 #define TRANSPARENT_COLOR 0.25
 
 #define SCREEN_WIDTH 760

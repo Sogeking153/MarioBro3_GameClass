@@ -14,25 +14,29 @@ goomba.txt
 
 # MARIO
 #0	6080	210
-0	444	1130
+0	100	1130
 
 # goomba
 #2	860	600
-2	1587	1185
+#2	1587	1185
 
 #hai con đúng
-2	2244	600
-2	2090	600
+#2	2244	600
+#2	2090	600
 
 #test
-2	2790	600
+#2	2790	600
 #2	2430	600
 #2	2470	600
 
 #COIN
-#4	100	120
-#4	420	1200
+4	3216	955
+4	3312	859
+4	3408	763
+4	3504	667
+4	3600	571
 
+#Hidden map coin
 4	6606	1512
 4	6606	1704
 4	6654	1464
@@ -157,6 +161,8 @@ goomba.txt
 #P button đúng
 8	6096	1104	2
 
+8	528	1056	1
+
 #nút cao hơn
 #8	6096	1004	2
 
@@ -229,6 +235,10 @@ goomba.txt
 #virtal box
 19	2750	930
 19	1500	1200
+
+[OBJECTS_GRID]
+# file_path
+Resources\object\object_scene_1.txt	Resources\object\grid_scene_1.txt
 
 [MAP]
 textures\map_world1-1.txt	textures\TileObject.png	176	41	29	30

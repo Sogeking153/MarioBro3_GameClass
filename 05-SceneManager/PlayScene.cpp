@@ -40,6 +40,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define SCENE_SECTION_ASSETS	1
 #define SCENE_SECTION_OBJECTS	2
 #define SCENE_SECTION_MAP	3
+#define SCENE_SECTION_OBJECTS_GRID 4
 
 #define ASSETS_SECTION_UNKNOWN -1
 #define ASSETS_SECTION_SPRITES 1
@@ -151,7 +152,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_MARIO:
 		if (player != NULL)
 		{
-			DebugOut(L"[ERROR] MARIO object was created before!\n");
+			//DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
 		obj = new CMario(x, y);
@@ -346,6 +347,7 @@ void CPlayScene::Load()
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
 		if (line == "[MAP]") {	section = SCENE_SECTION_MAP; continue;};
+		if (line == "[OBJECTS_GRID]") { section = SCENE_SECTION_OBJECTS_GRID; continue; }
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
 
 		//
@@ -356,6 +358,7 @@ void CPlayScene::Load()
 			case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
 			case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 			case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
+			case SCENE_SECTION_OBJECTS_GRID: _ParseSection_OBJECTS_GRID(line); break;
 		}
 	}
 
@@ -370,8 +373,15 @@ void CPlayScene::Update(DWORD dt)
 {
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+	CGame* game = CGame::GetInstance();
+
+	grid->GetListObjInGrid(game->GetCamX(), game->GetCamY());
 
 	vector<LPGAMEOBJECT> coObjects;
+
+	for (size_t i = 0; i < enemies.size(); i++)
+		coObjects.push_back(enemies[i]);
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
@@ -385,6 +395,12 @@ void CPlayScene::Update(DWORD dt)
 	for (int i = 0; i < list_bricklink.size(); i++)
 	{
 		coObjects.push_back(list_bricklink[i]);
+	}
+
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->Update(dt, &coObjects);
+		enemies[i]->is_appeared = false;
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
@@ -452,7 +468,7 @@ void CPlayScene::Update(DWORD dt)
 	float cx, cy;
 	player->GetPosition(cx, cy);
 
-	CGame *game = CGame::GetInstance();
+	//CGame *game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
 	cy -= game->GetBackBufferHeight() / 2;
 
@@ -467,6 +483,7 @@ void CPlayScene::Update(DWORD dt)
 	else if (player->GetY() >= TOP_IN_GROUND && player->GetY() <= BOT_IN_GROUND)
 	{
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_IN_GROUND);
+		grid->UpdatePositionInGrid(game->GetCamX(), CAM_Y_IN_GROUND);
 	}
 
 	else if (player->GetY() > BOT_IN_GROUND)
@@ -485,6 +502,9 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	map->Draw();
+
+	for (int i = 0; i < enemies.size(); i++)
+		enemies[i]->Render();
 
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
@@ -585,8 +605,35 @@ void CPlayScene::DropItem(int itemType, float x, float y)
 
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }
 
+void CPlayScene::_ParseSection_OBJECTS_GRID(string line)
+{
+	//DebugOut(L"hello object grid\n");
+	DebugOut(L"[INFO] object grid : %s \n", line);
+
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return; // skip invalid lines
+	wstring objPath = ToWSTR(tokens[0].c_str());
+	wstring gridPath = ToWSTR(tokens[1].c_str());
+
+	grid = new CGrid(objPath.c_str(), gridPath.c_str(), player);
+	grid->ReadFileObj();
+	grid->ReadFileGrid();
+}
+
 void CPlayScene::PurgeDeletedObjects()
 {
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i]->IsDeleted() == true)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
+
+			enemies.erase(enemies.begin() + i);
+		}
+	}
+
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = objects.begin(); it != objects.end(); it++)
 	{
