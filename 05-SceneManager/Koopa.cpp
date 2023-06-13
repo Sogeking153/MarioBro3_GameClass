@@ -16,7 +16,7 @@ Koopa::Koopa(float x, float y, LPGAMEOBJECT mario, int koopa_type, int koopa_sta
 	player = dynamic_cast<CMario*>(mario);
 
 	if (type == KOOPA_RED)
-		virtualbox = new VirtualBox(x - 50, y, mario);
+		virtualbox = new VirtualBox(x - GAP_VIRTUAL_BOX, y, mario);
 }
 
 void Koopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)

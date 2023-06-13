@@ -329,7 +329,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		CollideWithEnemy();
 		is_jumped = true;
-		DebugOut(L"collision above %d \n");
+		//DebugOut(L"collision above %d \n");
 	}
 	else
 	{

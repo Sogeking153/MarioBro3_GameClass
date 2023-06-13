@@ -4,7 +4,13 @@
 // This file contains all IDs of game assets 
 //
 
+#define BORDER_COLUMN_GRID_GET_OBJ 1
+
+#define BORDER_COLUMN_GRID 1
+#define BORDER_ROW_GRID 2
+
 #define MAX_SCENE_LINE	1024
+#define MAX_SCENE_LINE_MORE	4096
 
 #define TRANSPARENT_COLOR 0.25
 

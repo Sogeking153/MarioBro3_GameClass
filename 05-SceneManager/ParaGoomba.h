@@ -34,6 +34,12 @@
 #define ID_ANI_PARA_GOOMBA_DIE 5024
 #define ID_ANI_PARA_GOOMBA_WAS_SHOOTED 5401
 
+#define JUMP_SHORT_0 0
+#define JUMP_SHORT_1 1
+#define JUMP_SHORT_2 2
+#define JUMP_HIGHT 3
+#define WALKING 4
+
 #define TIME_WALKING 2000
 
 class ParaGoomba : public CGameObject

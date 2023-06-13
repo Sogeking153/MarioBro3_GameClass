@@ -18,6 +18,7 @@
 #include "RandomBonus.h"
 
 #include "Utils.h"
+#include "AssetIDs.h"
 
 void CGrid::Classify(LPGAMEOBJECT obj)
 {
@@ -39,12 +40,12 @@ void CGrid::GetListObjInGrid(float cam_x, float cam_y)
 	bricks_blink.clear();
 
 	int top = (int)((cam_y) / CELL_HEIGHT);
-	int bottom = (int)((cam_y + 730) / CELL_HEIGHT);
+	int bottom = (int)((cam_y + SCREEN_HEIGHT) / CELL_HEIGHT);
 
 	int left = (int)((cam_x) / CELL_WIDTH);
-	int right = (int)((cam_x + 760) / CELL_WIDTH);
+	int right = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
 
-	for (int i = top - 1; i <= bottom + 1; i++)
+	for (int i = top - BORDER_COLUMN_GRID_GET_OBJ; i <= bottom + BORDER_COLUMN_GRID_GET_OBJ; i++)
 		for (int j = left; j <= right; j++)
 		{	//can -2 for testing
 
@@ -115,8 +116,8 @@ void CGrid::UpdatePositionInGrid(float cam_x, float cam_y)
 		for (int m = 0; m < enemies.size(); m++) {
 			LPGAMEOBJECT enemy = enemies[m];
 
-			for (int i = top_cell - 1; i <= bottom_cell + 1; i++)
-				for (int j = left_cell - 2; j <= right_cell + 2; j++) {
+			for (int i = top_cell - BORDER_COLUMN_GRID; i <= bottom_cell + BORDER_COLUMN_GRID; i++)
+				for (int j = left_cell - BORDER_ROW_GRID; j <= right_cell + BORDER_ROW_GRID; j++) {
 					if (j < 0) j = 0;
 					if (i < 0) i = 0;
 					for (int k = 0; k < cells[i][j].size(); k++) {
@@ -141,8 +142,8 @@ void CGrid::UpdatePositionInGrid(float cam_x, float cam_y)
 		for (int m = 0; m < items.size(); m++) {
 			LPGAMEOBJECT item = items[m];
 
-			for (int i = top_cell - 1; i <= bottom_cell + 1; i++)
-				for (int j = left_cell - 2; j <= right_cell + 2; j++) {
+			for (int i = top_cell - BORDER_COLUMN_GRID; i <= bottom_cell + BORDER_COLUMN_GRID; i++)
+				for (int j = left_cell - BORDER_ROW_GRID; j <= right_cell + BORDER_ROW_GRID; j++) {
 					if (j < 0) j = 0;
 					if (i < 0) i = 0;
 					for (int k = 0; k < cells[i][j].size(); k++) {
@@ -167,8 +168,8 @@ void CGrid::UpdatePositionInGrid(float cam_x, float cam_y)
 		for (int m = 0; m < bricks_blink.size(); m++) {
 			LPGAMEOBJECT blink = bricks_blink[m];
 
-			for (int i = top_cell - 1; i <= bottom_cell + 1; i++)
-				for (int j = left_cell - 2; j <= right_cell + 2; j++) {
+			for (int i = top_cell - BORDER_COLUMN_GRID; i <= bottom_cell + BORDER_COLUMN_GRID; i++)
+				for (int j = left_cell - BORDER_ROW_GRID; j <= right_cell + BORDER_ROW_GRID; j++) {
 					if (j < 0) j = 0;
 					if (i < 0) i = 0;
 					for (int k = 0; k < cells[i][j].size(); k++) {
