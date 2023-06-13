@@ -13,12 +13,11 @@ Mushroom::Mushroom(float x, float y, int type) : CGameObject(x, y)
 void Mushroom::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
-	animations->Get(ID_ANI_COIN)->Render(x, y);
 
-	int IdAni = MUSHROOM_RED;
+	int IdAni = ANI_MUSHROOM_RED;
 
-	if (type == GREEN)
-		IdAni = MUSHROOM_GREEN;
+	if (type == MUSHROOM_GREEN)
+		IdAni = ANI_MUSHROOM_GREEN;
 
 	animations->Get(IdAni)->Render(x, y);
 
@@ -42,10 +41,10 @@ void Mushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Mushroom::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - COIN_BBOX_WIDTH / 2;
-	t = y - COIN_BBOX_HEIGHT / 2;
-	r = l + COIN_BBOX_WIDTH;
-	b = t + COIN_BBOX_HEIGHT;
+	l = x - MUSH_ROOM_BBOX_WIDTH / 2;
+	t = y - MUSH_ROOM_BBOX_HEIGHT / 2;
+	r = l + MUSH_ROOM_BBOX_WIDTH;
+	b = t + MUSH_ROOM_BBOX_HEIGHT;
 }
 
 void Mushroom::OnCollisionWith(LPCOLLISIONEVENT e)

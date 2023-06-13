@@ -5,8 +5,8 @@
 #define WIDTH 48
 #define HEIGHT 48
 
-#define MAX_ROW 200
-#define MAX_COLUMN 200
+#define MAX_ROW_MAP 200
+#define MAX_COLUMN_MAP  200
 
 #define SCREEN_WIDTH  760
 #define SCREEN_HEIGHT  730
@@ -32,7 +32,7 @@ class Map
 	int height_map;//= 41
 
 	LPCWSTR mapTextFilePath;
-	int map[MAX_ROW][MAX_COLUMN];
+	int map[MAX_ROW_MAP][MAX_COLUMN_MAP];
 public:
 	Map(LPCWSTR maptext, LPCWSTR tileset, int width_map, int height_map,
 		int number_tile_set_width, int number_tile_set_height);

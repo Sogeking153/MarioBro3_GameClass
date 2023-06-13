@@ -3,7 +3,7 @@
 #include "PlayScene.h"
 
 #define BRICKCOIN_GAP_BOUNCING 20
-#define BRICKCOIN_VX 0.2
+#define BRICKCOIN_VX 0.2f
 
 void BrickCoin::Render()
 {

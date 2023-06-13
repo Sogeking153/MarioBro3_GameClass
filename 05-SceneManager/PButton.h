@@ -3,7 +3,7 @@
 #include "Animation.h"
 #include "Animations.h"
 
-#define ID_ANI_BRICK 746
+//#define ID_ANI_BRICK 746
 #define PBUTTON_WIDTH 16
 #define PBUTTON_BBOX_WIDTH 16
 #define PBUTTON_BBOX_HEIGHT 16

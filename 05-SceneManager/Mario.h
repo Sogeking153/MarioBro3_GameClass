@@ -8,7 +8,6 @@
 #include "debug.h"
 #include "Game.h"
 
-#define CORE 100
 
 #define EFFECT_GAP 50
 

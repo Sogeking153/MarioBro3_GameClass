@@ -3,7 +3,7 @@
 
 #define ANI_MONEY_EFFECT 755
 #define VY_MONEY_EFFECT 0.15
-#define EFFECT_TIME 300
+#define MONEY_EFFECT_TIME  300
 
 class MoneyEffect : public Effect
 {

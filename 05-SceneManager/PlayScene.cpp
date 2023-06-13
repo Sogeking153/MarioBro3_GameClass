@@ -423,7 +423,7 @@ void CPlayScene::Update(DWORD dt)
 				{
 					if (player->GetLevel() == MARIO_LEVEL_SMALL)
 					{
-						Mushroom* mushroom = new Mushroom(x, y, RED);
+						Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_RED);
 						itemsMarioCanEat.push_back(mushroom);
 					}
 					else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
@@ -433,7 +433,7 @@ void CPlayScene::Update(DWORD dt)
 					}
 				}
 				brick->dropped = true;
-				player->score += CORE;
+				player->score += SCORE;
 			}
 			else if (brick->is_hit == true && brick->dropped == false)
 			{
@@ -442,7 +442,7 @@ void CPlayScene::Update(DWORD dt)
 				itemsMarioCanEat.push_back(coineffect);
 
 				brick->dropped = true;
-				player->score += CORE;
+				player->score += SCORE;
 			}
 		}
 	}

@@ -3,9 +3,9 @@
 #include "Animation.h"
 #include "Animations.h"
 
-#define  DEBRIS_BRICK_GRAVITY		0.0009
-#define  DEBRIS_BRICK_SPEED_X		0.07
-#define  DEBRIS_BRICK_SPEED_Y		0.26
+#define  DEBRIS_BRICK_GRAVITY		0.0009f
+#define  DEBRIS_BRICK_SPEED_X		0.07f
+#define  DEBRIS_BRICK_SPEED_Y		0.26f
 
 #define ID_ANI_DEBRIS_BRICK 745
 

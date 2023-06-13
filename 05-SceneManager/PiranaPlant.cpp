@@ -13,7 +13,7 @@ PiranaPlant::PiranaPlant(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y
 
 	player = mario;
 
-	min_y = y - VENUS_BBOX_HEIGHT + GAP_MIN_Y;
+	min_y = y - PIRANA_PLANT_BBOX_HEIGHT + GAP_MIN_Y;
 	max_y = y + GAP_MAX_Y;
 
 	l_safe = x - PIRANA_WIDTH_SAFE;
@@ -24,10 +24,10 @@ PiranaPlant::PiranaPlant(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y
 
 void PiranaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - VENUS_BBOX_WIDTH / 2;
-	top = y - VENUS_BBOX_HEIGHT / 2;
-	right = x + VENUS_BBOX_WIDTH / 2;
-	bottom = y + VENUS_BBOX_HEIGHT / 2;
+	left = x - PIRANA_PLANT_BBOX_WIDTH / 2;
+	top = y - PIRANA_PLANT_BBOX_HEIGHT / 2;
+	right = x + PIRANA_PLANT_BBOX_WIDTH / 2;
+	bottom = y + PIRANA_PLANT_BBOX_HEIGHT / 2;
 }
 
 void PiranaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

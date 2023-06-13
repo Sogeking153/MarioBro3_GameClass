@@ -4,6 +4,10 @@
 // This file contains all IDs of game assets 
 //
 
+#define ID_ANI_BRICK 10000
+#define SCORE 100
+#define SCORE_COIN 50
+
 #define BORDER_COLUMN_GRID_GET_OBJ 1
 
 #define BORDER_COLUMN_GRID 1
@@ -55,7 +59,6 @@
 #define EATEN_COIN 5
 #define LIFE 4
 #define SCENE 2
-#define SCORE 2000
 #define POS_Y_ENEMY_DELETE 1350
 
 

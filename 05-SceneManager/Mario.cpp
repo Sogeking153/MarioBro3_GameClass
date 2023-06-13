@@ -390,7 +390,7 @@ void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	if (dynamic_cast<Mushroom*>(e->obj)->type == RED)
+	if (dynamic_cast<Mushroom*>(e->obj)->type == MUSHROOM_RED)
 		SetLevel(MARIO_LEVEL_BIG);
 }
 void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
@@ -471,7 +471,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
-	//DebugOut(L"[INFO] Delete coin! %d\n");
+	score += SCORE_COIN;
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -977,7 +977,7 @@ void CMario::CollideWithItems(vector<LPGAMEOBJECT>* itemsMarioCanEat)
 
 		if (this->CheckOverLap(ml, mt, mr, mb, il, it, ir, ib))
 		{
-			if (dynamic_cast<Mushroom*>(item) && dynamic_cast<Mushroom*>(item)->type == RED)
+			if (dynamic_cast<Mushroom*>(item) && dynamic_cast<Mushroom*>(item)->type == MUSHROOM_RED)
 			{
 				//GREEN
 				//&& dynamic_cast<Mushroom*>(item)->is_read_mushroom == true

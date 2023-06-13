@@ -5,7 +5,7 @@ MoneyEffect::MoneyEffect(int pos_x, int pos_y, int moneyAni)
 	this->y = pos_y;
 
 	vy = -VY_MONEY_EFFECT;
-	effectTime = EFFECT_TIME;
+	effectTime = MONEY_EFFECT_TIME;
 
 	//this->SetAnimationSet(CAnimationSets::GetInstance()->Get(23));
 }

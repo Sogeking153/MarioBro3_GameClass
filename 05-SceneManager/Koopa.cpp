@@ -318,7 +318,7 @@ void Koopa::SetState(int state)
 	{
 	case CONCO_STATE_DIE:
 		die_start = GetTickCount64();
-		y += (GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+		y += (GOOMBA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;

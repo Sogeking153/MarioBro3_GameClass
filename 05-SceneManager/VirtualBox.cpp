@@ -60,8 +60,8 @@ void VirtualBox::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void VirtualBox::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - BRICK_BBOX_WIDTH / 2;
-	t = y - BRICK_BBOX_HEIGHT / 2;
-	r = l + BRICK_BBOX_WIDTH;
-	b = t + BRICK_BBOX_HEIGHT;
+	l = x - VIRTUAL_BOX_BBOX_WIDTH / 2;
+	t = y - VIRTUAL_BOX_BBOX_HEIGHT / 2;
+	r = l + VIRTUAL_BOX_BBOX_WIDTH;
+	b = t + VIRTUAL_BOX_BBOX_HEIGHT;
 }
