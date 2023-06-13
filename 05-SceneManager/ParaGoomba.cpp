@@ -163,6 +163,9 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			effect = NULL;
 		}
 	}
+
+	if (this->y > POS_Y_ENEMY_DELETE)
+		this->Delete();
 }
 
 

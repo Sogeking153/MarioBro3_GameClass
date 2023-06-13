@@ -14,7 +14,10 @@ goomba.txt
 
 # MARIO
 #0	6080	210
-0	7766	1130
+0	166	1130	0
+###near random bonus
+#0	7766	1130
+
 
 # goomba
 #2	860	600

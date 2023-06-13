@@ -249,10 +249,8 @@ void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (y > POS_Y_HOLD)
-	{
+	if (this->y > POS_Y_ENEMY_DELETE)
 		this->Delete();
-	}
 }
 
 

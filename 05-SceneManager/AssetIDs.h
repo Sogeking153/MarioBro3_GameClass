@@ -56,6 +56,7 @@
 #define LIFE 4
 #define SCENE 2
 #define SCORE 2000
+#define POS_Y_ENEMY_DELETE 1350
 
 
 #pragma region MARIO 
