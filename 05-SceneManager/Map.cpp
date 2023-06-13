@@ -18,10 +18,6 @@ Map::Map(LPCWSTR maptext, LPCWSTR tileset, int width_map, int height_map,
 	this->number_tile_set_height = number_tile_set_height;
 }
 
-Map::~Map()
-{
-}
-
 void Map::LoadTileSet()
 {
 	int a, b;

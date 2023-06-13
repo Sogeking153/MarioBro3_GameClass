@@ -25,8 +25,8 @@ void CGrid::Classify(LPGAMEOBJECT obj)
 	//type is use to create different type of same object also for sorting in grid
 	if (obj->type == OBJECT_TYPE_COIN || obj->type == OBJECT_TYPE_BRICK_COIN || obj->type == OBJECT_TYPE_RANDOM_BONUS)
 		items.push_back(obj);
-	else if (obj->type == OBJECT_TYPE_BRICK_BLINK)
-		bricks_blink.push_back(obj);
+	/*else if (obj->type == OBJECT_TYPE_BRICK_BLINK)
+		bricks_blink.push_back(obj);*/
 	else
 		enemies.push_back(obj);
 }
@@ -196,7 +196,8 @@ LPGAMEOBJECT CGrid::CreateNewObj(int id_grid, int obj_type, float x, float y, fl
 {
 	///CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 
-	CGameObject* obj = NULL;
+	//CGameObject* obj = NULL;
+	CGameObject* obj=NULL;
 
 	switch (obj_type)
 	{
@@ -282,6 +283,7 @@ LPGAMEOBJECT CGrid::CreateNewObj(int id_grid, int obj_type, float x, float y, fl
 
 
 	obj->SetPosition(x, y);
+	obj->type = obj_type;
 	obj->w = w;
 	obj->h = h;
 	obj->id_grid = id_grid;

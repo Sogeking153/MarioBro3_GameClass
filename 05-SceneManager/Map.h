@@ -32,7 +32,7 @@ class Map
 	int height_map;//= 41
 
 	LPCWSTR mapTextFilePath;
-	int map[MAX_ROW_MAP][MAX_COLUMN_MAP];
+	int map[200][200] = { 0 };
 public:
 	Map(LPCWSTR maptext, LPCWSTR tileset, int width_map, int height_map,
 		int number_tile_set_width, int number_tile_set_height);

@@ -285,7 +285,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	else
 		objects.push_back(obj);
 
-	game_ui = new UI();
+	game_ui->SetPlayer(player);
 }
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
@@ -513,16 +513,16 @@ void CPlayScene::Render()
 {
 	map->Draw();
 
+	for (int i = 0; i < itemsMarioCanEat.size(); i++)
+	{
+		itemsMarioCanEat[i]->Render();
+	}
+
 	for (int i = 0; i < items.size(); i++)
 		items[i]->Render();
 
 	for (int i = 0; i < enemies.size(); i++)
 		enemies[i]->Render();
-
-	for (int i = 0; i < itemsMarioCanEat.size(); i++)
-	{
-		itemsMarioCanEat[i]->Render();
-	}	
 
 	for (int i = 0; i < list_bricklink.size(); i++)
 	{
