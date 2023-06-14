@@ -132,6 +132,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//DebugOut(L"[INFO] fly awawyyyy?\n");
 	}
 
+	if (GetState() == MARIO_STATE_TRANSFORM && GetTickCount64() - time_to_transform >= MARIO_TIME_TO_STRANSFORM && time_to_transform)
+	{
+		SetState(MARIO_STATE_IDLE);
+		time_to_transform = 0;
+		//DebugOut(L"[INFO] henshin?\n");
+	}
+
+	if (GetState() == MARIO_STATE_APPEAR_TAIL && GetTickCount64() - time_to_appear_tail >= MARIO_TIME_TO_APPEAR_TAIL && time_to_appear_tail)
+	{
+		SetState(MARIO_STATE_IDLE);
+		time_to_appear_tail = 0;
+		//DebugOut(L"[INFO] wow a tail?\n");
+	}
+
 	if (this->GetY() < 0)
 	{
 		//SetState(MARIO_STATE_FLY_LANDING);
@@ -384,14 +398,17 @@ void CMario::OnCollisionWithVirtualBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
-	//coin++;
+	dynamic_cast<SuperLeaf*>(e->obj)->Delete();
+	SetState(MARIO_STATE_APPEAR_TAIL);
+	SetLevel(MARIO_LEVEL_BIG_TAIL);
 }
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
+	//e->obj->Delete();
 	if (dynamic_cast<Mushroom*>(e->obj)->type == MUSHROOM_RED)
-		SetLevel(MARIO_LEVEL_BIG);
+		SetState(MARIO_STATE_TRANSFORM);
+
+	dynamic_cast<Mushroom*>(e->obj)->Delete();
 }
 void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 {
@@ -469,7 +486,8 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
+	//e->obj->Delete();
+	dynamic_cast<CCoin*>(e->obj)->Delete();
 	coin++;
 	score += SCORE_COIN;
 }
@@ -845,6 +863,17 @@ void CMario::Render()
 		nx = 1;
 	}
 
+	if (time_to_transform)
+	{
+		if (nx >= 0)
+			aniId = MARIO_ANI_TRANSFORM;
+		else
+			aniId = MARIO_ANI_TRANSFORM + TO_BECOME_LEFT;
+	}
+
+	if (time_to_appear_tail)
+		aniId = MARIO_ANI_APEAR_TAIL;
+
 	/*int count = 402;
 	GameTime* game_time = GameTime::GetInstance();
 	if (game_time->gameTime % 4 == 1)
@@ -962,6 +991,12 @@ void CMario::SetState(int state)
 		fly_high_start = GetTickCount64();
 		vy = -MARIO_VY_FLY_HIGH;
 		break;
+	case MARIO_STATE_TRANSFORM:
+		time_to_transform = GetTickCount64();
+		break;
+	case MARIO_STATE_APPEAR_TAIL:
+		time_to_appear_tail = GetTickCount64();
+		break;
 	}
 
 	CGameObject::SetState(state);
@@ -989,13 +1024,11 @@ void CMario::CollideWithItems(vector<LPGAMEOBJECT>* itemsMarioCanEat)
 
 				//SetState(MARIO_STATE_TRANSFORM);
 				//score += 1000;
-				this->SetLevel(2);
 			}
 			else if (dynamic_cast<SuperLeaf*>(item))
 			{
 				//SetState(MARIO_STATE_APPEAR_TAIL);
 				//score += 1000;
-				this->SetLevel(3);
 			}
 			//else if (dynamic_cast<Coin*>(item))
 			//{
