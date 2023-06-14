@@ -572,7 +572,7 @@ int CMario::GetAniIdSmall()
 				if (holding_something == NULL)
 				{
 					if (ax < 0)
-						aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
+						aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
 					else if (vx == MARIO_RUNNING_SPEED)
 						aniId = ID_ANI_MARIO_SMALL_RUNNING_RIGHT;
 					else
@@ -586,7 +586,7 @@ int CMario::GetAniIdSmall()
 				if (holding_something == NULL)
 				{
 					if (ax > 0)
-						aniId = ID_ANI_MARIO_SMALL_BRACE_LEFT;
+						aniId = ID_ANI_MARIO_SMALL_BRACE_RIGHT;
 					else if (vx == -MARIO_RUNNING_SPEED)
 						aniId = ID_ANI_MARIO_SMALL_RUNNING_LEFT;
 					else
@@ -750,7 +750,7 @@ int CMario::GetAniIdTail()
 			if (holding_something == NULL)
 			{
 				if (ax < 0)
-					aniId = MARIO_ANI_TAIL_SKID_LEFT;
+					aniId = MARIO_ANI_TAIL_SKID_LEFT + TO_BECOME_LEFT;
 				else if (vx == MARIO_RUNNING_SPEED)
 					aniId = MARIO_ANI_TAIL_RUN_RIGHT;
 				else
@@ -764,7 +764,7 @@ int CMario::GetAniIdTail()
 			if (holding_something == NULL)
 			{
 				if (ax > 0)
-					aniId = MARIO_ANI_TAIL_SKID_LEFT + TO_BECOME_LEFT;
+					aniId = MARIO_ANI_TAIL_SKID_LEFT;
 				else if (vx == -MARIO_RUNNING_SPEED)
 					aniId = MARIO_ANI_TAIL_RUN_RIGHT + TO_BECOME_LEFT;
 				else
@@ -901,6 +901,11 @@ void CMario::SetState(int state)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
+			else if (abs(this->vx) == 0)
+			{
+				vy = -MARIO_JUMP_SPEED_Y;
+				vx = 0;
+			}
 			else
 			{
 				vy = -MARIO_JUMP_SPEED_Y;

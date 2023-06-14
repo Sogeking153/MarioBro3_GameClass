@@ -46,7 +46,7 @@ void CGrid::GetListObjInGrid(float cam_x, float cam_y)
 	int right = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
 
 	for (int i = top - BORDER_COLUMN_GRID_GET_OBJ; i <= bottom + BORDER_COLUMN_GRID_GET_OBJ; i++)
-		for (int j = left; j <= right; j++)
+		for (int j = left - BORDER_ROW_GRID_GET_OBJ ; j <= right; j++)
 		{	//can -2 for testing
 
 			if (j < 0) j = 0;

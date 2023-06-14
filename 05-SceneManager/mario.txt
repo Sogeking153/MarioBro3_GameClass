@@ -760,7 +760,7 @@
 #fly big
 431	10010	100
 #fly raccoon
-432	10069	100	10070	100	10071	100
+432	10069	120	10070	120	10071	120
 #fly fire 
 433	10104	100
 #fly throw FIRE
@@ -891,7 +891,7 @@ throw FIRE mario
 #fly big
 531	10510	100
 #fly raccoon
-532	10569	100	10570	100	10571	100
+532	10569	120	10570	120	10571	120
 #fly fire HƠI NGƯỢC HƯỚNG
 533	15104	100
 #fly throw FIRE

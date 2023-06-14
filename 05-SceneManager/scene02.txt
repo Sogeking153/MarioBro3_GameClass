@@ -14,7 +14,9 @@ goomba.txt
 
 # MARIO
 #0	6080	210
-0	200	1130	
+#0	200	1130
+#truoc paragoomba
+0	2300	1130		
 ###near random bonus
 #0	7766	1130
 
@@ -113,7 +115,7 @@ goomba.txt
 #trên không trung
 6	3936	432	192	2	1
 6	4224	576	192	2	1
-6	4464	528	720	2	1
+6	4480	528	600	2	1
 
 #Portal 
 #50	200	160	216	180	1
