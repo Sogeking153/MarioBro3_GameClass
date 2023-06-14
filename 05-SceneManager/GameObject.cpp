@@ -15,6 +15,11 @@ CGameObject::CGameObject()
 	nx = 1;	
 	state = -1;
 	isDeleted = false;
+	w = 0;
+	h = 0;
+	type = 0;
+	id_grid = 0;
+	id = 0;
 }
 
 void CGameObject::DeleteWhenOutOfCam()

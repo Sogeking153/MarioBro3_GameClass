@@ -53,7 +53,7 @@
 #define MARIO_GAP_JUMP	1
 
 
-#define MARIO_JUMP_SPEED_Y		0.85f
+#define MARIO_JUMP_SPEED_Y		0.90f
 #define MARIO_JUMP_RUN_SPEED_Y	0.95f
 
 #define MARIO_GRAVITY			0.002f
@@ -147,6 +147,7 @@
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14*3
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16*3
 
+
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
 #define MARIO_SMALL_BBOX_WIDTH  13*3
@@ -231,6 +232,9 @@
 #define MARIO_BIG_TAIL_SITDOWN_BBOX_WIDTH  22*3
 #define MARIO_BIG_TAIL_SITDOWN_BBOX_HEIGHT 16*3
 
+#define MARIO_BIG_TAIL_SPIN_BBOX_WIDTH  48*3
+#define MARIO_BIG_TAIL_BBOX_HEIGHT 28*3
+
 class CMario : public CGameObject
 {
 public:
@@ -289,7 +293,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_BIG;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;

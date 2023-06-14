@@ -33,6 +33,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 {
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
+	map = NULL;
+	grid = NULL;
 }
 
 
@@ -518,6 +520,9 @@ void CPlayScene::Render()
 		itemsMarioCanEat[i]->Render();
 	}
 
+	for (int i = 0; i < objects.size(); i++)
+		objects[i]->Render();
+
 	for (int i = 0; i < items.size(); i++)
 		items[i]->Render();
 
@@ -528,9 +533,6 @@ void CPlayScene::Render()
 	{
 		list_bricklink[i]->Render();
 	}
-
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
 
 	//game_time = GameTime::GetInstance();
 	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));

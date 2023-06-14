@@ -40,6 +40,11 @@ public:
 	bool isDeleted; 
 
 //public: 
+	void SetType(int Type) { type = Type; }
+	void SetWidth(int Width) { w = Width; }
+	void SetHeight(int Height) { h = Height; }
+	void SetIdGrid(int IdGrid) { id_grid = IdGrid; }
+
 	void DeleteWhenOutOfCam();
 	void CheckWetherBeingAttacked(CGameObject* obj_attack, int become_state);
 	int GetNX() { return nx; };

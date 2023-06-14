@@ -115,6 +115,18 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	for (LPGAMEOBJECT fireball : listFireball)
 		fireball->Update(dt, coObjects);
+
+	for (int i = 0; i < listFireball.size(); i++)
+	{
+		if (listFireball[i]->IsDeleted())
+		{
+			delete listFireball[i];
+			listFireball[i] = nullptr;
+			listFireball.erase(listFireball.begin() + i);
+
+			//DebugOut(L"[INFO]delete fireball %d\n", listFireball.size());
+		}
+	}
 }
 
 

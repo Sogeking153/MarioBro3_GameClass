@@ -53,13 +53,13 @@
 #define END_FIRST_SCENE_GAP 10
 #define TOP_IN_GROUND 570
 #define BOT_IN_GROUND 1368
-#define CAM_Y_IN_GROUND 700-24
+#define CAM_Y_IN_GROUND 700-24-10
 
 #define GAME_TIME 300
 #define EATEN_COIN 5
 #define LIFE 4
 #define SCENE 2
-#define POS_Y_ENEMY_DELETE 1350
+#define POS_Y_ENEMY_DELETE 1320
 
 
 #pragma region MARIO 

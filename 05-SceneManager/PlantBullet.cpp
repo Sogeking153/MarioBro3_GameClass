@@ -29,6 +29,8 @@ void PlantBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		dynamic_cast<CMario*>(player)->SetLevel(1);
 		is_hit_mario = true;
 	}
+
+	this->DeleteWhenOutOfCam();
 }
 
 void PlantBullet::Render()

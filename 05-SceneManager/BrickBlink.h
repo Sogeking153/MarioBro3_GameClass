@@ -20,8 +20,11 @@
 #define BRICKBLINK_STATE_COIN 200
 #define BRICKBLINK_STATE_BRICK 300
 
+#define NUMBER_DEBRIS_IS_DELETED 4
+
 class BrickBlink : public CGameObject {
 public:
+	int count = 0;
 	CMario* player;
 	bool is_block = true;
 	vector<LPGAMEOBJECT> vec_debris;

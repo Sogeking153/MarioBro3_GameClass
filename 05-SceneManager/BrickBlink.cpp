@@ -53,9 +53,14 @@ void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			delete vec_debris[i];
 			vec_debris[i] = nullptr;
 			vec_debris.erase(vec_debris.begin() + i);
-
+			count++;
 			//DebugOut(L"[INFO]delete %d\n", vec_debris.size());
 		}
+	}
+
+	if (count == NUMBER_DEBRIS_IS_DELETED)
+	{
+		this->Delete();
 	}
 
 	for (LPGAMEOBJECT debris : vec_debris)
