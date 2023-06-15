@@ -398,15 +398,15 @@ void CMario::OnCollisionWithVirtualBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithSuperLeaf(LPCOLLISIONEVENT e)
 {
-	dynamic_cast<SuperLeaf*>(e->obj)->Delete();
-	SetState(MARIO_STATE_APPEAR_TAIL);
+	dynamic_cast<SuperLeaf*>(e->obj)->Delete();	
 	SetLevel(MARIO_LEVEL_BIG_TAIL);
 }
+
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	//e->obj->Delete();
 	if (dynamic_cast<Mushroom*>(e->obj)->type == MUSHROOM_RED)
-		SetState(MARIO_STATE_TRANSFORM);
+		SetLevel(MARIO_LEVEL_BIG);
 
 	dynamic_cast<Mushroom*>(e->obj)->Delete();
 }
@@ -863,7 +863,7 @@ void CMario::Render()
 		nx = 1;
 	}
 
-	if (time_to_transform)
+	if (state == MARIO_STATE_TRANSFORM)
 	{
 		if (nx >= 0)
 			aniId = MARIO_ANI_TRANSFORM;
@@ -871,7 +871,7 @@ void CMario::Render()
 			aniId = MARIO_ANI_TRANSFORM + TO_BECOME_LEFT;
 	}
 
-	if (time_to_appear_tail)
+	if (state == MARIO_STATE_APPEAR_TAIL)
 		aniId = MARIO_ANI_APEAR_TAIL;
 
 	/*int count = 402;

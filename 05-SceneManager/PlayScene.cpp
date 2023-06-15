@@ -469,6 +469,39 @@ void CPlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+		if (dynamic_cast<BrickCoin*>(objects[i]))
+		{
+			//DebugOut(L"[INFO] brickcoin?\n");
+			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
+			float x, y;
+			brick->GetPosition(x, y);
+
+			if (brick->is_hit == true && brick->dropped == false &&
+				(brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM || brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM))
+			{
+				if (brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM)
+				{
+					Mushroom* mushroom = new Mushroom(x, y, GREEN);
+					itemsMarioCanEat.push_back(mushroom);
+				}
+				else
+				{
+					if (player->GetLevel() == MARIO_LEVEL_SMALL)
+					{
+						Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_RED);
+						itemsMarioCanEat.push_back(mushroom);
+					}
+					else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
+					{
+						SuperLeaf* superleaf = new SuperLeaf(x, y);
+						itemsMarioCanEat.push_back(superleaf);
+					}
+				}
+				brick->dropped = true;
+				player->score += SCORE;
+			}
+
+		}
 	}
 
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
@@ -526,13 +559,13 @@ void CPlayScene::Render()
 {
 	map->Draw();
 
+	for (int i = 0; i < objects.size(); i++)
+		objects[i]->Render();
+
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
 		itemsMarioCanEat[i]->Render();
 	}
-
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
 
 	/*for (int i = 0; i < items.size(); i++)
 		items[i]->Render();*/

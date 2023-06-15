@@ -36,7 +36,7 @@ void BrickBlink::Render()
 
 	//DebugOut(L"[INFO] state of brick %d\n", state);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void BrickBlink::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
