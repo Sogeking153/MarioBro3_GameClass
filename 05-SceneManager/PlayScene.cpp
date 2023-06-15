@@ -389,12 +389,12 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame* game = CGame::GetInstance();
 
-	grid->GetListObjInGrid(game->GetCamX(), game->GetCamY());
+	//grid->GetListObjInGrid(game->GetCamX(), game->GetCamY());
 
 	vector<LPGAMEOBJECT> coObjects;
 
-	for (size_t i = 0; i < enemies.size(); i++)
-		coObjects.push_back(enemies[i]);
+	/*for (size_t i = 0; i < enemies.size(); i++)
+		coObjects.push_back(enemies[i]);*/
 
 	/*for (size_t i = 0; i < items.size(); i++)
 		coObjects.push_back(items[i]);*/
@@ -419,14 +419,18 @@ void CPlayScene::Update(DWORD dt)
 		items[i]->Update(dt, &coObjects);
 		items[i]->is_appeared = false;*/
 
-	for (size_t i = 0; i < enemies.size(); i++)
+	/*for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Update(dt, &coObjects);
 		enemies[i]->is_appeared = false;
 
-		if (dynamic_cast<BrickCoin*>(enemies[i]))
+		if (dynamic_cast<BrickCoin*>(enemies[i]))*/
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		objects[i]->Update(dt, &coObjects);
+		if (dynamic_cast<BrickCoin*>(objects[i]))
 		{
-			BrickCoin* brick = dynamic_cast<BrickCoin*>(enemies[i]);
+			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
 			float x, y;
 			brick->GetPosition(x, y);
 
@@ -454,7 +458,7 @@ void CPlayScene::Update(DWORD dt)
 				brick->dropped = true;
 				player->score += SCORE;
 			}
-			else if (brick->is_hit == true && brick->dropped == false)
+			else if (brick->is_hit == true && brick->dropped == false && brick->has_item != BRICKCOIN_CONTAINS_PBUTTON)
 			{
 				DebugOut(L"[clang clang]\n");
 				CoinEffect* coineffect = new CoinEffect(x, y);
@@ -466,43 +470,6 @@ void CPlayScene::Update(DWORD dt)
 		}
 	}
 
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-		if (dynamic_cast<BrickCoin*>(objects[i]))
-		{
-			//DebugOut(L"[INFO] brickcoin?\n");
-			BrickCoin* brick = dynamic_cast<BrickCoin*>(objects[i]);
-			float x, y;
-			brick->GetPosition(x, y);
-
-			if (brick->is_hit == true && brick->dropped == false &&
-				(brick->has_item == BRICKCOIN_CONTAINS_EATABLE_ITEM || brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM))
-			{
-				if (brick->has_item == BRICKCOIN_CONTAINS_GREEN_MUSHROOM)
-				{
-					Mushroom* mushroom = new Mushroom(x, y, GREEN);
-					itemsMarioCanEat.push_back(mushroom);
-				}
-				else
-				{
-					if (player->GetLevel() == MARIO_LEVEL_SMALL)
-					{
-						Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_RED);
-						itemsMarioCanEat.push_back(mushroom);
-					}
-					else if (player->GetLevel() == MARIO_LEVEL_BIG || player->GetLevel() == MARIO_LEVEL_BIG_TAIL)
-					{
-						SuperLeaf* superleaf = new SuperLeaf(x, y);
-						itemsMarioCanEat.push_back(superleaf);
-					}
-				}
-				brick->dropped = true;
-				player->score += SCORE;
-			}
-
-		}
-	}
 
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
@@ -538,13 +505,13 @@ void CPlayScene::Update(DWORD dt)
 	else if (player->GetY() >= TOP_IN_GROUND && player->GetY() <= BOT_IN_GROUND)
 	{
 		CGame::GetInstance()->SetCamPos(cx, CAM_Y_IN_GROUND);
-		grid->UpdatePositionInGrid(game->GetCamX(), CAM_Y_IN_GROUND);
+		//grid->UpdatePositionInGrid(game->GetCamX(), CAM_Y_IN_GROUND);
 	}
 
 	else if (player->GetY() > BOT_IN_GROUND)
 	{
 		CGame::GetInstance()->SetCamPos(cx, BOT_IN_GROUND);
-		grid->UpdatePositionInGrid(game->GetCamX(), BOT_IN_GROUND);
+		//grid->UpdatePositionInGrid(game->GetCamX(), BOT_IN_GROUND);
 	}
 
 	//CGame::GetInstance()->SetCamPos(cx, 700.0f);
@@ -559,19 +526,19 @@ void CPlayScene::Render()
 {
 	map->Draw();
 
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Render();
-
 	for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
 		itemsMarioCanEat[i]->Render();
 	}
 
+	for (int i = 0; i < objects.size(); i++)
+		objects[i]->Render();
+
 	/*for (int i = 0; i < items.size(); i++)
 		items[i]->Render();*/
 
-	for (int i = 0; i < enemies.size(); i++)
-		enemies[i]->Render();
+	/*for (int i = 0; i < enemies.size(); i++)
+		enemies[i]->Render();*/
 
 	for (int i = 0; i < list_bricklink.size(); i++)
 	{
@@ -675,9 +642,9 @@ void CPlayScene::_ParseSection_OBJECTS_GRID(string line)
 	wstring objPath = ToWSTR(tokens[0].c_str());
 	wstring gridPath = ToWSTR(tokens[1].c_str());
 
-	grid = new CGrid(objPath.c_str(), gridPath.c_str(), player);
+	/*grid = new CGrid(objPath.c_str(), gridPath.c_str(), player);
 	grid->ReadFileObj();
-	grid->ReadFileGrid();
+	grid->ReadFileGrid();*/
 }
 
 void CPlayScene::PurgeDeletedObjects()
@@ -692,7 +659,7 @@ void CPlayScene::PurgeDeletedObjects()
 		}
 	}*/
 
-	for (size_t i = 0; i < enemies.size(); i++)
+	/*for (size_t i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i]->IsDeleted() == true)
 		{
@@ -701,7 +668,7 @@ void CPlayScene::PurgeDeletedObjects()
 
 			enemies.erase(enemies.begin() + i);
 		}
-	}
+	}*/
 
 	vector<LPGAMEOBJECT>::iterator it;
 	for (it = objects.begin(); it != objects.end(); it++)

@@ -173,84 +173,76 @@ void Koopa::OnCollisionWithFlatForm(LPCOLLISIONEVENT e)
 void Koopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 
-	if (type == KOOPA_RED)
+	if (player->x + CAM_DISTANCE > this->x && this->is_cam_coming == false)
 	{
-		virtualbox->vx = this->vx;
-		virtualbox->Update(dt, coObjects);
+		is_cam_coming = true;
+	}
 
-		if (abs(virtualbox->y - this->y) > GAP_VIRTUAL_BOX_TO_KOOPA)
+	if (is_cam_coming == true)
+	{
+		if (type == KOOPA_RED)
 		{
-			if (this->state == CONCO_STATE_WALKING_LEFT)
+			virtualbox->vx = this->vx;
+			virtualbox->Update(dt, coObjects);
+			if (abs(virtualbox->y - this->y) > GAP_VIRTUAL_BOX_TO_KOOPA)
 			{
-				this->SetState(CONCO_STATE_WALKING_RIGHT);
-				virtualbox->SetPosition(this->x + GAP_VIRTUAL_BOX_TURAROUND_X, y);
+				if (this->state == CONCO_STATE_WALKING_LEFT)
+				{
+					this->SetState(CONCO_STATE_WALKING_RIGHT);
+					virtualbox->SetPosition(this->x + GAP_VIRTUAL_BOX_TURAROUND_X, y);
+				}
+				else if (this->state == CONCO_STATE_WALKING_RIGHT)
+				{
+					this->SetState(CONCO_STATE_WALKING_LEFT);
+					virtualbox->SetPosition(this->x - GAP_VIRTUAL_BOX_TURAROUND_X, y);
+				}
 			}
-			else if (this->state == CONCO_STATE_WALKING_RIGHT)
+		}
+
+		CGameObject::Update(dt, coObjects);
+		if (is_picked == false)
+		{
+			vy += KOOPA_AY * dt;
+
+		}
+
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+
+		if (state == GOOMBA_STATE_INDENT_IN && GetTickCount64() - time_to_indent_out > TIME_TO_SHELL_MOVING)
+		{
+			SetState(CONCO_STATE_SHELL_MOVING);
+		}
+		if (state == CONCO_STATE_SHELL_MOVING && GetTickCount64() - time_to_indent_out > TIME_TO_INDENT_OUT)
+		{
+			SetPosition(this->x, this->y - GAP_AVOID_FALLING_DOWN);
+			SetState(CONCO_STATE_INDENT_OUT);
+			if (this->is_picked == true)
 			{
-				this->SetState(CONCO_STATE_WALKING_LEFT);
-				virtualbox->SetPosition(this->x - GAP_VIRTUAL_BOX_TURAROUND_X, y);
+				player->CollideWithEnemy();
+				player->holding_something = NULL;
+				player->SetState(MARIO_STATE_IDLE);
+				player->is_holding = false;
+
+				this->is_picked = false;
 			}
 		}
-	}
 
-	CGameObject::Update(dt, coObjects);
-	if (is_picked == false)
-	{
-		vy += KOOPA_AY * dt;
+		if (player->GetState() == MARIO_STATE_SPIN)
+			this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
 
-	}
-
-	/*if ((state == CONCO_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
-	{
-		isDeleted = true;
-		return;
-	}*/
-
-	float nothing;
-	CCollision::GetInstance()->Process(this, dt, coObjects);
-
-	if (state == GOOMBA_STATE_INDENT_IN && GetTickCount64() - time_to_indent_out > TIME_TO_SHELL_MOVING)
-	{
-		SetState(CONCO_STATE_SHELL_MOVING);
-
-	}
-	if (state == CONCO_STATE_SHELL_MOVING && GetTickCount64() - time_to_indent_out > TIME_TO_INDENT_OUT)
-	{
-		SetState(CONCO_STATE_INDENT_OUT);
-
-	}
-	if (state == CONCO_STATE_INDENT_OUT && GetTickCount64() - time_to_indent_out > TIME_TO_WALKING_LEFT)
-	{
-		SetPosition(this->x, this->y - GAP_AVOID_FALLING_DOWN);//so that shell wont fall off when indent out
-		SetState(CONCO_STATE_WALKING_LEFT);
-
-		if (this->is_picked == true)
+		if (effect)
 		{
-			player->CollideWithEnemy();
-			player->holding_something = NULL;
-			player->SetState(MARIO_STATE_IDLE);
-			player->is_holding = false;
-
-			this->is_picked = false;
-
+			effect->Update(dt, coObjects);
+			if (effect->isDeleted == true)
+			{
+				delete effect;
+				effect = NULL;
+			}
 		}
+		if (this->y > POS_Y_ENEMY_DELETE)
+			this->Delete();
 	}
 
-	if (player->GetState() == MARIO_STATE_SPIN)
-		this->CheckWetherBeingAttacked(player, CONCO_STATE_WAS_SHOOTED);
-
-	if (effect)
-	{
-		effect->Update(dt, coObjects);
-		if (effect->isDeleted == true)
-		{
-			delete effect;
-			effect = NULL;
-		}
-	}
-
-	if (this->y > POS_Y_ENEMY_DELETE)
-		this->Delete();
 }
 
 

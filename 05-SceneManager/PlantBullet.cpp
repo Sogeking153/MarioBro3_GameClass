@@ -26,7 +26,7 @@ void PlantBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (this->CheckOverLap(lb, tb, rb, bb, l, t, r, b) == true && is_hit_mario == false)
 	{
-		dynamic_cast<CMario*>(player)->SetLevel(1);
+		dynamic_cast<CMario*>(player)->CollideWithEnemy();
 		is_hit_mario = true;
 	}
 

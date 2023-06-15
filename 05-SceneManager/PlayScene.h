@@ -63,9 +63,9 @@ public:
 	void PurgeDeletedObjects();
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
-	void SetEnemiesInScene(vector<LPGAMEOBJECT> listEnemy) { enemies.clear(); enemies = listEnemy; }
+	void SetEnemiesInScene(vector<LPGAMEOBJECT> listEnemy) {  }
 	//void SetItems(vector<LPGAMEOBJECT> listItem) { items.clear(); items = listItem; }
-	void SetBrickBlink(vector<LPGAMEOBJECT> ListBrickBlink) { list_bricklink.clear(); list_bricklink = ListBrickBlink; }
+	void SetBrickBlink(vector<LPGAMEOBJECT> ListBrickBlink) { }
 };
 
 typedef CPlayScene* LPPLAYSCENE;

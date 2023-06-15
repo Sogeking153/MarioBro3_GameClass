@@ -86,6 +86,7 @@
 class Koopa : public CGameObject
 {
 public:
+	bool is_cam_coming = false;
 	MoneyEffect* effect = NULL;
 	bool is_picked = false;
 	VirtualBox* virtualbox = NULL;
