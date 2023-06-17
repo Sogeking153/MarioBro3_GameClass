@@ -901,15 +901,15 @@ void CMario::SetState(int state)
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
 		maxVx = MARIO_RUNNING_SPEED;
-		//ax = MARIO_ACCEL_RUN_X;
-		ax = MARIO_ACCEL_WALK_X;
+		ax = MARIO_ACCEL_RUN_X;
+		//ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
 		maxVx = -MARIO_RUNNING_SPEED;
-		//ax = -MARIO_ACCEL_RUN_X;
-		ax = -MARIO_ACCEL_WALK_X;
+		ax = -MARIO_ACCEL_RUN_X;
+		//ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
