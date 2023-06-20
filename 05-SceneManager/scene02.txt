@@ -14,7 +14,8 @@ goomba.txt
 
 # MARIO
 #0	6080	210
-0	200	1130
+#0	200	1130
+0	1561	600
 #truoc paragoomba
 #0	2300	1130		
 ###near random bonus

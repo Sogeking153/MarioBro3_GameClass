@@ -21,6 +21,7 @@
 #include "PButton.h"
 #include "RandomBonus.h"
 #include "Koopa.h"
+#include "MapPortal.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -30,7 +31,7 @@ MapScene::MapScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
 	player = NULL;
-	key_handler = new CSampleKeyHandler(this);
+	key_handler = new MapSceneKeyHandler(this);
 }
 
 
@@ -42,6 +43,7 @@ MapScene::MapScene(int id, LPCWSTR filePath) :
 #define ASSETS_SECTION_SPRITES 1
 #define ASSETS_SECTION_ANIMATIONS 2
 #define ASSETS_SECTION_SPRITES_PLUS 3
+#define SCENE_SECTION_MAP_SELECTION 7
 
 #define MAX_SCENE_LINE 1024
 
@@ -275,6 +277,28 @@ void MapScene::_ParseSection_OBJECTS(string line)
 	objects.push_back(obj);
 }
 
+void MapScene::_ParseSection_MAP_SELECTION(string line)
+{
+	vector<string> tokens = split(line);
+	if (tokens.size() < 9) return;
+
+	int id = atof(tokens[0].c_str());
+	float x = atof(tokens[1].c_str());
+	float y = atof(tokens[2].c_str());
+
+	int is_portal = atof(tokens[3].c_str());
+	int t = atof(tokens[4].c_str());
+
+	int r = atoi(tokens[5].c_str());
+	int b = atoi(tokens[6].c_str());
+	int l = atoi(tokens[7].c_str());
+	int state = atoi(tokens[8].c_str());
+
+	CGameObject* obj = new MapPortal(id, x, y, is_portal, t, r, b, l, state);
+
+	map_portals.push_back(obj);
+}
+
 void MapScene::LoadAssets(LPCWSTR assetFile)
 {
 	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
@@ -337,6 +361,7 @@ void MapScene::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
+		if (line == "[MAP_SELECTION]") { section = SCENE_SECTION_MAP_SELECTION; continue; }
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -346,6 +371,7 @@ void MapScene::Load()
 		{
 		case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_MAP_SELECTION: _ParseSection_MAP_SELECTION(line); break;
 		}
 	}
 
@@ -356,6 +382,8 @@ void MapScene::Load()
 	//0	textures\world_map.txt	12	16	textures\tileset_worldmap.png	4 	8
 	map = new Map(L"textures\\world_map.txt", L"textures\\tileset_worldmap.png", 16, 12, 8, 4);
 	map->LoadTileSet();
+
+	current_portal = dynamic_cast<MapPortal*>(map_portals[0]);
 }
 
 void MapScene::Update(DWORD dt)
@@ -446,6 +474,10 @@ void MapScene::Render()
 {
 	map->Draw();
 
+	for (size_t i = 0; i < map_portals.size(); i++)
+	{
+		map_portals[i]->Render();
+	}
 
 	/*for (int i = 0; i < itemsMarioCanEat.size(); i++)
 	{
@@ -488,6 +520,10 @@ void MapScene::Unload()
 
 
 	objects.clear();
+
+	for (int i = 0; i < map_portals.size(); i++)
+		delete map_portals[i];
+	map_portals.clear();
 
 
 	player = NULL;

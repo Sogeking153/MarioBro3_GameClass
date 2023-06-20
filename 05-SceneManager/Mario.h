@@ -231,6 +231,10 @@
 
 #define MARIO_ANI_APEAR_TAIL		457
 
+#define MARIO_ANI_SMALL_IN_MAP			763
+#define MARIO_ANI_BIG_IN_MAP			764
+#define MARIO_ANI_TAIL_IN_MAP			765
+
 #define TO_BECOME_LEFT 100
 #pragma endregion
 
@@ -246,6 +250,7 @@
 class CMario : public CGameObject
 {
 public:
+	bool is_moving_in_world_map = true;
 	ULONGLONG time_to_appear_tail = 0;
 	ULONGLONG time_to_transform = 0;
 

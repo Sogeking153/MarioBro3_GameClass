@@ -5,6 +5,7 @@
 
 #include "Mario.h"
 #include "PlayScene.h"
+#include "MapScene.h"
 
 #define IN_SKY_POS_X 4281
 #define IN_SKY_POS_Y 110
@@ -93,6 +94,58 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_UP:
 		mario->is_up_press = true;
+		break;
+	}
+}
+
+void MapSceneKeyHandler::OnKeyDown(int KeyCode)
+{
+	//CMario* mario = (MapScene*)scence->GetPlayer();
+
+	CMario* mario = (CMario*)((MapScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	CGame* game_temp = CGame::GetInstance();
+	MapScene* map_scene = (MapScene*)game_temp->GetCurrentScene();
+
+	switch (KeyCode)
+	{
+		/*case DIK_S:
+			if (map_scene->current_portal->is_portal) {
+				game_temp->SwitchScene(4);
+				DebugOut(L"switch to 4---->  \n");
+			}
+			break;*/
+	case DIK_RIGHT:
+		if (map_scene->current_portal->r != -1)
+		{
+			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->r];
+			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
+			mario->vx = 0.4;
+		}
+		break;
+	case DIK_LEFT:
+		if (map_scene->current_portal->l != -1)
+		{
+			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->l];
+			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
+			mario->vx = -0.4;
+		}
+		break;
+	case DIK_UP:
+		if (map_scene->current_portal->t != -1)
+		{
+			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->t];
+			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
+			mario->vy = -0.4;
+		}
+		break;
+	case DIK_DOWN:
+		if (map_scene->current_portal->b != -1)
+		{
+			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->b];
+			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
+			mario->vy = 0.4;
+		}
 		break;
 	}
 }
