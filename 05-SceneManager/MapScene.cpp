@@ -148,16 +148,20 @@ void MapScene::_ParseSection_OBJECTS(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
+	{
 		if (player != NULL)
 		{
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x, y);
+		int is_in_world_map = atoi(tokens[3].c_str());
+
+		obj = new CMario(x, y, is_in_world_map);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
+	}
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y, player); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
@@ -454,14 +458,14 @@ void MapScene::Update(DWORD dt)
 	cx -= game->GetBackBufferWidth() / 2;
 	cy -= game->GetBackBufferHeight() / 2;
 
-	if (cx < 0) cx = 0;
-	if (cx > 8448 - 760) cx = 8448 - 760 - 10;
+	//if (cx < 0) cx = 0;
+	//if (cx > 8448 - 760) cx = 8448 - 760 - 10;
 	//CGame::GetInstance()->SetCamPos(cx, 700);
 
-	if (player->GetY() > 1368)
+	/*if (player->GetY() > 1368)
 		CGame::GetInstance()->SetCamPos(cx, 1365);
-	else
-		CGame::GetInstance()->SetCamPos(-20, -25);
+	else*/
+		CGame::GetInstance()->SetCamPos(POS_CAM_X, POS_CAM_Y);
 
 	PurgeDeletedObjects();
 
@@ -517,14 +521,15 @@ void MapScene::Unload()
 	for (int i = 0; i < objects.size(); i++)
 		delete objects[i];
 
-
-
 	objects.clear();
 
 	for (int i = 0; i < map_portals.size(); i++)
 		delete map_portals[i];
 	map_portals.clear();
 
+	for (int i = 0; i < map_portals.size(); i++)
+		delete map_portals[i];
+	map_portals.clear();
 
 	player = NULL;
 

@@ -250,7 +250,7 @@
 class CMario : public CGameObject
 {
 public:
-	bool is_moving_in_world_map = true;
+	bool is_moving_in_world_map;
 	ULONGLONG time_to_appear_tail = 0;
 	ULONGLONG time_to_transform = 0;
 
@@ -302,8 +302,9 @@ public:
 	int GetAniIdTail();
 
 //public:
-	CMario(float x, float y) : CGameObject(x, y)
+	CMario(float x, float y, bool is_in_world_map) : CGameObject(x, y)
 	{
+		is_moving_in_world_map = is_in_world_map;
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;

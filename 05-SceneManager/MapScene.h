@@ -13,6 +13,9 @@
 #include "PiranaPlant.h"
 #include "MapPortal.h"
 
+#define POS_CAM_X -20
+#define POS_CAM_Y -20
+
 class MapScene : public CScene
 {
 public:

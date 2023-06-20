@@ -19,6 +19,9 @@
 #define HACK_POS_X 2200*3
 #define HACK_POS_Y 362*3
 
+#define CAN_NOT_WALK -1
+#define MARIO_SPEED_IN_WOLRD_MAP 0.4
+
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
@@ -116,35 +119,35 @@ void MapSceneKeyHandler::OnKeyDown(int KeyCode)
 			}
 			break;*/
 	case DIK_RIGHT:
-		if (map_scene->current_portal->r != -1)
+		if (map_scene->current_portal->r != CAN_NOT_WALK)
 		{
 			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->r];
 			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
-			mario->vx = 0.4;
+			mario->vx = MARIO_SPEED_IN_WOLRD_MAP;
 		}
 		break;
 	case DIK_LEFT:
-		if (map_scene->current_portal->l != -1)
+		if (map_scene->current_portal->l != CAN_NOT_WALK)
 		{
 			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->l];
 			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
-			mario->vx = -0.4;
+			mario->vx = -MARIO_SPEED_IN_WOLRD_MAP;
 		}
 		break;
 	case DIK_UP:
-		if (map_scene->current_portal->t != -1)
+		if (map_scene->current_portal->t != CAN_NOT_WALK)
 		{
 			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->t];
 			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
-			mario->vy = -0.4;
+			mario->vy = -MARIO_SPEED_IN_WOLRD_MAP;
 		}
 		break;
 	case DIK_DOWN:
-		if (map_scene->current_portal->b != -1)
+		if (map_scene->current_portal->b != CAN_NOT_WALK)
 		{
 			map_scene->current_portal = (MapPortal*)map_scene->map_portals[map_scene->current_portal->b];
 			//mario->SetPosition(map_scene->current_portal->GetX(), map_scene->current_portal->GetY());
-			mario->vy = 0.4;
+			mario->vy = MARIO_SPEED_IN_WOLRD_MAP;
 		}
 		break;
 	}
