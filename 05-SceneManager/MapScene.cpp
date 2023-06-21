@@ -186,15 +186,10 @@ void MapScene::_ParseSection_OBJECTS(string line)
 	// General object setup
 	obj->SetPosition(x, y);
 
-
-	//if (dynamic_cast<BrickBlink*>(obj))
-	//{
-		//list_bricklink.push_back(obj);
-		
-	//}
-	//else
-
-	objects.push_back(obj);
+	/*if (dynamic_cast<VisibleObject*>(obj))
+		visible_object.push_back(obj);
+	else*/
+		objects.push_back(obj);
 }
 
 void MapScene::_ParseSection_MAP_SELECTION(string line)

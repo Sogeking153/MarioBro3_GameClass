@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "PiranaPlant.h"
 #include "MapPortal.h"
+#include "VisibleObject.h"
 
 #define POS_CAM_X -20
 #define POS_CAM_Y -20
@@ -21,7 +22,7 @@ class MapScene : public CScene
 public:
 	vector<LPGAMEOBJECT> map_portals;
 	MapPortal* current_portal;
-
+	vector<LPGAMEOBJECT> visible_object;
 	Map* map;
 
 	CMario* player;

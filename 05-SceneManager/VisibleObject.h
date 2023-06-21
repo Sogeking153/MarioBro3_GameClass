@@ -18,6 +18,10 @@
 #define ANI_3_INTRO 4
 #define ANI_ARROW 5
 
+#define LEFT_GUARD 250
+#define RIGHT_GUARD 336
+#define VX_GUARD 0.05
+
 class VisibleObject : public CGameObject
 {
 public:

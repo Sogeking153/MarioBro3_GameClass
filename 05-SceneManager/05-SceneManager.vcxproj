@@ -149,6 +149,7 @@
     <ClCompile Include="BrickBlink.cpp" />
     <ClCompile Include="BrickCoin.cpp" />
     <ClCompile Include="BrickDebris.cpp" />
+    <ClCompile Include="CircularMoving.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinEffect.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="BrickBlink.h" />
     <ClInclude Include="BrickCoin.h" />
     <ClInclude Include="BrickDebris.h" />
+    <ClInclude Include="CircularMoving.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinEffect.h" />
     <ClInclude Include="Collision.h" />

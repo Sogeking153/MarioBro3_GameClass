@@ -10,7 +10,7 @@ VisibleObject::VisibleObject(float x, float y, float width, float height, int st
 	this->state = state;
 
 	if (state == STATE_GUARD)
-		vx = 0.05f;
+		vx = VX_GUARD;
 }
 
 void VisibleObject::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -24,15 +24,15 @@ void VisibleObject::GetBoundingBox(float& left, float& top, float& right, float&
 void VisibleObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == STATE_GUARD) {
-		if (vx < 0 && x < 250) {
-			x = 250;
+		if (vx < 0 && x < LEFT_GUARD) {
+			x = LEFT_GUARD;
 			vx = -vx;
 			nx *= -1;
 
 		}
 
-		if (vx > 0 && x > 336) {
-			x = 336;
+		if (vx > 0 && x > RIGHT_GUARD) {
+			x = RIGHT_GUARD;
 			vx = -vx;
 			nx *= -1;
 
