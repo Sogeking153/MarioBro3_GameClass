@@ -12,15 +12,15 @@
 #define STATE_CARD 7
 #define STATE_EMPTY 8
 
-#define ANI_START 0
-#define ANI_1 1
-#define ANI_2 2
-#define ANI_3 3
-#define ANI_4 4
-#define ANI_5 5
-#define ANI_6 6
-#define ANI_CARD 7
-#define ANI_EMPTY 8
+#define ANI_START 768
+#define ANI_1 769
+#define ANI_2 770
+#define ANI_3 771
+#define ANI_4 772
+#define ANI_5 773
+#define ANI_6 774
+#define ANI_CARD 775
+#define ANI_EMPTY 776
 
 #define MAP_PORTAL_BBOX_WIDTH  16*3
 #define MAP_PORTAL_BBOX_HEIGHT 16*3
