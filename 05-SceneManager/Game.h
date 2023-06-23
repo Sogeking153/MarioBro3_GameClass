@@ -20,7 +20,7 @@ using namespace std;
 #define SCENE_INTRO 0
 #define SAMPLE_SCENE	1
 #define FIRST_SCENE	2
-#define MAP_SCENE	2 //3
+#define MAP_SCENE	3
 
 /*
 	Our simple game framework

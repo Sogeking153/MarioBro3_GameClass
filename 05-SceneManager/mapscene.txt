@@ -1,4 +1,7 @@
 # list of object assets to load in this scene
+[MAP]
+textures\world_map.txt	textures\tileset_worldmap.png	16	12	8	4
+
 [ASSETS]
 mario.txt
 brick.txt

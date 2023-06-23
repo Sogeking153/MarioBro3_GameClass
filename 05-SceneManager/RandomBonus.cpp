@@ -26,7 +26,7 @@ void RandomBonus::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (GetTickCount64() - start_ani >= 2000 && got_bonus == false)
+	if (GetTickCount64() - start_ani >= TIME_TO_CHANGE_ITEM && got_bonus == false)
 	{
 		switch (state) {
 		case STATE_RANDOM_BONUS_MUSHROOM:
@@ -90,7 +90,7 @@ void RandomBonus::Render()
 		ani = ANI_GOT_BONUS_FIRE_FLOWER;
 
 
-	CSprites::GetInstance()->Get(899)->Draw(8088, 1029);
+	CSprites::GetInstance()->Get(ANI_RANDOM_BONUS_BOUNDARY)->Draw(RANDOM_BONUS_BOUNDARY_POS_X, RANDOM_BONUS_BOUNDARY_POS_Y);
 	animations->Get(ani)->Render(x, y);
 
 	if (got_bonus == true)
@@ -98,14 +98,14 @@ void RandomBonus::Render()
 		float x = CGame::GetInstance()->GetCamX();
 		float y = CGame::GetInstance()->GetCamY();
 
-		if (GetTickCount64() - time_order_to_render_text > 1000)
-			text.Render(x + 200, y + 100, "COURSE CLEAR !");
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_COURSE_CLEAR)
+			text.Render(x + FIX_COURSE_CLEAR_X, y + FIX_COURSE_CLEAR_Y, COURSE_CLEAR);
 
-		if (GetTickCount64() - time_order_to_render_text > 1500)
-			text.Render(x + 170, y + 155, "YOU GOT A CARD");
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_YOU_GOT_A_CARD)
+			text.Render(x + FIX_YOU_GOT_A_CARD_X, y + FIX_YOU_GOT_A_CARD_Y, YOU_GOT_A_CARD);
 
-		if (GetTickCount64() - time_order_to_render_text > 2000)
-			CSprites::GetInstance()->Get(40040 + player->card_end_scene)->Draw(x + 550, y + 155);
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_CARD)
+			CSprites::GetInstance()->Get(WHICH_CARD + player->card_end_scene)->Draw(x + FIX_CARD_X, y + FIX_CARD_Y);
 		//CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);
 
 
@@ -125,7 +125,7 @@ void RandomBonus::SetState(int state)
 	case STATE_GOT_BONUS_MUSHROOM:
 	case STATE_GOT_BONUS_STAR:
 	case STATE_GOT_BONUS_FIRE_FLOWER:
-		vy = -0.3f;
+		vy = -RANDOM_BONUS_FLY_VY;
 		break;
 	}
 }
