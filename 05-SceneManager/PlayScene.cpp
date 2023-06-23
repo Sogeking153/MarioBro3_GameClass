@@ -271,8 +271,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_VIRTUAL_BOX:
 	{
 		//CMario* mario = dynamic_cast<CMario*>(player);
-		obj = new VirtualBox(x, y, player); break;
-
+		obj = new VirtualBox(x, y, player); 
+		break;
 	}
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

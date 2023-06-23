@@ -156,9 +156,6 @@
     <ClCompile Include="VisibleObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CircularMoving.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -309,9 +306,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="VisibleObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CircularMoving.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
