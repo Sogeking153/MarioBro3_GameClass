@@ -160,6 +160,7 @@ void MapScene::_ParseSection_OBJECTS(string line)
 
 		obj = new CMario(x, y, is_in_world_map);
 		player = (CMario*)obj;
+		player->SetLevel(MARIO_LEVEL_SMALL);
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;

@@ -28,6 +28,9 @@ public:
 	CMario* player;
 	vector<LPGAMEOBJECT> objects;
 
+	vector<LPGAMEOBJECT> enemies;
+	void SetEnemiesInScene(vector<LPGAMEOBJECT> listEnemy) { enemies.clear(); enemies = listEnemy; }
+
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_SPRITES_PLUS(string line);
 
