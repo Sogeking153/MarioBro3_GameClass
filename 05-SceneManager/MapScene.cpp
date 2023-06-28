@@ -171,8 +171,8 @@ void MapScene::_ParseSection_OBJECTS(string line)
 		//float x = atof(tokens[1].c_str());
 		//float y = atof(tokens[2].c_str());
 
-		float w = atof(tokens[3].c_str());
-		float h = atof(tokens[4].c_str());
+		float w = (float)atof(tokens[3].c_str());
+		float h = (float)atof(tokens[4].c_str());
 
 		//int ani_set_id = atoi(tokens[5].c_str());
 		int state = atoi(tokens[5].c_str());
@@ -199,12 +199,12 @@ void MapScene::_ParseSection_MAP_SELECTION(string line)
 	vector<string> tokens = split(line);
 	if (tokens.size() < 9) return;
 
-	int id = atof(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
+	int id = (int)atof(tokens[0].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
-	int is_portal = atof(tokens[3].c_str());
-	int t = atof(tokens[4].c_str());
+	int is_portal = (int)atof(tokens[3].c_str());
+	int t = (int)atof(tokens[4].c_str());
 
 	int r = atoi(tokens[5].c_str());
 	int b = atoi(tokens[6].c_str());

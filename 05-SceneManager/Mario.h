@@ -18,14 +18,14 @@
 
 #define MARIO_ACCEL_WALK_X	0.0003f
 #define MARIO_ACCEL_RUN_X	0.0007f
-#define MARIO_VX_JUMP	0.3
-#define MARIO_VY_FLY_LANDING	0.06
-#define MARIO_VY_FLY_HIGH	0.3
+#define MARIO_VX_JUMP	0.3f
+#define MARIO_VY_FLY_LANDING	0.06f
+#define MARIO_VY_FLY_HIGH	0.3f
 
-#define MARIO_VY_GO_DOWN_PIPE	0.03
-#define MARIO_VY_GO_UP_PIPE	0.032
+#define MARIO_VY_GO_DOWN_PIPE	0.03f
+#define MARIO_VY_GO_UP_PIPE	0.032f
 
-#define MARIO_VX_AUTO 0.3
+#define MARIO_VX_AUTO 0.3f
 #define MARIO_TIME_TO_GO_PIPE	3000
 #define MARIO_Y_ABOVE	900
 #define MARIO_Y_BELOW	1170
@@ -265,9 +265,9 @@ public:
 	bool is_holding = false;
 	CGameObject* holding_something = NULL;
 	bool IsOnTheFlatForm() { return isOnPlatform; }
-	DWORD fly_high_start = 0;
-	DWORD fly_start = 0;
-	DWORD spin_start = 0;
+	ULONGLONG fly_high_start = 0;
+	ULONGLONG fly_start = 0;
+	ULONGLONG spin_start = 0;
 	ULONGLONG change_ani = GetTickCount64();
 	BOOLEAN isSitting;
 	float maxVx;

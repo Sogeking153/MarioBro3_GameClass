@@ -4,8 +4,8 @@ VisibleObject::VisibleObject(float x, float y, float width, float height, int st
 	this->x = x;
 	this->y = y;
 
-	this->w = width;
-	this->h = height;
+	this->w = (int)width;
+	this->h = (int)height;
 
 	this->state = state;
 

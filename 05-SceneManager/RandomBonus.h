@@ -58,11 +58,11 @@ public:
 
 	TextAndNumber text;
 
-	DWORD time_order_to_render_text = 0;
+	ULONGLONG time_order_to_render_text = 0;
 
 	bool got_bonus = false;
 	CMario* player = NULL;
-	DWORD start_ani = 0;
+	ULONGLONG start_ani = 0;
 	RandomBonus(float x, float y, CMario* mario);
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

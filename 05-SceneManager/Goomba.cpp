@@ -3,8 +3,8 @@
 #include "Koopa.h"
 #include "ParaGoomba.h"
 
-#define GOOMBA_VY_WHEN_WAS_SHOOT 0.6
-#define GOOMBA_VX_WHEN_WAS_SHOOT 0.1
+#define GOOMBA_VY_WHEN_WAS_SHOOT 0.6f
+#define GOOMBA_VX_WHEN_WAS_SHOOT 0.1f
 
 CGoomba::CGoomba(float x, float y, LPGAMEOBJECT mario):CGameObject(x, y)
 {

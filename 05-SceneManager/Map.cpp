@@ -20,7 +20,7 @@ Map::Map(LPCWSTR maptext, LPCWSTR tileset, int width_map, int height_map,
 
 void Map::LoadTileSet()
 {
-	int a, b;
+	//int a, b;
 	ifstream f;
 	f.open(mapTextFilePath);
 
@@ -71,15 +71,15 @@ void Map::Draw()
 	float cam_x = 0, cam_y = 0;
 	CGame::GetInstance()->GetCamPos(cam_x, cam_y);
 
-	int begin_row = cam_y / width_tile + 1;
-	int end_row = (cam_y + SCREEN_HEIGHT) / width_tile - 1;
+	int begin_row = (int)cam_y / width_tile + 1;
+	int end_row = (int)(cam_y + SCREEN_HEIGHT) / width_tile - 1;
 
 	if (begin_row < MIN_ROW)
 		begin_row = MIN_ROW;
 
 
-	int begin_column = cam_x / height_tile;
-	int end_column = (cam_x + SCREEN_WIDTH) / height_tile + 1;
+	int begin_column = (int)cam_x / height_tile;
+	int end_column = (int)	(cam_x + SCREEN_WIDTH) / height_tile + 1;
 
 	if (begin_column < MIN_COLUMN)
 		begin_column = MIN_COLUMN;
@@ -97,7 +97,7 @@ void Map::Draw()
 			if (map[i][j] <= IS_NOT_COLOURED_TILE)
 				continue;
 
-			sprites->Get(map[i][j] - 1)->Draw(j * width_tile, (i)*height_tile);
+			sprites->Get(map[i][j] - 1)->Draw((float)j * width_tile, (float)(i)*height_tile);
 		}
 
 	}

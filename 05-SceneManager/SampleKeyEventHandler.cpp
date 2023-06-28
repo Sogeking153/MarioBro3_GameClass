@@ -13,14 +13,14 @@
 #define ABOVE_PIPE_IN_SKY_X 6818
 #define ABOVE_PIPE_IN_SKY_Y 210
 
-#define VY_FLY_LADING 0.1
-#define VY_FLY_HIGH 0.3
+#define VY_FLY_LADING 0.1f
+#define VY_FLY_HIGH 0.3f
 
 #define HACK_POS_X 2200*3
 #define HACK_POS_Y 362*3
 
 #define CAN_NOT_WALK -1
-#define MARIO_SPEED_IN_WOLRD_MAP 0.4
+#define MARIO_SPEED_IN_WOLRD_MAP 0.4f
 
 #define PORTAL_PLAY_SCENE 1
 

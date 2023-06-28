@@ -200,7 +200,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
-		int is_go_through = (float)atof(tokens[5].c_str());
+		int is_go_through = (int)atof(tokens[5].c_str());
 		obj = new FlatForm(x, y, width, height, is_go_through);
 		break;
 	}

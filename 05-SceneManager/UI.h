@@ -6,7 +6,7 @@
 class UI
 {
 	LPGAMEOBJECT player = NULL;
-	float posX = 100, posY = 800;
+	float posX = 100.0f, posY = 800.0f;
 	TextAndNumber text;
 
 public:

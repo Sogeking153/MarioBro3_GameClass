@@ -20,7 +20,7 @@
 
 #define LEFT_GUARD 250
 #define RIGHT_GUARD 336
-#define VX_GUARD 0.05
+#define VX_GUARD 0.05f
 
 class VisibleObject : public CGameObject
 {

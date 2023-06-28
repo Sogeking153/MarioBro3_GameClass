@@ -13,7 +13,7 @@
 
 #define  MUSHROOM_DISTANCE_MOVE_UP	 55
 
-#define  MUSHROOM_MOVING_SPEED	 0.1
+#define  MUSHROOM_MOVING_SPEED	 0.1f
 
 #define  ANI_MUSHROOM_RED			7004
 #define  ANI_MUSHROOM_GREEN			762
@@ -21,7 +21,7 @@
 #define MUSHROOM_RED		1
 #define MUSHROOM_GREEN 		2
 
-#define AY_MUSHROOM 0.002
+#define AY_MUSHROOM 0.002f
 #define VY_MUSHROOM_GO_UP 0.1f
 
 class Mushroom : public CGameObject {
