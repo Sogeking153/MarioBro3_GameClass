@@ -334,6 +334,7 @@ void CPlayScene::Load()
 {
 	//temp = new TextAndNumber();
 	//game_time = new GameTime();
+	//game_time->Reset();
 
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
 

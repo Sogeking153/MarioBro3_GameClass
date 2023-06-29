@@ -15,15 +15,15 @@
 #include "VisibleObject.h"
 
 #define POS_CAM_X -20
-#define POS_CAM_Y -20
+#define POS_CAM_Y -50
 
 class MapScene : public CScene
 {
 public:
 	vector<LPGAMEOBJECT> map_portals;
-	MapPortal* current_portal;
+	MapPortal* current_portal = NULL;
 	vector<LPGAMEOBJECT> visible_object;
-	Map* map;
+	Map* map = NULL;
 
 	CMario* player;
 	vector<LPGAMEOBJECT> objects;
