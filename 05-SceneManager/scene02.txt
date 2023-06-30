@@ -13,9 +13,8 @@ goomba.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-#0	6080	210
-#0	200	1130
-0	1561	600	0
+0	200	1130	0
+
 #truoc paragoomba
 #0	2300	1130		
 ###near random bonus
@@ -226,19 +225,6 @@ goomba.txt
 #rùa xanh test
 #11	2400	1048	0	600	
 
-#pipe 1 cao 	2 thấp	3 đen
-12	1079	1152	1	0	
-
-12	5399	1177	2	0
-12	5592	1152	1	0
-			
-12	6984	1177	2	0
-12	7035	1415	3	1
-
-#testing pipe
-#12	6793	359	2	1
-
-
 #bullet 
 #13	600	900	1
 #13	600	900	2
@@ -252,9 +238,16 @@ goomba.txt
 #pirana plant
 15	5400	1174
 
-#17	6100	1104
+#pipe 1 cao 	2 thấp	3 đen
+12	1079	1152	1	0	
 
-#17	6100	1104
+12	5399	1177	2	0
+12	5592	1152	1	0
+			
+12	6984	1177	2	0
+12	7035	1415	3	1
+
+12	6793	359	2	1
 
 #random bonus
 18	8088	1029

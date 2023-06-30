@@ -27,6 +27,11 @@ VenusFireTrap::VenusFireTrap(float x, float y, LPGAMEOBJECT mario, int type) :CG
 
 void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	left = x - VENUS_BBOX_WIDTH / 2;
+	top = y - VENUS_BBOX_HEIGHT / 2;
+	right = x + VENUS_BBOX_WIDTH / 2;
+	bottom = y + VENUS_BBOX_HEIGHT / 2;
+
 	if (type == GREEN)
 	{
 		left = x - VENUS_BBOX_WIDTH / 2;
@@ -34,11 +39,6 @@ void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float&
 		right = x + VENUS_BBOX_WIDTH / 2;
 		bottom = y + GREEN_BBOX_HEIGHT / 2;
 	}
-
-	left = x - VENUS_BBOX_WIDTH / 2;
-	top = y - VENUS_BBOX_HEIGHT / 2;
-	right = x + VENUS_BBOX_WIDTH / 2;
-	bottom = y + VENUS_BBOX_HEIGHT / 2;
 
 }
 
@@ -60,13 +60,12 @@ void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float&
 void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy * dt;
-
 	if (y < min_y && state == VENUS_STATE_GOING_UP)
 	{
 		vy = 0;
 	}
 
-	if (y > min_y && state == VENUS_STATE_GOING_DOWN)
+	if (y > max_y && state == VENUS_STATE_GOING_DOWN)
 	{
 		vy = 0;
 	}
@@ -77,30 +76,33 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else if (state == VENUS_STATE_SEEING && GetTickCount64() - time_interval > VENUS_TIME_SEEING)
 	{
-		PlantBullet* venus_bullet;
-		venus_bullet = new PlantBullet(x, y - DISTANCE_BULLET_PLANT, player);
-		venus_bullet->SetPosition(x, y - DISTANCE_BULLET_PLANT);
-
-		if (player->GetX() < x)
+		if (bulletcount == 0)
 		{
-			if (player->GetY() < y)
-				venus_bullet->SetState(PLANT_BULLET_STATE_TOP_LEFT);
-			else if (player->GetY() >= y)
-				venus_bullet->SetState(PLANT_BULLET_STATE_BOT_LEFT);
+			PlantBullet* venus_bullet;
+			venus_bullet = new PlantBullet(x, y - DISTANCE_BULLET_PLANT, player);
+			venus_bullet->SetPosition(x, y - DISTANCE_BULLET_PLANT);
 
+			if (player->GetX() < x)
+			{
+				if (player->GetY() < y)
+					venus_bullet->SetState(PLANT_BULLET_STATE_TOP_LEFT);
+				else if (player->GetY() >= y)
+					venus_bullet->SetState(PLANT_BULLET_STATE_BOT_LEFT);
+
+			}
+			else if (player->GetX() >= x)
+			{
+				if (player->GetY() < y)
+					venus_bullet->SetState(PLANT_BULLET_STATE_TOP_RIGHT);
+				else if (player->GetY() >= y)
+					venus_bullet->SetState(PLANT_BULLET_STATE_BOT_RIGHT);
+			}
+
+			listFireball.push_back(venus_bullet);
+
+			SetState(VENUS_STATE_GOING_DOWN);
+			bulletcount++;
 		}
-		else if (player->GetX() >= x)
-		{
-			if (player->GetY() < y)
-				venus_bullet->SetState(PLANT_BULLET_STATE_TOP_RIGHT);
-			else if (player->GetY() >= y)
-				venus_bullet->SetState(PLANT_BULLET_STATE_BOT_RIGHT);
-		}
-
-		listFireball.push_back(venus_bullet);
-
-		SetState(VENUS_STATE_GOING_DOWN);
-
 	}
 	else if (state == VENUS_STATE_GOING_DOWN && GetTickCount64() - time_interval > VENUS_TIME_TURNAROUND)
 	{
@@ -110,6 +112,7 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (this->CheckOverLap(l_safe, t_safe, r_safe, b_safe, l, t, r, b) == false)
 		{
 			SetState(VENUS_STATE_GOING_UP);
+			bulletcount = 0;
 		}
 	}
 

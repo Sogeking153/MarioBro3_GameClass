@@ -14,7 +14,7 @@
 
 #define VENUS_TIME_GO_UP 2000
 #define VENUS_TIME_SEEING 4000
-#define VENUS_TIME_TURNAROUND 9000
+#define VENUS_TIME_TURNAROUND 6000
 
 #define VENUS_WIDTH_SAFE 90
 #define VENUS_RED 1
@@ -65,6 +65,7 @@ protected:
 
 	int type = GREEN;
 	//int type = FIRE;
+	int bulletcount = 0;
 	
 	vector<LPGAMEOBJECT> listFireball;
 	float min_y = y;
