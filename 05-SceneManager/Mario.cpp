@@ -62,6 +62,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				SetPosition(MARIO_POS_X_UNDER_GROUND, MARIO_POS_Y_UNDER_GROUND);
 				is_set_position = false;
 				time_to_go_down = 0;
+
+				is_on_the_ground = true;
 			}
 			else if (this->GetY() >= MARIO_Y_ABOVE && this->GetY() <= MARIO_Y_BELOW)
 			{
