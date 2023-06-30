@@ -312,11 +312,11 @@ void CGrid::ReadFileObj()
 		if (tokens.size() < 6) continue;
 		int id_grid = atoi(tokens[0].c_str());
 		int obj_type = atoi(tokens[1].c_str());
-		float x = atof(tokens[2].c_str());
-		float y = atof(tokens[3].c_str());
+		float x = (float)atof(tokens[2].c_str());
+		float y = (float)atof(tokens[3].c_str());
 
-		float w = atof(tokens[4].c_str());
-		float h = atof(tokens[5].c_str());
+		float w = (float)atof(tokens[4].c_str());
+		float h = (float)atof(tokens[5].c_str());
 		int extra0 = atoi(tokens[6].c_str());
 		int extra1 = atoi(tokens[7].c_str());
 		//int extra2 = atoi(tokens[8].c_str());

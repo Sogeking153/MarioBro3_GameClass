@@ -4,7 +4,6 @@
 #include "Animations.h"
 
 #define ID_ANI_BRICK 10000
-#define BRICK_WIDTH 48
 #define VIRTUAL_BOX_BBOX_WIDTH  58
 #define VIRTUAL_BOX_BBOX_HEIGHT  58
 
