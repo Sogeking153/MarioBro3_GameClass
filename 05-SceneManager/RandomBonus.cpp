@@ -93,25 +93,25 @@ void RandomBonus::Render()
 	CSprites::GetInstance()->Get(ANI_RANDOM_BONUS_BOUNDARY)->Draw(RANDOM_BONUS_BOUNDARY_POS_X, RANDOM_BONUS_BOUNDARY_POS_Y);
 	animations->Get(ani)->Render(x, y);
 
-//	if (got_bonus == true)
-//	{
-//		float x = CGame::GetInstance()->GetCamX();
-//		float y = CGame::GetInstance()->GetCamY();
-//
-//		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_COURSE_CLEAR)
-//			text.Render(x + FIX_COURSE_CLEAR_X, y + FIX_COURSE_CLEAR_Y, COURSE_CLEAR);
-//
-//		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_YOU_GOT_A_CARD)
-//			text.Render(x + FIX_YOU_GOT_A_CARD_X, y + FIX_YOU_GOT_A_CARD_Y, YOU_GOT_A_CARD);
-//
-//		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_CARD)
-//			CSprites::GetInstance()->Get(WHICH_CARD + player->card_end_scene)->Draw(x + FIX_CARD_X, y + FIX_CARD_Y);
-//		//CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);
-//
-//
-////TextAndNumber text;
-////CSprites::GetInstance()->Get(40040 )->DrawFlipX(x + 100, y + 155, 0, 255, 1, 1);
-//	}
+	if (got_bonus == true)
+	{
+		float x = CGame::GetInstance()->GetCamX();
+		float y = CGame::GetInstance()->GetCamY();
+
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_COURSE_CLEAR)
+			text.Render(x + FIX_COURSE_CLEAR_X, y + FIX_COURSE_CLEAR_Y, COURSE_CLEAR);
+
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_YOU_GOT_A_CARD)
+			text.Render(x + FIX_YOU_GOT_A_CARD_X, y + FIX_YOU_GOT_A_CARD_Y, YOU_GOT_A_CARD);
+
+		if (GetTickCount64() - time_order_to_render_text > TIME_TO_RENDER_CARD)
+			CSprites::GetInstance()->Get(WHICH_CARD + player->card_end_scene)->Draw(x + FIX_CARD_X, y + FIX_CARD_Y);
+		//CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);CSprites::GetInstance()->Get(40040 + mario->which_card)->DrawFlipX(x + 550, y + 155, 0, 255, 1, 1);
+
+
+//TextAndNumber text;
+//CSprites::GetInstance()->Get(40040 )->DrawFlipX(x + 100, y + 155, 0, 255, 1, 1);
+	}
 
 	RenderBoundingBox();
 }

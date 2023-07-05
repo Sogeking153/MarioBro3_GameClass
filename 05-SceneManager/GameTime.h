@@ -7,14 +7,15 @@ class GameTime
 {
 	static GameTime* __instance;
 public:
-	GameTime();
-	//static GameTime* GetInstance();
+	static GameTime* GetInstance();
 
 	int gameTime;
 	DWORD currentTotalTime;
 
 	void Update(DWORD dt);
 	void Reset() { gameTime = 0; }
-	//int GetTime() { return gameTime; }
+	int GetTime() { return gameTime; }
+
+	GameTime();
 	~GameTime();
 };

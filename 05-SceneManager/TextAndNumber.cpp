@@ -1,4 +1,5 @@
 #include "TextAndNumber.h"
+#include "debug.h"
 
 void TextAndNumber::Render(float posX, float posY, string str)
 {
@@ -16,7 +17,9 @@ void TextAndNumber::Render(float posX, float posY, string str)
 		//float x, y;
 		//CGame::GetInstance()->GetCamPos(x, y);
 
-		textSpr->Draw(posX + i * SPACING_LETTER,posY);
+		//DebugOut(L"[INFO]your value sir : %d\n", textSpr);
+
+		textSpr->Draw(posX + i * SPACING_LETTER, posY);
 	}
 
 }

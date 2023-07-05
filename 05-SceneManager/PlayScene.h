@@ -22,7 +22,7 @@ public:
 	// A play scene has to have player, right? 
 	CGrid* grid;
 
-	//GameTime* game_time = new GameTime();
+	GameTime* game_time = new GameTime();
 	UI* game_ui = new UI();
 
 	Map* map;

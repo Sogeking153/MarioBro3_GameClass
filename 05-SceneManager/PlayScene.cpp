@@ -335,7 +335,7 @@ void CPlayScene::Load()
 {
 	//temp = new TextAndNumber();
 	//game_time = new GameTime();
-	//game_time->Reset();
+	game_time->Reset();
 
 	DebugOut(L"[INFO] Start loading scene from : %s \n", sceneFilePath);
 
@@ -523,7 +523,9 @@ void CPlayScene::Update(DWORD dt)
 
 	PurgeDeletedObjects();
 
-	//game_time->Update(dt);
+	game_time->Update(dt);
+	if (GAME_TIME - game_time->GetTime() < 0)
+		CGame::GetInstance()->InitiateSwitchScene(MAP_SCENE);
 	//DebugOut(L"[INFO] game time value is: %d\n", game_time->gameTime);
 }
 
@@ -550,9 +552,9 @@ void CPlayScene::Render()
 		list_bricklink[i]->Render();
 	}
 
-	//game_time = GameTime::GetInstance();
+	game_time = GameTime::GetInstance();
 	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
-	//game_ui->Render(GAME_TIME  /*- game_time->GetTime()*/, player->hit_brick_number, player->score, LIFE, SCENE);
+	game_ui->Render(GAME_TIME  - game_time->GetTime(), player->hit_brick_number, player->score, LIFE, SCENE);
 }
 
 void CPlayScene::_ParseSection_MAP(string line)

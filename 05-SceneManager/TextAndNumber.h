@@ -1,6 +1,5 @@
 #pragma once
 #include "Sprites.h"
-#include "Sprite.h"
 #include <string>
 
 #define SPACING_LETTER 24
