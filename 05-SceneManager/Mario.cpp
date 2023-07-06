@@ -312,6 +312,7 @@ void CMario::OnCollisionWithBrickBlink(LPCOLLISIONEVENT e)
 	if (dynamic_cast<BrickBlink*>(e->obj)->is_block == false)
 	{
 		dynamic_cast<BrickBlink*>(e->obj)->Delete();
+		coin++;
 	}
 	else
 	{
@@ -445,6 +446,10 @@ void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 		if (brick->is_hit == false)
 		{
 			this->hit_brick_number++;
+			if (brick->has_item == 0)
+			{
+				this->coin++;
+			}
 			brick->SetState(BRICK_COIN_STATE_HIT);
 		}
 	}

@@ -50,8 +50,12 @@ void UI::Render(int remainingTime, int the_number_mario_hit_brick, int point_hub
 	text.Render(x + REMAIN_TIME_X, y + REMAIN_TIME_Y, to_string(remainingTime));
 
 	text.Render(x + POINT_POS_X, y + POINT_POS_Y, text.FillZeroString(to_string(point_hub), NUMBER_ZERO));
-
-	text.Render(x + NUMBER_BRICK_POS_X, y + NUMBER_BRICK_POS_Y, to_string(the_number_mario_hit_brick));
+	//Need fix: number coin mario have
+	if (the_number_mario_hit_brick < 10)
+	{
+		text.Render(x + NUMBER_BRICK_POS_X, y + NUMBER_BRICK_POS_Y, to_string(the_number_mario_hit_brick));
+	}
+	else text.Render(x + NUMBER_BRICK_POS_X - 21, y + NUMBER_BRICK_POS_Y, to_string(the_number_mario_hit_brick));
 
 	text.Render(x + WORLD_POS_X, y + WORLD_POS_Y, to_string(world));
 	text.Render(x + ID_MAP_POS_X, y + ID_MAP_POS_Y, to_string(id_map));

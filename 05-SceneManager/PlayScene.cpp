@@ -554,7 +554,7 @@ void CPlayScene::Render()
 
 	game_time = GameTime::GetInstance();
 	//temp.Render(100, 800, temp.FillZeroString(to_string(15 - game_time->gameTime), 5));
-	game_ui->Render(GAME_TIME  - game_time->GetTime(), player->hit_brick_number, player->score, LIFE, SCENE);
+	game_ui->Render(GAME_TIME  - game_time->GetTime(), player->coin, player->score, LIFE, SCENE);
 }
 
 void CPlayScene::_ParseSection_MAP(string line)
