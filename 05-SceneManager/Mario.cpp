@@ -1070,6 +1070,15 @@ void CMario::CollideWithItems(vector<LPGAMEOBJECT>* itemsMarioCanEat)
 				//score += 1000;
 				this->SetLevel(MARIO_LEVEL_BIG);
 			}
+			else if (dynamic_cast<Mushroom*>(item) && dynamic_cast<Mushroom*>(item)->type == MUSHROOM_GREEN)
+			{
+				//GREEN
+				//&& dynamic_cast<Mushroom*>(item)->is_read_mushroom == true
+
+				//SetState(MARIO_STATE_TRANSFORM);
+				//score += 1000;
+				//LIFE = LIFE + 1;
+			}
 			else if (dynamic_cast<SuperLeaf*>(item))
 			{
 				//SetState(MARIO_STATE_APPEAR_TAIL);

@@ -60,7 +60,7 @@
 #define GAME_TIME 300
 #define EATEN_COIN 5
 #define LIFE 4
-#define SCENE 2
+#define SCENE 1
 #define POS_Y_ENEMY_DELETE 1320
 
 
