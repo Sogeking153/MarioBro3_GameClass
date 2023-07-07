@@ -54,7 +54,7 @@ void Map::LoadTileSet()
 		for (int j = 0; j < number_tile_set_width; j++)
 		{
 			sprites->Add(id++, j * width_tile, i * height_tile,
-				j * width_tile + width_tile, i * height_tile + height_tile, titleset);
+				(j * width_tile + width_tile)-1, (i * height_tile + height_tile)-1, titleset);
 		}
 	}
 }

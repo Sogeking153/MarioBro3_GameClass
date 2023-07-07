@@ -2,7 +2,7 @@
 #include "Textures.h"
 #include "Sprites.h"
 
-#define WIDTH 48
+#define WIDTH 48.5
 #define HEIGHT 48
 
 #define MAX_ROW_MAP 200
