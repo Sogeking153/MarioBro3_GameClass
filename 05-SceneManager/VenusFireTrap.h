@@ -3,7 +3,7 @@
 #include "Mario.h"
 #include "PlantBullet.h"
 
-#define VENUS_WALKING_SPEED 0.06f;
+#define VENUS_WALKING_SPEED 0.15f;
 
 #define VENUS_BBOX_WIDTH 16*3
 #define VENUS_BBOX_HEIGHT 32*3
@@ -65,7 +65,6 @@ protected:
 
 	int type = GREEN;
 	//int type = FIRE;
-	int bulletcount = 0;
 	
 	vector<LPGAMEOBJECT> listFireball;
 	float min_y = y;
