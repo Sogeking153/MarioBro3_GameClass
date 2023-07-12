@@ -3,7 +3,7 @@
 #include "Mario.h"
 #include "PlantBullet.h"
 
-#define VENUS_WALKING_SPEED 0.06f;
+#define VENUS_WALKING_SPEED 0.15f;
 
 #define PIRANA_PLANT_BBOX_WIDTH  16*3
 #define PIRANA_PLANT_BBOX_HEIGHT  28*3

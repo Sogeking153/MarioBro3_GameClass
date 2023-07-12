@@ -80,7 +80,7 @@ void PlantBullet::SetState(int state)
 		break;
 	case PLANT_BULLET_STATE_TOP_LEFT_NEAR:
 		vx = -PLANT_BULLET_WALKING_SPEED;
-		vy = -0.15;
+		vy = -0.15f;
 		break;
 	case PLANT_BULLET_STATE_BOT_LEFT_FAR:
 		vx = -PLANT_BULLET_WALKING_SPEED;
