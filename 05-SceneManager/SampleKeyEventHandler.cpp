@@ -77,6 +77,26 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		else
 			mario->SetState(MARIO_STATE_JUMP);
 		break;
+	case DIK_RIGHT:
+	{
+		if (mario->GetState() == MARIO_STATE_FLY_HIGH && mario->nx < 0)
+		{
+			mario->nx = 1;
+			mario->ax = -mario->ax;
+			mario->SetState(MARIO_STATE_FLY_HIGH);
+		}
+		break;
+	}
+	case DIK_LEFT:
+	{
+		if (mario->GetState() == MARIO_STATE_FLY_HIGH && mario->nx >= 0)
+		{
+			mario->nx = -1;
+			mario->ax = -mario->ax;
+			mario->SetState(MARIO_STATE_FLY_HIGH);
+		}
+		break;
+	}
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
 		break;
