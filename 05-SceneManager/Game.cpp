@@ -8,6 +8,7 @@
 #include "Animations.h"
 #include "PlayScene.h"
 #include "MapScene.h"
+#include "IntroMap.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -463,6 +464,8 @@ void CGame::_ParseSection_SCENES(string line)
 		scene = new CPlayScene(id, path); // Handle at this place if need other scene
 	else if (id == MAP_SCENE)
 		scene = new MapScene(id, path);
+	else if (id == INTRO_MAP)
+		scene = new IntroMap(id, path);
 
 	scenes[id] = scene;
 }

@@ -160,6 +160,7 @@
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="IntroMap.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="IntroMap.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="Map.h" />

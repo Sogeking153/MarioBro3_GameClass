@@ -134,14 +134,17 @@ void MapSceneKeyHandler::OnKeyDown(int KeyCode)
 
 	switch (KeyCode)
 	{
-		case DIK_S:
-			/*if (map_scene->current_portal->is_portal) {
-				game_temp->SwitchScene(4);
-				DebugOut(L"switch to 4---->  \n");
-			}*/
-			if (map_scene->current_portal->id_portal == PORTAL_PLAY_SCENE)
-				CGame::GetInstance()->InitiateSwitchScene(FIRST_SCENE);
-			break;
+	case DIK_W:
+			CGame::GetInstance()->InitiateSwitchScene(MAP_SCENE);
+		break;
+	case DIK_S:
+		/*if (map_scene->current_portal->is_portal) {
+			game_temp->SwitchScene(4);
+			DebugOut(L"switch to 4---->  \n");
+		}*/
+		if (map_scene->current_portal->id_portal == PORTAL_PLAY_SCENE)
+			CGame::GetInstance()->InitiateSwitchScene(FIRST_SCENE);
+		break;
 	case DIK_RIGHT:
 		if (map_scene->current_portal->r != CAN_NOT_WALK)
 		{
