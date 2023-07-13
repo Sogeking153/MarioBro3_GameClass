@@ -18,7 +18,12 @@
 #define ASSETS_SECTION_SPRITES 1
 #define ASSETS_SECTION_ANIMATIONS 2
 #define ASSETS_SECTION_SPRITES_PLUS 3
-#define SCENE_SECTION_MAP 4
+#define SCENE_SECTION_MAP_1 41
+#define SCENE_SECTION_MAP_2 42
+#define SCENE_SECTION_MAP_3 43
+#define SCENE_SECTION_MAP_4 44
+#define SCENE_SECTION_MAP_5 45
+#define SCENE_SECTION_MAP_6 46
 #define SCENE_SECTION_MAP_SELECTION 7
 
 using namespace std;
@@ -219,9 +224,12 @@ void IntroMap::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
-		if (line == "[MAP]") {
-			section = SCENE_SECTION_MAP; continue;
-		}
+		if (line == "[MAP_1]") { section = SCENE_SECTION_MAP_1; continue; }
+		if (line == "[MAP_2]") { section = SCENE_SECTION_MAP_2; continue; }
+		if (line == "[MAP_3]") { section = SCENE_SECTION_MAP_3; continue; }
+		if (line == "[MAP_4]") { section = SCENE_SECTION_MAP_4; continue; }
+		if (line == "[MAP_5]") { section = SCENE_SECTION_MAP_5; continue; }
+		if (line == "[MAP_6]") { section = SCENE_SECTION_MAP_6; continue; }
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -229,7 +237,12 @@ void IntroMap::Load()
 		//
 		switch (section)
 		{
-		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
+		case SCENE_SECTION_MAP_1: _ParseSection_MAP_1(line); break;
+		case SCENE_SECTION_MAP_2: _ParseSection_MAP_2(line); break;
+		case SCENE_SECTION_MAP_3: _ParseSection_MAP_3(line); break;
+		case SCENE_SECTION_MAP_4: _ParseSection_MAP_4(line); break;
+		case SCENE_SECTION_MAP_5: _ParseSection_MAP_5(line); break;
+		case SCENE_SECTION_MAP_6: _ParseSection_MAP_6(line); break;
 		}
 	}
 
@@ -239,7 +252,12 @@ void IntroMap::Load()
 
 	//0	textures\world_map.txt	12	16	textures\tileset_worldmap.png	4 	8
 	//map = new Map(L"textures\\world_map.txt", L"textures\\tileset_worldmap.png", 16, 12, 8, 4);
-	map->LoadTileSet();
+	map_1->LoadTileSet();
+	map_2->LoadTileSet();
+	map_3->LoadTileSet();
+	map_4->LoadTileSet();
+	map_5->LoadTileSet();
+	map_6->LoadTileSet();
 }
 
 void IntroMap::Update(DWORD dt)
@@ -264,13 +282,18 @@ void IntroMap::Update(DWORD dt)
 	cx -= game->GetBackBufferWidth() / 2;
 	cy -= game->GetBackBufferHeight() / 2;
 
-	CGame::GetInstance()->SetCamPos(POS_CAM_X, POS_CAM_Y);
+	CGame::GetInstance()->SetCamPos(POS_CAM_X_2, POS_CAM_Y_2);
 	PurgeDeletedObjects();
 }
 
 void IntroMap::Render()
 {
-	map->Draw();
+	map_1->Draw();
+	map_2->Draw();
+	map_3->Draw();
+	map_4->Draw();
+	map_5->Draw();
+	map_6->Draw();
 }
 
 void IntroMap::Clear()
@@ -315,12 +338,62 @@ void IntroMap::PurgeDeletedObjects()
 		objects.end());
 }
 
-void IntroMap::_ParseSection_MAP(string line)
+void IntroMap::_ParseSection_MAP_1(string line)
 {
 	vector<string> tokens = split(line);
 	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
 
 	if (tokens.size() < 5) return;
 
-	map = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+	map_1 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+}
+
+void IntroMap::_ParseSection_MAP_2(string line)
+{
+	vector<string> tokens = split(line);
+	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
+
+	if (tokens.size() < 5) return;
+
+	map_2 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+}
+
+void IntroMap::_ParseSection_MAP_3(string line)
+{
+	vector<string> tokens = split(line);
+	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
+
+	if (tokens.size() < 5) return;
+
+	map_3 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+}
+
+void IntroMap::_ParseSection_MAP_4(string line)
+{
+	vector<string> tokens = split(line);
+	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
+
+	if (tokens.size() < 5) return;
+
+	map_4 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+}
+
+void IntroMap::_ParseSection_MAP_5(string line)
+{
+	vector<string> tokens = split(line);
+	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
+
+	if (tokens.size() < 5) return;
+
+	map_5 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
+}
+
+void IntroMap::_ParseSection_MAP_6(string line)
+{
+	vector<string> tokens = split(line);
+	DebugOut(L"[INFO] play scene mapid loading scene resources from : %s \n", line);
+
+	if (tokens.size() < 5) return;
+
+	map_6 = new Map(ToLPCWSTR(tokens[0]), ToLPCWSTR(tokens[1]), atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), atoi(tokens[4].c_str()), atoi(tokens[5].c_str()));
 }
