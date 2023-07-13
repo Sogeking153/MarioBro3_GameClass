@@ -42,6 +42,7 @@
 #define MARIO_TIME_FLY_LANDING	300
 #define MARIO_TIME_FLY_HIGH	360
 #define MARIO_TIME_TO_SWITCH_SCENE	1000
+#define MARIO_TIME_TO_SKID 200
 
 #define MARIO_TIME_TO_STRANSFORM	1500
 #define MARIO_TIME_TO_APPEAR_TAIL	600
@@ -263,11 +264,13 @@ public:
 	bool is_jumped = false;
 	bool is_up_press = false;
 	bool is_holding = false;
+	bool is_skid = false;
 	CGameObject* holding_something = NULL;
 	bool IsOnTheFlatForm() { return isOnPlatform; }
 	ULONGLONG fly_high_start = 0;
 	ULONGLONG fly_start = 0;
 	ULONGLONG spin_start = 0;
+	ULONGLONG skid_start = 0;
 	ULONGLONG change_ani = GetTickCount64();
 	BOOLEAN isSitting;
 	float maxVx;

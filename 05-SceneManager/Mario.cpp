@@ -173,6 +173,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//DebugOut(L"[INFO] wow a tail?\n");
 	}
 
+	if (is_skid == true && GetTickCount64() - skid_start >= MARIO_TIME_TO_SKID && skid_start)
+	{
+		skid_start = 0;
+		vx = 0;
+		is_skid = false;
+	}
+
 	if (this->GetY() < 0)
 	{
 		//SetState(MARIO_STATE_FLY_LANDING);
@@ -944,6 +951,11 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		if (ax < 0)
+		{
+			skid_start = GetTickCount64();
+			is_skid = true;
+		}
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		//ax = MARIO_ACCEL_WALK_X;
@@ -951,6 +963,11 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		if (ax > 0)
+		{
+			skid_start = GetTickCount64();
+			is_skid = true;
+		}
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		//ax = -MARIO_ACCEL_WALK_X;
@@ -958,12 +975,22 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
+		if (ax < 0)
+		{
+			skid_start = GetTickCount64();
+			is_skid = true;
+		}
 		maxVx = MARIO_WALKING_SPEED;
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		if (isSitting) break;
+		if (ax > 0)
+		{
+			skid_start = GetTickCount64();
+			is_skid = true;
+		}
 		maxVx = -MARIO_WALKING_SPEED;
 		ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
