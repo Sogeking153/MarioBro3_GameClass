@@ -28,6 +28,8 @@ VenusFireTrap::VenusFireTrap(float x, float y, LPGAMEOBJECT mario, int type) :CG
 
 void VenusFireTrap::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	if (state == VENUS_STATE_ATTACKED)
+		return;
 	left = x - VENUS_BBOX_WIDTH / 2;
 	top = y - VENUS_BBOX_HEIGHT / 2;
 	right = x + VENUS_BBOX_WIDTH / 2;
@@ -149,6 +151,9 @@ void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			//DebugOut(L"[INFO]delete fireball %d\n", listFireball.size());
 		}
 	}
+
+	if (player->GetState() == MARIO_STATE_SPIN)
+		this->CheckWetherBeingAttacked(player, VENUS_STATE_ATTACKED);
 }
 
 
@@ -240,6 +245,9 @@ void VenusFireTrap::SetState(int state)
 		break;
 	case VENUS_STATE_GOING_DOWN:
 		vy = VENUS_WALKING_SPEED;
+		break;
+	case VENUS_STATE_ATTACKED:
+		this->Delete();
 		break;
 	}
 }

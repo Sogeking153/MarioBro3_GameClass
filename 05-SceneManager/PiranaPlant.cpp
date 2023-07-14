@@ -24,6 +24,8 @@ PiranaPlant::PiranaPlant(float x, float y, LPGAMEOBJECT mario) :CGameObject(x, y
 
 void PiranaPlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
+	if (state == VENUS_STATE_ATTACKED)
+		return;
 	left = x - PIRANA_PLANT_BBOX_WIDTH / 2;
 	top = y - PIRANA_PLANT_BBOX_HEIGHT / 2;
 	right = x + PIRANA_PLANT_BBOX_WIDTH / 2;
@@ -59,6 +61,9 @@ void PiranaPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(VENUS_STATE_GOING_UP);
 		}
 	}
+
+	if (player->GetState() == MARIO_STATE_SPIN)
+		this->CheckWetherBeingAttacked(player, VENUS_STATE_ATTACKED);
 }
 
 
@@ -84,6 +89,9 @@ void PiranaPlant::SetState(int state)
 		break;
 	case VENUS_STATE_GOING_DOWN:
 		vy = VENUS_WALKING_SPEED;
+		break;
+	case VENUS_STATE_ATTACKED:
+		this->Delete();
 		break;
 	}
 }
