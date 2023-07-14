@@ -22,7 +22,13 @@
 #define CAN_NOT_WALK -1
 #define MARIO_SPEED_IN_WOLRD_MAP 0.4f
 
-#define PORTAL_PLAY_SCENE 1
+#define PORTAL_PLAY_SCENE_NODE_1 1
+#define PORTAL_PLAY_SCENE_NODE_2 5
+#define PORTAL_PLAY_SCENE_NODE_3 10
+#define PORTAL_PLAY_SCENE_NODE_4 12
+#define PORTAL_PLAY_SCENE_NODE_5 14
+#define PORTAL_PLAY_SCENE_NODE_6 15
+#define PORTAL_PLAY_SCENE_NODE_7 16
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
@@ -142,8 +148,19 @@ void MapSceneKeyHandler::OnKeyDown(int KeyCode)
 			game_temp->SwitchScene(4);
 			DebugOut(L"switch to 4---->  \n");
 		}*/
-		if (map_scene->current_portal->id_portal == PORTAL_PLAY_SCENE)
+		switch (map_scene->current_portal->id_portal)
+		{
+		case PORTAL_PLAY_SCENE_NODE_1:
+		case PORTAL_PLAY_SCENE_NODE_2:
+		case PORTAL_PLAY_SCENE_NODE_3:
+		case PORTAL_PLAY_SCENE_NODE_4:
+		case PORTAL_PLAY_SCENE_NODE_5:
+		case PORTAL_PLAY_SCENE_NODE_6:
+		case PORTAL_PLAY_SCENE_NODE_7:
 			CGame::GetInstance()->InitiateSwitchScene(FIRST_SCENE);
+		default:
+			break;
+		}
 		break;
 	case DIK_RIGHT:
 		if (map_scene->current_portal->r != CAN_NOT_WALK)
